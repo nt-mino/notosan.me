@@ -1,0 +1,90 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+// TODO: Replace with microCMS data
+const newsItems = [
+  {
+    id: 'form-validator-release',
+    date: '2024.01.20',
+    badge: 'release',
+    badgeLabel: 'リリース',
+    text: '新しいOSSライブラリ「form-validator」をリリースしました',
+    href: '/news/form-validator-release',
+  },
+  {
+    id: 'tech-summit-2024',
+    date: '2024.01.10',
+    badge: 'event',
+    badgeLabel: '登壇',
+    text: '技術カンファレンス「Tech Summit 2024」に登壇します',
+    href: '/news/tech-summit-2024',
+  },
+  {
+    id: 'techlog-interview',
+    date: '2023.12.25',
+    badge: 'media',
+    badgeLabel: 'メディア',
+    text: 'エンジニア向けメディア「TechLog」にインタビュー記事が掲載されました',
+    href: '/news/techlog-interview',
+  },
+  {
+    id: 'developer-of-the-year',
+    date: '2023.12.01',
+    badge: 'award',
+    badgeLabel: '受賞',
+    text: 'Developer of the Year 2023 ノミネート',
+    href: '/news/developer-of-the-year',
+  },
+]
+
+const badgeStyles: Record<string, string> = {
+  release: 'bg-[#e3f2fd] text-[#1565c0]',
+  event: 'bg-[#fce4ec] text-[#c2185b]',
+  media: 'bg-[#f3e5f5] text-[#7b1fa2]',
+  award: 'bg-[#fff8e1] text-[#f57c00]',
+}
+---
+
+<section id="news" class:list={['py-28 px-6 md:px-12 bg-white', className]}>
+  <div class="section-header flex justify-between items-end mb-16 pb-6 border-b border-noto-border max-w-[900px] mx-auto">
+    <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-tight">お知らせ</h2>
+    <span class="text-[0.6875rem] text-noto-accent tracking-[0.15em] font-medium">NEWS</span>
+  </div>
+
+  <div class="flex flex-col max-w-[900px] mx-auto">
+    {newsItems.map((news) => (
+      <div class="py-5 border-b border-noto-border transition-all duration-200 hover:pl-2 hover:bg-noto-accent/[0.02]">
+        <a
+          href={news.href}
+          class="grid grid-cols-1 sm:grid-cols-[80px_1fr] md:grid-cols-[100px_1fr] gap-2 sm:gap-4 md:gap-8 no-underline text-inherit"
+        >
+          <span class="text-xs text-noto-text-muted">{news.date}</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <span
+              class:list={[
+                'shrink-0 px-2 py-1 text-[0.625rem] font-medium rounded tracking-[0.03em]',
+                badgeStyles[news.badge],
+              ]}
+            >
+              {news.badgeLabel}
+            </span>
+            <span class="text-sm text-noto-text leading-relaxed">{news.text}</span>
+          </div>
+        </a>
+      </div>
+    ))}
+  </div>
+
+  <div class="text-center mt-10">
+    <a
+      href="/news"
+      class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
+    >
+      もっと見る →
+    </a>
+  </div>
+</section>

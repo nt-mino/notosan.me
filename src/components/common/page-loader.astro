@@ -1,0 +1,43 @@
+---
+// ページ読み込み時のローディングアニメーション
+---
+
+<div
+  id="pageLoader"
+  class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-noto-bg overflow-hidden transition-all duration-500 ease-out"
+>
+  <!-- Background Orbs -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div
+      class="absolute w-[400px] h-[400px] rounded-full opacity-60 -top-[100px] -right-[50px] blur-[40px] animate-[loaderFloat1_8s_ease-in-out_infinite]"
+      style="background: radial-gradient(circle at 30% 30%, rgba(120, 150, 180, 0.6) 0%, rgba(61, 90, 128, 0.4) 40%, rgba(61, 90, 128, 0.1) 70%, transparent 100%);"
+    />
+    <div
+      class="absolute w-[300px] h-[300px] rounded-full opacity-60 -bottom-[50px] -left-[50px] blur-[30px] animate-[loaderFloat2_10s_ease-in-out_infinite]"
+      style="background: radial-gradient(circle at 35% 35%, rgba(140, 170, 200, 0.5) 0%, rgba(90, 127, 168, 0.35) 40%, rgba(61, 90, 128, 0.1) 70%, transparent 100%);"
+    />
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex flex-col items-center">
+    <div class="font-serif text-2xl font-medium tracking-widest mb-8 opacity-0 animate-[loaderFadeIn_0.5s_ease_forwards]">
+      noto.
+    </div>
+    <div class="w-[120px] h-0.5 bg-noto-border rounded overflow-hidden opacity-0 animate-[loaderFadeIn_0.5s_ease_0.2s_forwards]">
+      <div class="h-full bg-noto-accent rounded animate-[loaderProgress_1.2s_ease_forwards]" />
+    </div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const loader = document.getElementById('pageLoader')
+      if (loader) {
+        loader.style.opacity = '0'
+        loader.style.visibility = 'hidden'
+        loader.style.pointerEvents = 'none'
+      }
+    }, 1400)
+  })
+</script>

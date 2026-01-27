@@ -1,0 +1,130 @@
+---
+import { Image } from 'astro:assets'
+
+export interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+// TODO: Replace with microCMS data
+const works = [
+  {
+    id: 'ai-chat-platform',
+    title: 'AIチャットプラットフォーム',
+    description:
+      '月間100万ユーザー規模のリアルタイムチャット基盤を構築。WebSocketによるリアルタイム通信とコスト最適化を実現。',
+    year: '2024',
+    type: 'バックエンド',
+    tags: ['Go', 'WebSocket', 'AWS'],
+    image:
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=340&fit=crop',
+    href: '/works/ai-chat-platform',
+  },
+  {
+    id: 'payment-system',
+    title: '決済システム刷新',
+    description:
+      '10年運用のモノリスをマイクロサービス化。ダウンタイムゼロで移行完了し、可用性99.99%を達成。',
+    year: '2023',
+    type: 'アーキテクチャ',
+    tags: ['Microservices', 'Kubernetes'],
+    image:
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=340&fit=crop',
+    href: '/works/payment-system',
+  },
+  {
+    id: 'react-form-library',
+    title: 'React Form Library',
+    description:
+      '型安全なフォームバリデーションライブラリをOSSとして公開。GitHub 2,000+ スター獲得。',
+    year: '2023',
+    type: 'オープンソース',
+    tags: ['React', 'TypeScript', 'OSS'],
+    image:
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=340&fit=crop',
+    href: '/works/react-form-library',
+  },
+  {
+    id: 'edtech-platform',
+    title: 'EdTech学習プラットフォーム',
+    description:
+      'CTOとしてゼロから開発をリード。シリーズAで5億円の資金調達に成功。',
+    year: '2022',
+    type: 'プロダクト開発',
+    tags: ['Next.js', 'EdTech'],
+    image:
+      'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=340&fit=crop',
+    href: '/works/edtech-platform',
+  },
+]
+---
+
+<section
+  id="works"
+  class:list={['py-28 px-6 md:px-12', className]}
+  style="background: linear-gradient(180deg, white 0%, #f8f9fa 100%);"
+>
+  <div class="section-header flex justify-between items-end mb-16 pb-6 border-b border-noto-border max-w-[900px] mx-auto">
+    <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-tight">実績</h2>
+    <span class="text-[0.6875rem] text-noto-accent tracking-[0.15em] font-medium">WORKS</span>
+  </div>
+
+  <p class="text-xs text-noto-text-muted max-w-[900px] mx-auto -mt-10 mb-10 text-right">
+    ※ 参画した開発プロジェクトを掲載しています
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mx-auto">
+    {works.map((work) => (
+      <a
+        href={work.href}
+        class="group block no-underline text-inherit bg-white rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-400 relative hover:shadow-[0_8px_24px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[3px] before:bg-gradient-to-r before:from-noto-accent before:to-noto-accent-light before:scale-x-0 before:origin-left before:transition-transform before:duration-400 hover:before:scale-x-100"
+      >
+        <div class="aspect-video bg-[#e8e8e8] relative overflow-hidden">
+          <Image
+            src={work.image}
+            alt={work.title}
+            width={600}
+            height={340}
+            loading="lazy"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none" />
+          <div class="absolute bottom-3.5 left-3.5 right-3.5 flex flex-wrap gap-1.5 z-10">
+            {work.tags.map((tag) => (
+              <span class="px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded text-[0.625rem] text-white font-medium tracking-[0.02em]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs text-noto-accent font-semibold tracking-wide">{work.year}</span>
+            <span class="text-[0.625rem] text-noto-text-muted px-2 py-1 bg-noto-bg-alt rounded tracking-[0.02em]">
+              {work.type}
+            </span>
+          </div>
+          <h3 class="font-serif text-lg font-medium mb-2.5 leading-snug transition-colors duration-300 group-hover:text-noto-accent">
+            {work.title}
+          </h3>
+          <p class="text-[0.8125rem] text-noto-text-muted leading-relaxed">
+            {work.description}
+          </p>
+          <span class="inline-flex items-center gap-2 mt-4 text-xs text-noto-accent font-medium transition-[gap] duration-200 group-hover:gap-3 after:content-['→'] after:transition-transform after:duration-200 group-hover:after:translate-x-0.5">
+            詳細を見る
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="text-center mt-10">
+    <a
+      href="/works"
+      class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
+    >
+      もっと見る →
+    </a>
+  </div>
+</section>

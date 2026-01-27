@@ -1,0 +1,114 @@
+---
+export interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+// TODO: Replace with microCMS data
+const articles = [
+  {
+    id: 'llm-design-patterns',
+    title: 'LLMアプリケーション開発の設計パターン',
+    excerpt:
+      '大規模言語モデルを活用したアプリケーション開発における設計のベストプラクティス。',
+    date: '2024.01.15',
+    category: 'AI',
+    icon: '🤖',
+    href: 'https://zenn.dev/noto/articles/llm-design-patterns',
+    isExternal: true,
+  },
+  {
+    id: 'nextjs-14-server-actions',
+    title: 'Next.js 14 Server Actionsの実践',
+    excerpt: 'Server Actionsを本番環境で使ってみて分かった、実践的な使い方。',
+    date: '2024.01.02',
+    category: 'Frontend',
+    icon: '⚡',
+    href: 'https://zenn.dev/noto/articles/nextjs-14-server-actions',
+    isExternal: true,
+  },
+  {
+    id: 'microservices-migration',
+    title: 'マイクロサービス移行の失敗と学び',
+    excerpt: 'モノリスからマイクロサービスへの移行で直面した課題と解決策。',
+    date: '2023.12.18',
+    category: 'Architecture',
+    icon: '🏗️',
+    href: 'https://zenn.dev/noto/articles/microservices-migration',
+    isExternal: true,
+  },
+  {
+    id: 'typescript-type-system',
+    title: 'TypeScriptの型システムを極める',
+    excerpt:
+      'Template Literal TypesやConditional Typesを活用した型安全な設計。',
+    date: '2023.11.25',
+    category: 'TypeScript',
+    icon: '📘',
+    href: 'https://zenn.dev/noto/articles/typescript-type-system',
+    isExternal: true,
+  },
+]
+---
+
+<section
+  id="articles"
+  class:list={['py-28 px-6 md:px-12', className]}
+  style="background: linear-gradient(180deg, #f5f5f5 0%, #fafafa 100%);"
+>
+  <div class="section-header flex justify-between items-end mb-16 pb-6 border-b border-noto-border max-w-[900px] mx-auto">
+    <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-tight">執筆</h2>
+    <span class="text-[0.6875rem] text-noto-accent tracking-[0.15em] font-medium">ARTICLES</span>
+  </div>
+
+  <div class="flex flex-col gap-6 max-w-[900px] mx-auto">
+    {articles.map((article) => (
+      <a
+        href={article.href}
+        target={article.isExternal ? '_blank' : undefined}
+        rel={article.isExternal ? 'noopener noreferrer' : undefined}
+        class="group grid grid-cols-1 sm:grid-cols-[150px_1fr] md:grid-cols-[200px_1fr] gap-4 md:gap-8 p-5 md:p-6 bg-white rounded-md border border-noto-border shadow-sm no-underline text-inherit transition-all duration-300 relative overflow-hidden hover:shadow-lg hover:-translate-y-0.5 hover:border-noto-accent"
+      >
+        <div
+          class="aspect-video sm:aspect-[16/10] rounded relative overflow-hidden"
+          style="background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);"
+        >
+          <div
+            class="absolute inset-0 opacity-10"
+            style="background: linear-gradient(135deg, #3d5a80 0%, #5a7fa8 100%);"
+          />
+          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl opacity-30">
+            {article.icon}
+          </span>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div class="flex items-center gap-4 mb-3">
+            <span class="text-[0.6875rem] text-noto-text-muted tracking-wide">{article.date}</span>
+            <span class="text-[0.625rem] text-noto-accent tracking-wide px-2 py-1 bg-noto-accent/10 rounded font-medium">
+              {article.category}
+            </span>
+          </div>
+          <h3 class="font-serif text-[1.0625rem] font-medium leading-normal mb-2 transition-colors duration-200 group-hover:text-noto-accent">
+            {article.title}
+          </h3>
+          <p class="text-[0.8125rem] text-noto-text-muted leading-relaxed mb-4">
+            {article.excerpt}
+          </p>
+          <span class="inline-flex items-center gap-2 text-xs text-noto-accent font-medium transition-[gap] duration-200 group-hover:gap-3 after:content-['→'] after:transition-transform after:duration-200 group-hover:after:translate-x-0.5">
+            続きを読む
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="text-center mt-10">
+    <a
+      href="/articles"
+      class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
+    >
+      もっと見る →
+    </a>
+  </div>
+</section>

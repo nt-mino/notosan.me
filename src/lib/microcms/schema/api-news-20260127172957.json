@@ -1,0 +1,35 @@
+{
+  "apiFields": [
+    {
+      "fieldId": "title",
+      "name": "タイトル",
+      "kind": "text",
+      "required": true
+    },
+    {
+      "fieldId": "body",
+      "name": "概要",
+      "kind": "richEditorV2",
+      "required": true
+    },
+    {
+      "fieldId": "category",
+      "name": "カテゴリー",
+      "kind": "select",
+      "required": true,
+      "selectItems": [
+        { "id": "L6BYfRVf5c", "value": "キャリア" },
+        { "id": "L3dQaHrawK", "value": "資格・認定" },
+        { "id": "mzEojfa3NW", "value": "イベント" },
+        { "id": "zK0IQInqVT", "value": "制作・リリース" },
+        { "id": "WwmoTDgLdf", "value": "メディア" },
+        { "id": "tw7BYCFjyu", "value": "メディア" },
+        { "id": "0Y9KYVqBWc", "value": "お知らせ" }
+      ],
+      "selectInitialValue": [],
+      "multipleSelect": false
+    },
+    { "fieldId": "date", "name": "日時", "kind": "date", "required": true }
+  ],
+  "customFields": []
+}

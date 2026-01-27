@@ -1,0 +1,67 @@
+---
+export interface Props {
+  href: string
+  category: string
+  icon: string
+  date: string
+  title: string
+  excerpt: string
+  isExternal?: boolean
+}
+
+const {
+  href,
+  category,
+  icon,
+  date,
+  title,
+  excerpt,
+  isExternal = false,
+} = Astro.props
+---
+
+<a
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  class="group flex flex-col bg-white rounded-lg border border-noto-border overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-noto-accent"
+>
+  <!-- Thumbnail -->
+  <div class="aspect-[16/10] bg-gradient-to-br from-noto-bg-alt to-[#f5f5f5] relative overflow-hidden">
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-noto-accent to-noto-accent-light opacity-15 transition-opacity duration-300 group-hover:opacity-25"></div>
+    <!-- Category badge -->
+    <span class="absolute top-3 left-3 px-2.5 py-1 bg-white rounded text-[0.625rem] font-medium text-noto-accent tracking-wide shadow-sm">
+      {category}
+    </span>
+    <!-- Icon -->
+    <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[2rem] opacity-40 transition-all duration-300 group-hover:scale-110 group-hover:opacity-60">
+      {icon}
+    </span>
+    <!-- External icon -->
+    {isExternal && (
+      <span class="absolute top-3 right-3 text-noto-text-muted opacity-50">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+          <polyline points="15 3 21 3 21 9" />
+          <line x1="10" y1="14" x2="21" y2="3" />
+        </svg>
+      </span>
+    )}
+  </div>
+
+  <!-- Content -->
+  <div class="p-5 flex flex-col flex-1">
+    <span class="text-[0.6875rem] text-noto-text-muted tracking-wider mb-2">{date}</span>
+    <h3 class="font-serif text-base font-medium leading-normal mb-3 transition-colors duration-200 group-hover:text-noto-accent">
+      {title}
+    </h3>
+    <p class="text-[0.8125rem] text-noto-text-muted leading-relaxed flex-1">
+      {excerpt}
+    </p>
+    <span class="inline-flex items-center gap-2 mt-4 text-xs text-noto-accent font-medium transition-[gap] duration-200 group-hover:gap-3">
+      {isExternal ? '記事を読む' : '続きを読む'}
+      <span class="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+    </span>
+  </div>
+</a>

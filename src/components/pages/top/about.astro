@@ -1,0 +1,61 @@
+---
+import { SkillsTerminal } from './skills-terminal'
+
+export interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<section
+  id="about"
+  class:list={['py-28 px-6 md:px-12', className]}
+  style="background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);"
+>
+  <div class="section-header flex justify-between items-end mb-16 pb-6 border-b border-noto-border max-w-[900px] mx-auto">
+    <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-tight">私について</h2>
+    <span class="text-[0.6875rem] text-noto-accent tracking-[0.15em] font-medium">ABOUT</span>
+  </div>
+
+  <div class="max-w-[900px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-center">
+      <!-- About Text -->
+      <div class="flex flex-col">
+        <h3 class="font-serif text-[clamp(1.75rem,3vw,2.25rem)] font-medium mb-2 tracking-wider">
+          能戸 成琉 / Minoru Noto
+        </h3>
+        <p class="text-xs text-noto-accent tracking-[0.1em] mb-8">ソフトウェアエンジニア</p>
+
+        <blockquote
+          class="font-serif text-lg text-noto-text leading-[1.9] mb-8 py-4 px-4 pl-6 rounded-r-md relative"
+          style="background: linear-gradient(90deg, rgba(61, 90, 128, 0.08) 0%, rgba(61, 90, 128, 0.02) 100%);"
+        >
+          <span class="absolute left-0 top-0 bottom-0 w-1 bg-noto-accent rounded" />
+          なぜつくるのか。<br />
+          その問いと、挑戦する心を忘れない。
+        </blockquote>
+
+        <p class="text-[0.9375rem] text-noto-text-muted leading-8">
+          <strong class="text-noto-text font-medium px-0.5" style="background: linear-gradient(transparent 60%, rgba(61, 90, 128, 0.25) 60%);">
+            5年以上のソフトウェア開発経験
+          </strong>を通じて、ユーザーにとって本当に価値のあるプロダクトとは何かを考え続けてきました。
+        </p>
+
+        <p class="text-[0.9375rem] text-noto-text-muted leading-8 mt-4">
+          スタートアップから大企業まで様々な環境で開発に携わり、
+          <strong class="text-noto-text font-medium px-0.5" style="background: linear-gradient(transparent 60%, rgba(61, 90, 128, 0.25) 60%);">
+            新しい挑戦を楽しむ姿勢
+          </strong>を大切にしてきました。
+        </p>
+
+        <p class="text-[0.9375rem] text-noto-text-muted leading-8 mt-4">
+          現在は特に、AIを活用した新しいユーザー体験の創出と、開発者体験の向上に関心を持っています。
+        </p>
+      </div>
+
+      <!-- Skills Terminal -->
+      <SkillsTerminal client:visible />
+    </div>
+  </div>
+</section>

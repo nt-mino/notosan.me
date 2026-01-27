@@ -1,12 +1,34 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Footer from '@/components/common/footer.astro'
+import Navigation from '@/components/common/navigation.astro'
+import PageLoader from '@/components/common/page-loader.astro'
+import About from '@/components/pages/top/about.astro'
+import Articles from '@/components/pages/top/articles.astro'
+import ContactCta from '@/components/pages/top/contact-cta.astro'
+import Hero from '@/components/pages/top/hero.astro'
+import News from '@/components/pages/top/news.astro'
+import Works from '@/components/pages/top/works.astro'
+import Layout from '@/layouts/layout.astro'
 ---
 
-<Layout title="Noto">
-  <main class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="text-center">
-      <h1 class="text-4xl font-bold text-gray-900">Noto</h1>
-      <p class="mt-4 text-gray-600">Astro + Tailwind CSS</p>
-    </div>
+<Layout
+  title="noto. | ソフトウェアエンジニア 能戸成琉"
+  description="ソフトウェアエンジニア 能戸成琉のポートフォリオサイト。バックエンドからフロントエンドまで、スケーラブルなシステム設計と開発を行っています。"
+  keywords="能戸成琉,ソフトウェアエンジニア,フルスタック,ポートフォリオ,TypeScript,Go,React"
+>
+  <PageLoader />
+  <Navigation />
+  <main>
+    <Hero />
+    <About />
+    <Works />
+    <Articles />
+    <News />
+    <ContactCta />
   </main>
+  <Footer />
 </Layout>
+
+<script>
+  import '@/scripts/scroll-animation'
+</script>

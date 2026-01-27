@@ -1,0 +1,31 @@
+---
+export interface Props {
+  href: string
+  date: string
+  badge: string
+  badgeType: 'release' | 'event' | 'media' | 'award' | 'update'
+  text: string
+}
+
+const { href, date, badge, badgeType, text } = Astro.props
+
+const badgeColors = {
+  release: 'bg-[#e3f2fd] text-[#1565c0]',
+  event: 'bg-[#fce4ec] text-[#c2185b]',
+  media: 'bg-[#f3e5f5] text-[#7b1fa2]',
+  award: 'bg-[#fff8e1] text-[#f57c00]',
+  update: 'bg-[#e8f5e9] text-[#2e7d32]',
+}
+---
+
+<div class="py-5 border-b border-noto-border transition-all duration-200 first:border-t hover:pl-2 hover:bg-noto-accent/[0.02]">
+  <a href={href} class="grid grid-cols-[100px_1fr] md:grid-cols-[100px_1fr] gap-4 md:gap-8 no-underline text-inherit">
+    <span class="text-xs text-noto-text-muted">{date}</span>
+    <div class="flex items-center gap-3 flex-wrap">
+      <span class:list={['shrink-0 px-2 py-1 text-[0.625rem] font-medium rounded tracking-wide', badgeColors[badgeType]]}>
+        {badge}
+      </span>
+      <span class="text-sm text-noto-text leading-relaxed">{text}</span>
+    </div>
+  </a>
+</div>

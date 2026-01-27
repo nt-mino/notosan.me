@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets'
+
+export interface Props {
+  href: string
+  thumbnail: string
+  alt: string
+  tags: string[]
+  year: string
+  type: string
+  title: string
+  description: string
+}
+
+const { href, thumbnail, alt, tags, year, type, title, description } =
+  Astro.props
+---
+
+<a href={href} class="group block bg-white rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-400 ease-[cubic-bezier(0.165,0.84,0.44,1)] relative hover:shadow-[0_8px_24px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.08)] hover:-translate-y-1.5">
+  <!-- Top border animation -->
+  <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-noto-accent to-noto-accent-light scale-x-0 origin-left transition-transform duration-400 group-hover:scale-x-100"></div>
+
+  <!-- Thumbnail -->
+  <div class="aspect-video bg-noto-bg-alt relative overflow-hidden">
+    <Image
+      src={thumbnail}
+      alt={alt}
+      width={600}
+      height={340}
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none"></div>
+    <!-- Tags -->
+    <div class="absolute bottom-3.5 left-3.5 right-3.5 flex flex-wrap gap-1.5 z-10">
+      {tags.map((tag) => (
+        <span class="px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded text-[0.625rem] text-white font-medium tracking-wide">
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="p-6">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-xs text-noto-accent font-semibold tracking-wider">{year}</span>
+      <span class="text-[0.625rem] text-noto-text-muted px-2 py-1 bg-noto-bg-alt rounded tracking-wide">{type}</span>
+    </div>
+    <h3 class="font-serif text-xl font-medium mb-3 leading-snug transition-colors duration-300 group-hover:text-noto-accent">
+      {title}
+    </h3>
+    <p class="text-sm text-noto-text-muted leading-relaxed">
+      {description}
+    </p>
+    <span class="inline-flex items-center gap-2 mt-4 text-xs text-noto-accent font-medium transition-[gap] duration-200 group-hover:gap-3">
+      詳細を見る
+      <span class="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+    </span>
+  </div>
+</a>

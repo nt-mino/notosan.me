@@ -1,0 +1,107 @@
+---
+import Footer from '@/components/common/footer.astro'
+import Navigation from '@/components/common/navigation.astro'
+import PageHeader from '@/components/common/page-header.astro'
+import WorkCard from '@/components/pages/works/work-card.astro'
+import WorksGrid from '@/components/pages/works/works-grid.astro'
+import Layout from '@/layouts/layout.astro'
+
+const works = [
+  {
+    href: '/works/ai-chat-platform',
+    thumbnail:
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=340&fit=crop',
+    alt: 'AIチャットプラットフォーム',
+    tags: ['Go', 'WebSocket', 'AWS'],
+    year: '2024',
+    type: 'バックエンド',
+    title: 'AIチャットプラットフォーム',
+    description:
+      '月間100万ユーザー規模のリアルタイムチャット基盤を構築。WebSocketによるリアルタイム通信とコスト最適化を実現。',
+  },
+  {
+    href: '/works/payment-system',
+    thumbnail:
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=340&fit=crop',
+    alt: '決済システム刷新',
+    tags: ['Microservices', 'Kubernetes'],
+    year: '2023',
+    type: 'アーキテクチャ',
+    title: '決済システム刷新',
+    description:
+      '10年運用のモノリスをマイクロサービス化。ダウンタイムゼロで移行完了し、可用性99.99%を達成。',
+  },
+  {
+    href: '/works/react-form-library',
+    thumbnail:
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=340&fit=crop',
+    alt: 'React Form Library',
+    tags: ['React', 'TypeScript', 'OSS'],
+    year: '2023',
+    type: 'オープンソース',
+    title: 'React Form Library',
+    description:
+      '型安全なフォームバリデーションライブラリをOSSとして公開。GitHub 2,000+ スター獲得。',
+  },
+  {
+    href: '/works/edtech-platform',
+    thumbnail:
+      'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=340&fit=crop',
+    alt: 'EdTech学習プラットフォーム',
+    tags: ['Next.js', 'EdTech'],
+    year: '2022',
+    type: 'プロダクト開発',
+    title: 'EdTech学習プラットフォーム',
+    description:
+      'CTOとしてゼロから開発をリード。シリーズAで5億円の資金調達に成功。',
+  },
+  {
+    href: '/works/data-dashboard',
+    thumbnail:
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop',
+    alt: 'データ分析ダッシュボード',
+    tags: ['React', 'D3.js', 'Python'],
+    year: '2022',
+    type: 'フロントエンド',
+    title: 'データ分析ダッシュボード',
+    description:
+      'リアルタイムでデータを可視化するダッシュボード。複雑なデータをわかりやすく表示。',
+  },
+  {
+    href: '/works/fitness-app',
+    thumbnail:
+      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=340&fit=crop',
+    alt: 'フィットネストラッキングアプリ',
+    tags: ['React Native', 'Firebase'],
+    year: '2021',
+    type: 'モバイル',
+    title: 'フィットネストラッキングアプリ',
+    description:
+      'iOS/Android対応のフィットネスアプリ。ヘルスケア連携と目標管理機能を実装。',
+  },
+]
+---
+
+<Layout
+  title="noto. | Works"
+  description="能戸成琉の実績一覧。AIチャットプラットフォーム、決済システム刷新、OSSライブラリ開発など、バックエンドからフロントエンドまで幅広いプロジェクトを担当。"
+  keywords="実績,ポートフォリオ,開発事例,バックエンド,フロントエンド,マイクロサービス,OSS"
+>
+  <Navigation class="bg-noto-bg/90 backdrop-blur-sm" />
+
+  <PageHeader
+    label="WORKS"
+    title="実績一覧"
+    description="これまで携わったプロジェクトの一覧です。バックエンドからフロントエンドまで幅広く担当しています。"
+    bgText="Works"
+    note="※ 参画した開発プロジェクトを掲載しています"
+  />
+
+  <main class="px-6 md:px-12 pb-24">
+    <WorksGrid>
+      {works.map((work) => <WorkCard {...work} />)}
+    </WorksGrid>
+  </main>
+
+  <Footer />
+</Layout>

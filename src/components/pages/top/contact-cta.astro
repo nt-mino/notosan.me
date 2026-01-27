@@ -1,0 +1,39 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<section
+  id="contact"
+  class:list={['py-28 px-6 md:px-12 relative overflow-hidden', className]}
+  style="background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);"
+>
+  <!-- Background Pattern -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background-image: radial-gradient(circle at 20% 30%, rgba(61, 90, 128, 0.04) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(61, 90, 128, 0.04) 0%, transparent 50%);"
+  />
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background-image: linear-gradient(90deg, transparent 49.5%, rgba(61, 90, 128, 0.03) 49.5%, rgba(61, 90, 128, 0.03) 50.5%, transparent 50.5%), linear-gradient(0deg, transparent 49.5%, rgba(61, 90, 128, 0.03) 49.5%, rgba(61, 90, 128, 0.03) 50.5%, transparent 50.5%); background-size: 60px 60px;"
+  />
+
+  <div class="max-w-[600px] mx-auto text-center relative z-10">
+    <div class="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(61,90,128,0.12)] text-2xl">
+      ✉️
+    </div>
+    <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-normal mb-4">お仕事のご相談</h2>
+    <p class="text-[0.9375rem] text-noto-text-muted leading-relaxed mb-8">
+      新規・既存プロダクト開発、技術支援、技術顧問などお気軽にご連絡ください。
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-2 px-7 py-3.5 bg-noto-text text-noto-bg text-[0.8125rem] font-medium no-underline rounded-sm tracking-[0.03em] transition-all duration-300 hover:bg-noto-accent"
+    >
+      お問い合わせ
+    </a>
+  </div>
+</section>
