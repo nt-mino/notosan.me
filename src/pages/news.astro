@@ -4,80 +4,33 @@ import Navigation from '@/components/common/navigation.astro'
 import PageHeader from '@/components/common/page-header.astro'
 import NewsItem from '@/components/pages/news/news-item.astro'
 import NewsList from '@/components/pages/news/news-list.astro'
-import Layout from '@/layouts/layout.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getNewsList } from '@/lib/microcms/api/news'
+import { NEWS_CATEGORIES, type NewsCategory } from '@/lib/microcms/types/news'
+import { formatDate } from '@/utils/format'
 
-const newsItems = [
-  {
-    href: '/news/form-validator-release',
-    date: '2024.01.20',
-    badge: 'リリース',
-    badgeType: 'release' as const,
-    text: '新しいOSSライブラリ「form-validator」をリリースしました',
-  },
-  {
-    href: '/news/tech-summit-2024',
-    date: '2024.01.10',
-    badge: '登壇',
-    badgeType: 'event' as const,
-    text: '技術カンファレンス「Tech Summit 2024」に登壇します',
-  },
-  {
-    href: '/news/techlog-interview',
-    date: '2023.12.25',
-    badge: 'メディア',
-    badgeType: 'media' as const,
-    text: 'エンジニア向けメディア「TechLog」にインタビュー記事が掲載されました',
-  },
-  {
-    href: '/news/developer-of-the-year',
-    date: '2023.12.01',
-    badge: '受賞',
-    badgeType: 'award' as const,
-    text: 'Developer of the Year 2023 ノミネート',
-  },
-  {
-    href: '/news/react-conf-tokyo',
-    date: '2023.11.15',
-    badge: '登壇',
-    badgeType: 'event' as const,
-    text: 'React Conf Tokyoでの登壇資料を公開しました',
-  },
-  {
-    href: '/news/typescript-book',
-    date: '2023.10.20',
-    badge: 'リリース',
-    badgeType: 'release' as const,
-    text: '技術書「TypeScript実践ガイド」を出版しました',
-  },
-  {
-    href: '/news/portfolio-renewal',
-    date: '2023.09.30',
-    badge: '更新',
-    badgeType: 'update' as const,
-    text: 'ポートフォリオサイトをリニューアルしました',
-  },
-  {
-    href: '/news/podcast-guest',
-    date: '2023.09.10',
-    badge: 'メディア',
-    badgeType: 'media' as const,
-    text: 'Podcastゲスト出演：「エンジニアの働き方を考える」',
-  },
-  {
-    href: '/news/jsconf-jp-2023',
-    date: '2023.08.25',
-    badge: '登壇',
-    badgeType: 'event' as const,
-    text: 'JSConf JP 2023に登壇決定',
-  },
-  {
-    href: '/news/ui-components-1000-stars',
-    date: '2023.07.15',
-    badge: 'リリース',
-    badgeType: 'release' as const,
-    text: 'OSSプロジェクト「ui-components」がGitHub 1,000スター達成',
-  },
-]
+const { contents } = await getNewsList()
+
+// カテゴリーからbadgeTypeへのマッピング
+const categoryToBadgeType: Record<
+  NewsCategory,
+  'release' | 'event' | 'media' | 'award' | 'update'
+> = {
+  [NEWS_CATEGORIES.CAREER]: 'update',
+  [NEWS_CATEGORIES.CERTIFICATION]: 'award',
+  [NEWS_CATEGORIES.EVENT]: 'event',
+  [NEWS_CATEGORIES.RELEASE]: 'release',
+  [NEWS_CATEGORIES.MEDIA]: 'media',
+  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'update',
+}
+
+const newsItems = contents.map((news) => ({
+  href: `/news/${news.id}`,
+  date: formatDate(news.date),
+  badge: news.category,
+  badgeType: categoryToBadgeType[news.category],
+  text: news.title,
+}))
 ---
 
 <Layout

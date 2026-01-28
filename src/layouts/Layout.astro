@@ -24,7 +24,9 @@ const {
 } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL).toString()
-const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE_URL).toString()
+const ogImageURL = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, SITE_URL).toString()
 
 const jsonLd = {
   '@context': 'https://schema.org',

@@ -1,55 +1,35 @@
 ---
+import { getArticles } from '@/lib/microcms/api/articles'
+import { ARTICLE_CATEGORIES } from '@/lib/microcms/types/article'
+
 export interface Props {
   class?: string
 }
 
 const { class: className } = Astro.props
 
-// TODO: Replace with microCMS data
-const articles = [
-  {
-    id: 'llm-design-patterns',
-    title: 'LLMアプリケーション開発の設計パターン',
-    excerpt:
-      '大規模言語モデルを活用したアプリケーション開発における設計のベストプラクティス。',
-    date: '2024.01.15',
-    category: 'AI',
-    icon: '🤖',
-    href: 'https://zenn.dev/noto/articles/llm-design-patterns',
-    isExternal: true,
-  },
-  {
-    id: 'nextjs-14-server-actions',
-    title: 'Next.js 14 Server Actionsの実践',
-    excerpt: 'Server Actionsを本番環境で使ってみて分かった、実践的な使い方。',
-    date: '2024.01.02',
-    category: 'Frontend',
-    icon: '⚡',
-    href: 'https://zenn.dev/noto/articles/nextjs-14-server-actions',
-    isExternal: true,
-  },
-  {
-    id: 'microservices-migration',
-    title: 'マイクロサービス移行の失敗と学び',
-    excerpt: 'モノリスからマイクロサービスへの移行で直面した課題と解決策。',
-    date: '2023.12.18',
-    category: 'Architecture',
-    icon: '🏗️',
-    href: 'https://zenn.dev/noto/articles/microservices-migration',
-    isExternal: true,
-  },
-  {
-    id: 'typescript-type-system',
-    title: 'TypeScriptの型システムを極める',
-    excerpt:
-      'Template Literal TypesやConditional Typesを活用した型安全な設計。',
-    date: '2023.11.25',
-    category: 'TypeScript',
-    icon: '📘',
-    href: 'https://zenn.dev/noto/articles/typescript-type-system',
-    isExternal: true,
-  },
-]
+const { contents } = await getArticles({ limit: 4 })
+
+// カテゴリーに応じたアイコンのマッピング
+const categoryIcons: Record<string, string> = {
+  [ARTICLE_CATEGORIES.TECH_SELECTION]: '⚖️',
+  [ARTICLE_CATEGORIES.TECH_ANALYSIS]: '🔍',
+  [ARTICLE_CATEGORIES.DEV_STORY]: '📖',
+}
+
+// 日付フォーマット（YYYY-MM-DD → YYYY.MM.DD）
+const formatDate = (dateString: string) => dateString.replace(/-/g, '.')
+
+const articles = contents.map((article) => ({
+  id: article.id,
+  title: article.title,
+  excerpt: article.description,
+  date: formatDate(article.date),
+  category: article.category,
+  icon: categoryIcons[article.category] || '📝',
+  href: article.zennUrl,
+  isExternal: true,
+}))
 ---
 
 <section

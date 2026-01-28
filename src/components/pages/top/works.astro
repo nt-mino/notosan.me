@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { getTopWorks } from '@/lib/microcms/api/works'
 
 export interface Props {
   class?: string
@@ -7,57 +8,18 @@ export interface Props {
 
 const { class: className } = Astro.props
 
-// TODO: Replace with microCMS data
-const works = [
-  {
-    id: 'ai-chat-platform',
-    title: 'AIチャットプラットフォーム',
-    description:
-      '月間100万ユーザー規模のリアルタイムチャット基盤を構築。WebSocketによるリアルタイム通信とコスト最適化を実現。',
-    year: '2024',
-    type: 'バックエンド',
-    tags: ['Go', 'WebSocket', 'AWS'],
-    image:
-      'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=340&fit=crop',
-    href: '/works/ai-chat-platform',
-  },
-  {
-    id: 'payment-system',
-    title: '決済システム刷新',
-    description:
-      '10年運用のモノリスをマイクロサービス化。ダウンタイムゼロで移行完了し、可用性99.99%を達成。',
-    year: '2023',
-    type: 'アーキテクチャ',
-    tags: ['Microservices', 'Kubernetes'],
-    image:
-      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&h=340&fit=crop',
-    href: '/works/payment-system',
-  },
-  {
-    id: 'react-form-library',
-    title: 'React Form Library',
-    description:
-      '型安全なフォームバリデーションライブラリをOSSとして公開。GitHub 2,000+ スター獲得。',
-    year: '2023',
-    type: 'オープンソース',
-    tags: ['React', 'TypeScript', 'OSS'],
-    image:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=340&fit=crop',
-    href: '/works/react-form-library',
-  },
-  {
-    id: 'edtech-platform',
-    title: 'EdTech学習プラットフォーム',
-    description:
-      'CTOとしてゼロから開発をリード。シリーズAで5億円の資金調達に成功。',
-    year: '2022',
-    type: 'プロダクト開発',
-    tags: ['Next.js', 'EdTech'],
-    image:
-      'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=340&fit=crop',
-    href: '/works/edtech-platform',
-  },
-]
+const { contents } = await getTopWorks({ limit: 4 })
+
+const works = contents.map((work) => ({
+  id: work.id,
+  title: work.title,
+  description: work.description,
+  year: new Date(work.publishedAt).getFullYear().toString(),
+  type: work.phase,
+  tags: work.tech.split(',').map((t) => t.trim()),
+  image: work.thumbnail.url,
+  href: `/works/${work.id}`,
+}))
 ---
 
 <section

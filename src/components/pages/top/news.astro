@@ -1,51 +1,43 @@
 ---
-interface Props {
+import { getNewsList } from '@/lib/microcms/api/news'
+import { NEWS_CATEGORIES, type NewsCategory } from '@/lib/microcms/types/news'
+
+export interface Props {
   class?: string
 }
 
 const { class: className } = Astro.props
 
-// TODO: Replace with microCMS data
-const newsItems = [
-  {
-    id: 'form-validator-release',
-    date: '2024.01.20',
-    badge: 'release',
-    badgeLabel: 'リリース',
-    text: '新しいOSSライブラリ「form-validator」をリリースしました',
-    href: '/news/form-validator-release',
-  },
-  {
-    id: 'tech-summit-2024',
-    date: '2024.01.10',
-    badge: 'event',
-    badgeLabel: '登壇',
-    text: '技術カンファレンス「Tech Summit 2024」に登壇します',
-    href: '/news/tech-summit-2024',
-  },
-  {
-    id: 'techlog-interview',
-    date: '2023.12.25',
-    badge: 'media',
-    badgeLabel: 'メディア',
-    text: 'エンジニア向けメディア「TechLog」にインタビュー記事が掲載されました',
-    href: '/news/techlog-interview',
-  },
-  {
-    id: 'developer-of-the-year',
-    date: '2023.12.01',
-    badge: 'award',
-    badgeLabel: '受賞',
-    text: 'Developer of the Year 2023 ノミネート',
-    href: '/news/developer-of-the-year',
-  },
-]
+const { contents } = await getNewsList({ limit: 4 })
+
+// カテゴリーからbadgeTypeへのマッピング
+const categoryToBadgeType: Record<NewsCategory, string> = {
+  [NEWS_CATEGORIES.CAREER]: 'update',
+  [NEWS_CATEGORIES.CERTIFICATION]: 'award',
+  [NEWS_CATEGORIES.EVENT]: 'event',
+  [NEWS_CATEGORIES.RELEASE]: 'release',
+  [NEWS_CATEGORIES.MEDIA]: 'media',
+  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'update',
+}
+
+// 日付フォーマット（YYYY-MM-DD → YYYY.MM.DD）
+const formatDate = (dateString: string) => dateString.replace(/-/g, '.')
+
+const newsItems = contents.map((news) => ({
+  id: news.id,
+  date: formatDate(news.date),
+  badge: categoryToBadgeType[news.category],
+  badgeLabel: news.category,
+  text: news.title,
+  href: `/news/${news.id}`,
+}))
 
 const badgeStyles: Record<string, string> = {
   release: 'bg-[#e3f2fd] text-[#1565c0]',
   event: 'bg-[#fce4ec] text-[#c2185b]',
   media: 'bg-[#f3e5f5] text-[#7b1fa2]',
   award: 'bg-[#fff8e1] text-[#f57c00]',
+  update: 'bg-[#e8f5e9] text-[#2e7d32]',
 }
 ---
 

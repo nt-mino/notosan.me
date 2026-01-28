@@ -1,0 +1,6 @@
+import { hc } from 'hono/client'
+import type { AppType } from '@/server/app'
+
+export const client = hc<AppType>('/')
+
+export const api = client.api

@@ -4,95 +4,21 @@ import Navigation from '@/components/common/navigation.astro'
 import PageHeader from '@/components/common/page-header.astro'
 import ArticleCard from '@/components/pages/articles/article-card.astro'
 import ArticlesGrid from '@/components/pages/articles/articles-grid.astro'
-import Layout from '@/layouts/layout.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getArticles } from '@/lib/microcms/api/articles'
+import { formatDate } from '@/utils/format'
 
-const articles = [
-  {
-    href: 'https://zenn.dev/noto/articles/llm-design-patterns',
-    category: 'AI',
-    icon: '🤖',
-    date: '2024.01.15',
-    title: 'LLMアプリケーション開発の設計パターン',
-    excerpt:
-      '大規模言語モデルを活用したアプリケーション開発における設計のベストプラクティス。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/nextjs-14-server-actions',
-    category: 'Frontend',
-    icon: '⚡',
-    date: '2024.01.02',
-    title: 'Next.js 14 Server Actionsの実践',
-    excerpt: 'Server Actionsを本番環境で使ってみて分かった、実践的な使い方。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/microservices-migration',
-    category: 'Architecture',
-    icon: '🏗️',
-    date: '2023.12.18',
-    title: 'マイクロサービス移行の失敗と学び',
-    excerpt: 'モノリスからマイクロサービスへの移行で直面した課題と解決策。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/typescript-type-system',
-    category: 'TypeScript',
-    icon: '📘',
-    date: '2023.11.25',
-    title: 'TypeScriptの型システムを極める',
-    excerpt:
-      'Template Literal TypesやConditional Typesを活用した型安全な設計。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/ci-cd-optimization',
-    category: 'DevOps',
-    icon: '🔧',
-    date: '2023.10.30',
-    title: 'CI/CDパイプラインの最適化術',
-    excerpt: 'ビルド時間を70%削減した実践的なCI/CD最適化のテクニック。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/design-system-guide',
-    category: 'Design System',
-    icon: '🎨',
-    date: '2023.09.15',
-    title: 'デザインシステム構築の実践ガイド',
-    excerpt:
-      'スケーラブルなデザインシステムを構築するための設計原則とベストプラクティス。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/web-performance',
-    category: 'Performance',
-    icon: '📊',
-    date: '2023.08.20',
-    title: 'Webパフォーマンス改善の教科書',
-    excerpt: 'Core Web Vitalsを改善するための具体的な手法とツールの使い方。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/web-security',
-    category: 'Security',
-    icon: '🔐',
-    date: '2023.07.10',
-    title: 'Webアプリケーションセキュリティ入門',
-    excerpt: 'OWASP Top 10を踏まえた、実践的なセキュリティ対策のポイント。',
-    isExternal: true,
-  },
-  {
-    href: 'https://zenn.dev/noto/articles/frontend-testing',
-    category: 'Testing',
-    icon: '🧪',
-    date: '2023.06.05',
-    title: 'フロントエンドテスト戦略の設計',
-    excerpt:
-      'Testing TrophyとTesting Pyramidを組み合わせた実践的なテスト戦略。',
-    isExternal: true,
-  },
-]
+const { contents } = await getArticles()
+
+const articles = contents.map((article) => ({
+  href: article.zennUrl,
+  category: article.category,
+  thumbnail: article.thumbnail,
+  date: formatDate(article.date),
+  title: article.title,
+  excerpt: article.description,
+  isExternal: true,
+}))
 ---
 
 <Layout
