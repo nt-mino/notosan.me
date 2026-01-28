@@ -136,3 +136,33 @@
     width: 100%;
   }
 }
+
+/* ===== Contact Success Animations ===== */
+@keyframes paperPlane {
+  0% {
+    opacity: 0;
+    transform: translateX(-12px) translateY(8px) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(4px) translateY(-4px) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes trailDot {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-20px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+    transform: translateY(-50%) translateX(0);
+  }
+}

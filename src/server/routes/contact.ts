@@ -21,61 +21,49 @@ export const contactRoute = new Hono<{ Bindings: Bindings }>().post(
     const body = c.req.valid('json')
 
     try {
-      // MailChannels API経由でメール送信
-      const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
+      // Resend API経由でメール送信
+      const response = await fetch('https://api.resend.com/emails', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${c.env.RESEND_API_KEY}`,
+        },
         body: JSON.stringify({
-          personalizations: [
-            {
-              to: [{ email: c.env.CONTACT_EMAIL }],
-            },
-          ],
-          from: {
-            email: c.env.FROM_EMAIL,
-            name: 'noto. お問い合わせ',
-          },
-          reply_to: {
-            email: body.email,
-            name: `${body.lastName} ${body.firstName}`,
-          },
+          from: c.env.FROM_EMAIL,
+          to: c.env.CONTACT_EMAIL,
+          reply_to: body.email,
           subject: `【お問い合わせ】${categoryLabels[body.category] || body.category}`,
-          content: [
-            {
-              type: 'text/html',
-              value: `
-                <h2>お問い合わせがありました</h2>
-                <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
-                  <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9; width: 30%;"><strong>お名前</strong></td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">${body.lastName} ${body.firstName}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>メールアドレス</strong></td>
-                    <td style="padding: 12px; border: 1px solid #ddd;"><a href="mailto:${body.email}">${body.email}</a></td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>会社名</strong></td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">${body.company}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>種別</strong></td>
-                    <td style="padding: 12px; border: 1px solid #ddd;">${categoryLabels[body.category] || body.category}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>お問い合わせ内容</strong></td>
-                    <td style="padding: 12px; border: 1px solid #ddd; white-space: pre-wrap;">${body.message}</td>
-                  </tr>
-                </table>
-              `,
-            },
-          ],
+          html: `
+            <h2>お問い合わせがありました</h2>
+            <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+              <tr>
+                <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9; width: 30%;"><strong>お名前</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${body.lastName} ${body.firstName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>メールアドレス</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;"><a href="mailto:${body.email}">${body.email}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>会社名</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${body.company}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>種別</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${categoryLabels[body.category] || body.category}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border: 1px solid #ddd; background: #f9f9f9;"><strong>お問い合わせ内容</strong></td>
+                <td style="padding: 12px; border: 1px solid #ddd; white-space: pre-wrap;">${body.message}</td>
+              </tr>
+            </table>
+          `,
         }),
       })
 
       if (!response.ok) {
         const error = await response.text()
-        console.error('MailChannels error:', error)
+        console.error('Resend error:', error)
         throw new Error('メール送信に失敗しました')
       }
 

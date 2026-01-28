@@ -44,21 +44,89 @@ export default function ContactForm() {
 
   if (formState === 'success') {
     return (
-      <div className="bg-white border border-noto-border rounded-xl p-6 md:p-10 text-center">
-        <div className="text-4xl mb-4">✓</div>
-        <h3 className="font-serif text-xl font-medium mb-3">送信完了</h3>
-        <p className="text-sm text-noto-text-muted leading-relaxed mb-6">
-          お問い合わせありがとうございます。
-          <br />
-          2〜3営業日以内にご返信いたします。
-        </p>
-        <button
-          type="button"
-          onClick={() => setFormState('idle')}
-          className="inline-flex items-center gap-2 px-6 py-3 text-sm text-noto-accent border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
-        >
-          新しいお問い合わせ
-        </button>
+      <div className="relative bg-white border border-noto-border rounded-xl p-8 md:p-12 text-center overflow-hidden">
+        {/* 背景のアクセント */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-noto-accent rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-500 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+        </div>
+
+        {/* コンテンツ */}
+        <div className="relative">
+          {/* アイコン - 紙飛行機 */}
+          <div className="mb-6 inline-flex items-center justify-center">
+            <div className="relative">
+              <div
+                className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center animate-[fadeUp_0.6s_ease-out]"
+              >
+                <svg
+                  className="w-9 h-9 text-emerald-600 animate-[paperPlane_1s_ease-out_0.3s_both]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+                  />
+                </svg>
+              </div>
+              {/* 軌跡のドット */}
+              <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-[trailDot_1s_ease-out_0.5s_both]" />
+              <span className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-emerald-300 rounded-full animate-[trailDot_1s_ease-out_0.6s_both]" />
+              <span className="absolute -right-6 top-1/2 -translate-y-1/2 w-0.5 h-0.5 bg-emerald-200 rounded-full animate-[trailDot_1s_ease-out_0.7s_both]" />
+            </div>
+          </div>
+
+          {/* テキスト */}
+          <h3
+            className="font-serif text-2xl md:text-[1.75rem] font-medium mb-4 text-noto-text animate-[fadeUp_0.5s_ease-out_0.2s_both]"
+          >
+            お問い合わせありがとうございます
+          </h3>
+          <p
+            className="text-[0.9375rem] text-noto-text-muted leading-relaxed mb-8 max-w-sm mx-auto animate-[fadeUp_0.5s_ease-out_0.35s_both]"
+          >
+            内容を確認のうえ、
+            <span className="font-medium text-noto-text">2〜3営業日以内</span>
+            にご返信いたします。
+            <br />
+            しばらくお待ちください。
+          </p>
+
+          {/* 区切り線 */}
+          <div className="flex items-center gap-4 mb-8 animate-[fadeUp_0.5s_ease-out_0.45s_both]">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-noto-border to-transparent" />
+          </div>
+
+          {/* ボタン */}
+          <div className="animate-[fadeUp_0.5s_ease-out_0.5s_both]">
+            <button
+              type="button"
+              onClick={() => setFormState('idle')}
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm text-noto-text-muted border border-noto-border rounded-lg transition-all duration-200 hover:text-noto-accent hover:border-noto-accent hover:bg-noto-accent/5"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+              新しいお問い合わせ
+            </button>
+          </div>
+        </div>
       </div>
     )
   }
