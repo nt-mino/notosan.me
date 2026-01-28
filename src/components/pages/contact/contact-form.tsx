@@ -53,31 +53,25 @@ export default function ContactForm() {
 
         {/* コンテンツ */}
         <div className="relative">
-          {/* アイコン - 紙飛行機 */}
+          {/* アイコン - メール */}
           <div className="mb-6 inline-flex items-center justify-center">
-            <div className="relative">
-              <div
-                className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center animate-[fadeUp_0.6s_ease-out]"
+            <div
+              className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center animate-[fadeUp_0.6s_ease-out]"
+            >
+              <svg
+                className="w-9 h-9 text-emerald-600 animate-[fadeUp_0.5s_ease-out_0.2s_both]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                aria-hidden="true"
               >
-                <svg
-                  className="w-9 h-9 text-emerald-600 animate-[paperPlane_1s_ease-out_0.3s_both]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-                  />
-                </svg>
-              </div>
-              {/* 軌跡のドット */}
-              <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-emerald-400 rounded-full animate-[trailDot_1s_ease-out_0.5s_both]" />
-              <span className="absolute -right-4 top-1/2 -translate-y-1/2 w-1 h-1 bg-emerald-300 rounded-full animate-[trailDot_1s_ease-out_0.6s_both]" />
-              <span className="absolute -right-6 top-1/2 -translate-y-1/2 w-0.5 h-0.5 bg-emerald-200 rounded-full animate-[trailDot_1s_ease-out_0.7s_both]" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                />
+              </svg>
             </div>
           </div>
 
@@ -87,12 +81,8 @@ export default function ContactForm() {
           >
             お問い合わせありがとうございます
           </h3>
-          <p
-            className="text-[0.9375rem] text-noto-text-muted leading-relaxed mb-8 max-w-sm mx-auto animate-[fadeUp_0.5s_ease-out_0.35s_both]"
-          >
-            内容を確認のうえ、
-            <span className="font-medium text-noto-text">2〜3営業日以内</span>
-            にご返信いたします。
+          <p className="text-[0.9375rem] text-noto-text-muted leading-relaxed mb-8 max-w-sm mx-auto animate-[fadeUp_0.5s_ease-out_0.35s_both]">
+            内容を確認のうえ、<span className="font-medium text-noto-text">2〜3営業日以内</span>にご返信いたします。
             <br />
             しばらくお待ちください。
           </p>
