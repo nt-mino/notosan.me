@@ -1,138 +1,31 @@
 ---
-import { Image } from 'astro:assets'
 import Footer from '@/components/common/footer.astro'
 import Navigation from '@/components/common/navigation.astro'
+import WorkDetailBody from '@/components/pages/works-detail/work-detail-body.astro'
+import WorkDetailCta from '@/components/pages/works-detail/work-detail-cta.astro'
+import WorkDetailHeader from '@/components/pages/works-detail/work-detail-header.astro'
+import WorkDetailInfo from '@/components/pages/works-detail/work-detail-info.astro'
+import WorkDetailThumbnail from '@/components/pages/works-detail/work-detail-thumbnail.astro'
 import Layout from '@/layouts/Layout.astro'
+import { getAllWorkIds, getWork } from '@/lib/microcms/api/works'
 
-export interface Props {
-  slug: string
-}
-
-// サンプルデータ
-const worksData: Record<
-  string,
-  {
-    year: string
-    type: string
-    title: string
-    description: string
-    thumbnail: string
-    company: string
-    role: string
-    industry: string
-    phase: string
-    technologies: string
-    overview: string
-    challenges: string
-  }
-> = {
-  'ai-chat-platform': {
-    year: '2024',
-    type: 'バックエンド',
-    title: 'AIチャットプラットフォーム',
-    description:
-      '月間100万ユーザー規模のリアルタイムAIチャットサービスのバックエンド設計・実装を担当。WebSocketによるリアルタイム通信とコスト最適化を実現しました。',
-    thumbnail:
-      'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop',
-    company: '株式会社サンプル',
-    role: 'テックリード / バックエンドエンジニア',
-    industry: 'AI / SaaS',
-    phase: '設計 / 開発 / 運用',
-    technologies: 'Go / WebSocket / AWS / Redis / PostgreSQL',
-    overview: `大規模言語モデル（LLM）を活用したBtoCチャットサービスの新規開発プロジェクト。ユーザーがAIアシスタントとリアルタイムで会話できるプラットフォームの構築を担当しました。
-
-急成長するユーザー数に対応するため、スケーラブルなアーキテクチャ設計と、API利用コストの最適化が主要な技術課題でした。`,
-    challenges: `**課題1：リアルタイム通信のスケーラビリティ**
-WebSocketを使用したリアルタイム通信において、接続数の増加に伴うサーバー負荷が課題でした。Redis Pub/Subを活用したステートレスなアーキテクチャを設計し、水平スケーリングを実現しました。
-
-**課題2：LLM APIコストの最適化**
-ユーザー数の増加に伴いAPI利用コストが急増。レスポンスキャッシング、プロンプト最適化、適切なモデル選択のロジックを実装し、コストを40%削減しました。`,
-  },
-  'payment-system': {
-    year: '2023',
-    type: 'アーキテクチャ',
-    title: '決済システム刷新',
-    description:
-      '10年運用のモノリスをマイクロサービス化。ダウンタイムゼロで移行完了し、可用性99.99%を達成。',
-    thumbnail:
-      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=600&fit=crop',
-    company: '株式会社フィンテック',
-    role: 'アーキテクト / テックリード',
-    industry: '金融 / 決済',
-    phase: '設計 / 開発 / 移行',
-    technologies: 'Kubernetes / Go / gRPC / PostgreSQL / Kafka',
-    overview: `10年以上運用されてきた決済システムのモダナイゼーションプロジェクト。モノリシックなアーキテクチャをマイクロサービスへ移行し、開発生産性と可用性を向上させました。`,
-    challenges: `**課題1：ダウンタイムゼロでの移行**
-24時間365日稼働が求められる決済システムにおいて、サービス停止なしでの移行が必須でした。Strangler Figパターンを採用し、段階的な移行を実現しました。
-
-**課題2：データ整合性の担保**
-分散システムにおけるトランザクション管理。Sagaパターンとイベントソーシングを組み合わせ、結果整合性を担保しつつ高可用性を実現しました。`,
-  },
-  'react-form-library': {
-    year: '2023',
-    type: 'オープンソース',
-    title: 'React Form Library',
-    description:
-      '型安全なフォームバリデーションライブラリをOSSとして公開。GitHub 2,000+ スター獲得。',
-    thumbnail:
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
-    company: '個人プロジェクト',
-    role: 'メンテナー',
-    industry: 'OSS / Developer Tools',
-    phase: '設計 / 開発 / メンテナンス',
-    technologies: 'TypeScript / React / Zod / Vite',
-    overview: `Reactアプリケーションでのフォーム実装を簡素化するライブラリ。TypeScriptの型推論を最大限に活用し、バリデーションルールからフォームの型を自動生成します。`,
-    challenges: `**課題1：型安全性とDXの両立**
-複雑なフォームでも型安全性を保ちながら、シンプルなAPIを提供することが課題でした。Zodとの統合により、スキーマ定義から型を自動推論する仕組みを実装しました。
-
-**課題2：バンドルサイズの最適化**
-Tree-shakingに対応した設計と、コア機能の分離により、gzip後3KB未満のバンドルサイズを実現しました。`,
-  },
-  'edtech-platform': {
-    year: '2022',
-    type: 'プロダクト開発',
-    title: 'EdTech学習プラットフォーム',
-    description:
-      'CTOとしてゼロから開発をリード。シリーズAで5億円の資金調達に成功。',
-    thumbnail:
-      'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=1200&h=600&fit=crop',
-    company: '株式会社エデュテック',
-    role: 'CTO / 共同創業者',
-    industry: 'EdTech / 教育',
-    phase: '企画 / 設計 / 開発 / 運用',
-    technologies: 'Next.js / TypeScript / PostgreSQL / AWS / Stripe',
-    overview: `オンライン学習プラットフォームのゼロからの立ち上げを技術責任者として主導。プログラミング学習に特化したインタラクティブな教材システムと、学習進捗を可視化するダッシュボードを構築しました。
-
-サービス開始から1年で登録ユーザー10万人を突破し、シリーズAラウンドで5億円の資金調達に成功しました。`,
-    challenges: `**課題1：インタラクティブな学習体験の実現**
-ブラウザ上でコードを書いて即座に実行結果を確認できる環境を構築。WebContainersとMonaco Editorを組み合わせ、ローカル開発環境に近い体験をブラウザ上で実現しました。
-
-**課題2：スケーラブルなコンテンツ管理**
-数千の教材コンテンツを効率的に管理するため、ヘッドレスCMSとGitベースのワークフローを組み合わせたシステムを設計。教材制作者が技術知識なしにコンテンツを作成・更新できる環境を整備しました。
-
-**課題3：学習進捗の可視化**
-生徒・講師・保護者それぞれに最適化されたダッシュボードを構築。リアルタイムでの学習状況把握と、データに基づいた学習アドバイスの自動生成機能を実装しました。`,
-  },
-}
-
-export function getStaticPaths() {
-  const slugs = [
-    'ai-chat-platform',
-    'payment-system',
-    'react-form-library',
-    'edtech-platform',
-  ]
-  return slugs.map((slug) => ({
-    params: { slug },
+export async function getStaticPaths() {
+  const ids = await getAllWorkIds()
+  return ids.map((id) => ({
+    params: { slug: id },
   }))
 }
 
 const { slug } = Astro.params
-const work = worksData[slug]
+const work = await getWork(slug)
 
-if (!work) {
-  return Astro.redirect('/works')
-}
+// 公開年を取得
+const year = new Date(work.publishedAt ?? work.createdAt)
+  .getFullYear()
+  .toString()
+
+// 技術スタックをタグに変換
+const techTags = work.tech.split(',').map((t) => t.trim())
 
 const infoItems = [
   {
@@ -142,12 +35,12 @@ const infoItems = [
   },
   {
     label: '役割',
-    value: work.role,
+    value: work.position,
     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
   },
   {
     label: '業界',
-    value: work.industry,
+    value: work.business,
     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>',
   },
   {
@@ -157,105 +50,43 @@ const infoItems = [
   },
   {
     label: '技術',
-    value: work.technologies,
+    value: work.tech,
     icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>',
   },
 ]
 ---
 
 <Layout
-  title={work.title}
+  title={`${work.title} | noto.`}
   description={work.description}
-  keywords={`実績,${work.technologies.replace(/ \/ /g, ',')},${work.type}`}
-  ogImage={work.thumbnail}
+  keywords={`実績,${work.tech.replace(/, /g, ',')},${work.phase}`}
+  ogImage={work.thumbnail.url}
   ogType="article"
 >
   <Navigation class="bg-noto-bg/90 backdrop-blur-sm" />
 
   <article>
-    <!-- Hero -->
-    <header class="pt-32 md:pt-40 px-6 md:px-12 max-w-[1000px] mx-auto">
-      <a
-        href="/works"
-        class="inline-flex items-center gap-2 text-[0.8125rem] text-noto-text-muted no-underline mb-8 transition-colors duration-200 hover:text-noto-accent"
-      >
-        ← 実績一覧に戻る
-      </a>
-      <div class="flex items-center gap-4 mb-6">
-        <span class="text-[0.8125rem] font-semibold text-noto-accent tracking-wider">{work.year}</span>
-        <span class="text-[0.6875rem] text-noto-text-muted px-3 py-1 bg-noto-bg-alt rounded">{work.type}</span>
-      </div>
-      <h1 class="font-serif text-[clamp(2rem,4vw,3rem)] font-medium leading-tight mb-6">
-        {work.title}
-      </h1>
-      <p class="text-[1.0625rem] text-noto-text-muted leading-relaxed max-w-[700px]">
-        {work.description}
-      </p>
-    </header>
+    <WorkDetailHeader
+      year={year}
+      phase={work.phase}
+      title={work.title}
+      description={work.description}
+    />
 
-    <!-- Thumbnail -->
-    <div class="my-12 md:my-16 px-6 md:px-12 max-w-[1000px] mx-auto">
-      <Image
-        src={work.thumbnail}
-        alt={work.title}
-        width={1200}
-        height={600}
-        class="w-full rounded-xl shadow-lg"
-      />
-    </div>
+    <WorkDetailThumbnail
+      src={work.thumbnail.url}
+      alt={work.title}
+      tags={techTags}
+    />
 
-    <!-- Content -->
-    <div class="px-6 md:px-12 pb-16 max-w-[700px] mx-auto">
-      <!-- Info List -->
-      <div class="border-t border-noto-border mb-16">
-        {infoItems.map((item) => (
-          <div class="flex flex-col md:flex-row py-5 border-b border-noto-border gap-2 md:gap-0">
-            <span class="flex items-center gap-2 md:w-[120px] shrink-0 text-[0.8125rem] font-medium text-noto-text-muted">
-              <span class="opacity-60" set:html={item.icon} />
-              {item.label}
-            </span>
-            <span class="text-[0.9375rem] text-noto-text">{item.value}</span>
-          </div>
-        ))}
-      </div>
-
-      <!-- Overview -->
-      <section class="mb-16">
-        <h2 class="font-serif text-xl font-medium mb-6 pb-3 border-b border-noto-border">
-          プロジェクト概要
-        </h2>
-        <div class="text-[0.9375rem] text-noto-text-muted leading-loose whitespace-pre-line">
-          {work.overview}
-        </div>
-      </section>
-
-      <!-- Challenges -->
-      <section class="mb-16">
-        <h2 class="font-serif text-xl font-medium mb-6 pb-3 border-b border-noto-border">
-          課題と解決策
-        </h2>
-        <div class="work-challenges text-[0.9375rem] text-noto-text-muted leading-loose" set:html={work.challenges.replace(/\*\*(.*?)\*\*/g, '<strong class="text-noto-text font-semibold block mt-6 first:mt-0">$1</strong>')} />
-      </section>
-    </div>
-
-    <!-- Contact CTA -->
-    <div class="px-6 md:px-12 py-12 md:py-16 max-w-[700px] mx-auto">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-5 md:gap-8 p-6 md:p-8 bg-noto-bg-alt rounded-xl text-center md:text-left">
-        <div class="flex flex-col gap-1">
-          <span class="text-[0.6875rem] font-semibold tracking-[0.1em] uppercase text-noto-text-muted">Contact</span>
-          <p class="text-[0.9375rem] text-noto-text">お仕事のご相談はお気軽にどうぞ</p>
-        </div>
-        <a
-          href="/contact"
-          class="inline-flex items-center gap-2 px-6 py-3.5 bg-noto-text text-white text-[0.8125rem] font-medium rounded-md transition-colors duration-200 hover:bg-noto-accent shrink-0"
-        >
-          お問い合わせ
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </a>
+    <div class="px-6 md:px-12 pb-12">
+      <div class="max-w-[700px] mx-auto">
+        <WorkDetailInfo items={infoItems} />
+        <WorkDetailBody body={work.body} />
       </div>
     </div>
+
+    <WorkDetailCta />
   </article>
 
   <Footer />

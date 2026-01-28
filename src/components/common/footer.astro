@@ -6,10 +6,10 @@ interface Props {
 const { class: className } = Astro.props
 
 const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '/works', label: 'Works' },
-  { href: '/articles', label: 'Articles' },
-  { href: '/news', label: 'News' },
+  { href: '/#about', label: 'About' },
+  { href: '/#works', label: 'Works' },
+  { href: '/#articles', label: 'Articles' },
+  { href: '/#news', label: 'News' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -23,49 +23,104 @@ const socialLinks = [
 ]
 ---
 
-<footer class:list={["py-16 px-6 md:px-12 bg-noto-text text-white", className]}>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-[900px] mx-auto text-center md:text-left">
-        <!-- Brand -->
-        <div class="flex flex-col items-center md:items-start gap-2">
-            <span class="font-serif text-lg font-medium mb-2">noto.</span>
-            <p class="text-xs text-white/50 leading-relaxed">
-                「なぜつくるのか」を大切に、本当に必要とされるものをつくる。<br />
-                一人でも多くの人に届けるために、今日もコードを書いています。
+<footer class:list={["py-12 md:py-16 px-6 md:px-12 bg-noto-text text-white", className]}>
+    <div class="max-w-[900px] mx-auto">
+        <!-- Mobile Layout -->
+        <div class="md:hidden flex flex-col items-start text-left">
+            <!-- Brand -->
+            <span class="font-serif text-xl font-medium mb-4">noto.</span>
+            <p class="text-[0.8125rem] text-white/50 leading-relaxed mb-8">
+                新しい価値を形にする。一人でも多くの人に届けるために、今日もコードを書いています。
             </p>
-            <span class="text-[0.6875rem] text-white/40 mt-4">© 2026 noto.</span>
+
+            <!-- Navigation -->
+            <div class="mb-8">
+                <span class="text-[0.6875rem] font-semibold text-white/50 tracking-[0.1em] uppercase mb-3 block">Menu</span>
+                <div class="flex flex-col gap-2">
+                    {
+                        navLinks.map((link) => (
+                            <a
+                                href={link.href}
+                                class="text-[0.875rem] text-white/70 no-underline transition-colors duration-200 hover:text-white py-1"
+                            >
+                                {link.label}
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Social -->
+            <div class="mb-8">
+                <span class="text-[0.6875rem] font-semibold text-white/50 tracking-[0.1em] uppercase mb-3 block">Social</span>
+                <div class="flex flex-col gap-2">
+                    {
+                        socialLinks.map((link) => (
+                            <a
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="group inline-flex items-center gap-2 text-[0.875rem] text-white/70 no-underline transition-colors duration-200 hover:text-white py-1"
+                            >
+                                <img src={link.icon} alt="" class="w-4 h-4 invert opacity-70 transition-opacity duration-200 group-hover:opacity-100" />
+                                {link.label}
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-[1px] bg-white/10 mb-6"></div>
+
+            <!-- Copyright -->
+            <span class="text-[0.6875rem] text-white/30">© 2026 noto.</span>
         </div>
 
-        <!-- Navigation -->
-        <div class="flex flex-col items-center md:items-start gap-3">
-            <span class="text-[0.6875rem] font-semibold text-white/50 tracking-[0.1em] uppercase mb-2">Menu</span>
-            {
-                navLinks.map((link) => (
-                    <a
-                        href={link.href}
-                        class="text-[0.8125rem] text-white/70 no-underline transition-colors duration-200 hover:text-white"
-                    >
-                        {link.label}
-                    </a>
-                ))
-            }
-        </div>
+        <!-- Desktop Layout (3 columns) -->
+        <div class="hidden md:grid grid-cols-3 gap-12 text-left">
+            <!-- Brand -->
+            <div class="flex flex-col items-start gap-2">
+                <span class="font-serif text-lg font-medium mb-2">noto.</span>
+                <p class="text-xs text-white/50 leading-relaxed">
+                    新しい価値を形にする。<br />
+                    一人でも多くの人に届けるために、今日もコードを書いています。
+                </p>
+                <span class="text-[0.6875rem] text-white/40 mt-4">© 2026 noto.</span>
+            </div>
 
-        <!-- Social -->
-        <div class="flex flex-col items-center md:items-start gap-3">
-            <span class="text-[0.6875rem] font-semibold text-white/50 tracking-[0.1em] uppercase mb-2">Social</span>
-            {
-                socialLinks.map((link) => (
-                    <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="group inline-flex items-center gap-2 text-[0.8125rem] text-white/70 no-underline transition-colors duration-200 hover:text-white"
-                    >
-                        <img src={link.icon} alt="" class="w-4 h-4 invert opacity-70 transition-opacity duration-200 group-hover:opacity-100" />
-                        {link.label}
-                    </a>
-                ))
-            }
+            <!-- Navigation -->
+            <div class="flex flex-col items-start gap-3">
+                <span class="text-[0.6875rem] font-semibold text-white/50 tracking-[0.1em] uppercase mb-2">Menu</span>
+                {
+                    navLinks.map((link) => (
+                        <a
+                            href={link.href}
+                            class="text-[0.8125rem] text-white/70 no-underline transition-colors duration-200 hover:text-white"
+                        >
+                            {link.label}
+                        </a>
+                    ))
+                }
+            </div>
+
+            <!-- Social -->
+            <div class="flex flex-col items-start gap-3">
+                <span class="text-[0.6875rem] font-semibold text-white/50 tracking-[0.1em] uppercase mb-2">Social</span>
+                {
+                    socialLinks.map((link) => (
+                        <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="group inline-flex items-center gap-2 text-[0.8125rem] text-white/70 no-underline transition-colors duration-200 hover:text-white"
+                        >
+                            <img src={link.icon} alt="" class="w-4 h-4 invert opacity-70 transition-opacity duration-200 group-hover:opacity-100" />
+                            {link.label}
+                        </a>
+                    ))
+                }
+            </div>
         </div>
     </div>
 </footer>

@@ -200,7 +200,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={formState === 'submitting'}
-        className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-[0.9375rem] font-medium text-white bg-noto-text rounded-md transition-all duration-200 hover:bg-noto-accent active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-[0.9375rem] font-medium text-white bg-noto-accent rounded-md transition-all duration-200 hover:bg-[#2e4660] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {formState === 'submitting' ? (
           <>

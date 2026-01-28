@@ -1,152 +1,41 @@
 ---
 import Footer from '@/components/common/footer.astro'
 import Navigation from '@/components/common/navigation.astro'
+import NewsDetailBody from '@/components/pages/news-detail/news-detail-body.astro'
+import NewsDetailHeader from '@/components/pages/news-detail/news-detail-header.astro'
 import Layout from '@/layouts/Layout.astro'
+import { getAllNewsIds, getNews } from '@/lib/microcms/api/news'
+import { NEWS_CATEGORIES, type NewsCategory } from '@/lib/microcms/types/news'
+import { formatDate } from '@/utils/format'
 
-export interface Props {
-  slug: string
-}
-
-// サンプルデータ
-const newsData: Record<
-  string,
-  {
-    date: string
-    badge: string
-    badgeType: 'release' | 'event' | 'media' | 'award' | 'update'
-    title: string
-    content: string
-  }
-> = {
-  'form-validator-release': {
-    date: '2024.01.20',
-    badge: 'リリース',
-    badgeType: 'release',
-    title: '新しいOSSライブラリ「form-validator」をリリースしました',
-    content: `
-      <p>このたび、TypeScript向けのフォームバリデーションライブラリ「form-validator」をオープンソースとしてリリースしました。このライブラリは、React/Vue/Svelteなど主要なフレームワークで使用可能で、完全な型安全性を提供します。</p>
-
-      <h2>主な特徴</h2>
-      <ul>
-        <li><strong>完全な型安全性</strong>：TypeScriptの型システムを最大限に活用し、バリデーションルールとフォームの型を自動で推論</li>
-        <li><strong>軽量</strong>：gzip圧縮後わずか3KB。依存関係なしで動作</li>
-        <li><strong>フレームワーク非依存</strong>：React、Vue、Svelte、バニラJSなど、あらゆる環境で使用可能</li>
-        <li><strong>カスタムバリデーション</strong>：独自のバリデーションルールを簡単に追加可能</li>
-      </ul>
-
-      <h2>インストール方法</h2>
-      <p>npmまたはyarnでインストールできます。</p>
-      <pre><code>npm install @noto/form-validator
-# または
-yarn add @noto/form-validator</code></pre>
-
-      <h2>今後の予定</h2>
-      <p>今後は以下の機能追加を予定しています。</p>
-      <ul>
-        <li>React Hook Formとの統合</li>
-        <li>非同期バリデーションのサポート</li>
-        <li>国際化（i18n）対応</li>
-      </ul>
-    `,
-  },
-  'tech-summit-2024': {
-    date: '2024.01.10',
-    badge: '登壇',
-    badgeType: 'event',
-    title: '技術カンファレンス「Tech Summit 2024」に登壇します',
-    content: `
-      <p>2024年2月に開催される「Tech Summit 2024」に登壇することが決定しました。</p>
-
-      <h2>登壇内容</h2>
-      <p>「スケーラブルなフロントエンドアーキテクチャの設計」というテーマで、大規模アプリケーションにおけるフロントエンド設計のベストプラクティスについてお話しします。</p>
-
-      <h2>イベント詳細</h2>
-      <ul>
-        <li><strong>日時</strong>：2024年2月15日（木）14:00〜14:45</li>
-        <li><strong>場所</strong>：東京国際フォーラム</li>
-        <li><strong>参加費</strong>：無料（事前登録制）</li>
-      </ul>
-
-      <p>ご興味のある方はぜひご参加ください。</p>
-    `,
-  },
-  'techlog-interview': {
-    date: '2023.12.25',
-    badge: 'メディア',
-    badgeType: 'media',
-    title:
-      'エンジニア向けメディア「TechLog」にインタビュー記事が掲載されました',
-    content: `
-      <p>エンジニア向けメディア「TechLog」にて、私のキャリアや技術に対する考え方についてのインタビュー記事が掲載されました。</p>
-
-      <h2>インタビュー内容</h2>
-      <p>今回のインタビューでは、以下のようなトピックについてお話ししました。</p>
-      <ul>
-        <li><strong>エンジニアとしてのキャリアパス</strong>：どのようにしてソフトウェアエンジニアになったのか</li>
-        <li><strong>技術選定の考え方</strong>：新しい技術をどのように評価し、採用を決めているか</li>
-        <li><strong>チームビルディング</strong>：エンジニアチームをどのようにマネジメントしているか</li>
-        <li><strong>今後の展望</strong>：これから取り組みたい技術領域について</li>
-      </ul>
-
-      <h2>記事について</h2>
-      <p>記事の詳細はTechLogのウェブサイトでご覧いただけます。エンジニアを目指す方や、キャリアについて考えている方の参考になれば幸いです。</p>
-    `,
-  },
-  'developer-of-the-year': {
-    date: '2023.12.01',
-    badge: '受賞',
-    badgeType: 'award',
-    title: 'Developer of the Year 2023 ノミネート',
-    content: `
-      <p>このたび「Developer of the Year 2023」にノミネートされましたことをご報告いたします。</p>
-
-      <h2>Developer of the Year とは</h2>
-      <p>Developer of the Year は、その年に技術コミュニティに大きく貢献した開発者を表彰するアワードです。オープンソースへの貢献、技術記事の執筆、コミュニティ活動などが評価対象となります。</p>
-
-      <h2>ノミネート理由</h2>
-      <p>今回のノミネートは、以下の活動が評価されたものです。</p>
-      <ul>
-        <li><strong>OSSへの貢献</strong>：form-validatorライブラリの開発・公開</li>
-        <li><strong>技術記事の執筆</strong>：Zennでの技術記事執筆（年間20本以上）</li>
-        <li><strong>登壇活動</strong>：技術カンファレンスでの登壇（年間5回）</li>
-      </ul>
-
-      <h2>謝辞</h2>
-      <p>日頃から応援してくださっている皆様に、心より感謝申し上げます。今後も技術コミュニティへの貢献を続けてまいります。</p>
-    `,
-  },
-}
-
-export function getStaticPaths() {
-  const slugs = [
-    'form-validator-release',
-    'tech-summit-2024',
-    'techlog-interview',
-    'developer-of-the-year',
-  ]
-  return slugs.map((slug) => ({
-    params: { slug },
+export async function getStaticPaths() {
+  const ids = await getAllNewsIds()
+  return ids.map((id) => ({
+    params: { slug: id },
   }))
 }
 
 const { slug } = Astro.params
-const news = newsData[slug]
+const news = await getNews(slug)
 
-if (!news) {
-  return Astro.redirect('/news')
+// カテゴリーからbadgeTypeへのマッピング
+const categoryToBadgeType: Record<
+  NewsCategory,
+  'release' | 'event' | 'media' | 'award' | 'update'
+> = {
+  [NEWS_CATEGORIES.CAREER]: 'update',
+  [NEWS_CATEGORIES.CERTIFICATION]: 'award',
+  [NEWS_CATEGORIES.EVENT]: 'event',
+  [NEWS_CATEGORIES.RELEASE]: 'release',
+  [NEWS_CATEGORIES.MEDIA]: 'media',
+  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'update',
 }
 
-const badgeColors = {
-  release: 'bg-[#e3f2fd] text-[#1565c0]',
-  event: 'bg-[#fce4ec] text-[#c2185b]',
-  media: 'bg-[#f3e5f5] text-[#7b1fa2]',
-  award: 'bg-[#fff8e1] text-[#f57c00]',
-  update: 'bg-[#e8f5e9] text-[#2e7d32]',
-}
+const badgeType = categoryToBadgeType[news.category]
 ---
 
 <Layout
-  title={news.title}
+  title={`${news.title} | noto.`}
   description={news.title}
   keywords="お知らせ,ニュース,能戸成琉"
   ogType="article"
@@ -154,115 +43,14 @@ const badgeColors = {
   <Navigation class="bg-noto-bg/90 backdrop-blur-sm" />
 
   <article>
-    <!-- Header -->
-    <header class="pt-32 md:pt-40 pb-8 md:pb-12 px-6 md:px-12 max-w-[800px] mx-auto">
-      <a
-        href="/news"
-        class="inline-flex items-center gap-2 text-[0.8125rem] text-noto-text-muted no-underline mb-8 transition-colors duration-200 hover:text-noto-accent"
-      >
-        ← お知らせ一覧に戻る
-      </a>
-      <div class="flex items-center gap-4 mb-6">
-        <span class="text-[0.8125rem] text-noto-text-muted tracking-wider">{news.date}</span>
-        <span class:list={['px-3 py-1 text-[0.6875rem] font-medium rounded tracking-wide', badgeColors[news.badgeType]]}>
-          {news.badge}
-        </span>
-      </div>
-      <h1 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium leading-snug">
-        {news.title}
-      </h1>
-    </header>
-
-    <!-- Content -->
-    <div class="px-6 md:px-12 pb-16 md:pb-24 max-w-[800px] mx-auto">
-      <div class="news-body" set:html={news.content} />
-    </div>
+    <NewsDetailHeader
+      date={formatDate(news.date)}
+      category={news.category}
+      badgeType={badgeType}
+      title={news.title}
+    />
+    <NewsDetailBody body={news.body} />
   </article>
 
   <Footer />
 </Layout>
-
-<style is:global>
-  .news-body {
-    font-size: 1rem;
-    line-height: 2;
-    color: var(--color-noto-text);
-  }
-
-  .news-body p {
-    margin-bottom: 1.5rem;
-  }
-
-  .news-body h2 {
-    font-family: var(--font-serif);
-    font-size: 1.375rem;
-    font-weight: 500;
-    margin: 3rem 0 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--color-noto-border);
-  }
-
-  .news-body h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin: 2rem 0 1rem;
-  }
-
-  .news-body ul,
-  .news-body ol {
-    margin: 1rem 0 1.5rem;
-    padding-left: 1.5rem;
-  }
-
-  .news-body li {
-    margin-bottom: 0.5rem;
-  }
-
-  .news-body a {
-    color: var(--color-noto-accent);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .news-body a:hover {
-    text-decoration: none;
-  }
-
-  .news-body code {
-    font-family: 'SF Mono', Consolas, monospace;
-    font-size: 0.875em;
-    background: var(--color-noto-bg-alt);
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-  }
-
-  .news-body pre {
-    background: #1e1e1e;
-    color: #d4d4d4;
-    padding: 1.5rem;
-    border-radius: 8px;
-    overflow-x: auto;
-    margin: 1.5rem 0;
-  }
-
-  .news-body pre code {
-    background: none;
-    padding: 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-  }
-
-  .news-body blockquote {
-    border-left: 3px solid var(--color-noto-accent);
-    padding-left: 1.25rem;
-    margin: 1.5rem 0;
-    color: var(--color-noto-text-muted);
-    font-style: italic;
-  }
-
-  .news-body img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin: 1.5rem 0;
-  }
-</style>

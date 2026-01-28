@@ -1,0 +1,57 @@
+/* ===== Rich Text (microCMS) ===== */
+.rich-text {
+  @apply text-base leading-loose text-noto-text;
+}
+
+.rich-text p {
+  @apply mb-6;
+}
+
+.rich-text h2 {
+  @apply font-serif text-[1.375rem] font-medium mt-12 mb-6 pb-3 border-b border-noto-border;
+}
+
+.rich-text h2:first-child {
+  @apply mt-0;
+}
+
+.rich-text h3 {
+  @apply text-lg font-semibold mt-8 mb-4 text-noto-text;
+}
+
+.rich-text ul,
+.rich-text ol {
+  @apply my-4 pl-6;
+}
+
+.rich-text li {
+  @apply mb-2;
+}
+
+.rich-text a {
+  @apply text-noto-accent underline underline-offset-2 hover:no-underline;
+}
+
+.rich-text strong {
+  @apply text-noto-text font-semibold;
+}
+
+.rich-text blockquote {
+  @apply border-l-[3px] border-noto-accent pl-5 my-6 text-noto-text-muted italic;
+}
+
+.rich-text code {
+  @apply font-mono text-[0.875em] bg-noto-bg-alt px-1.5 py-0.5 rounded;
+}
+
+.rich-text pre {
+  @apply bg-[#1e1e1e] text-[#d4d4d4] p-6 rounded-lg overflow-x-auto my-6;
+}
+
+.rich-text pre code {
+  @apply bg-transparent p-0 text-sm leading-relaxed;
+}
+
+.rich-text img {
+  @apply max-w-full rounded-lg my-6;
+}

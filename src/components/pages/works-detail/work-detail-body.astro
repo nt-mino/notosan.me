@@ -1,0 +1,9 @@
+---
+export interface Props {
+  body: string
+}
+
+const { body } = Astro.props
+---
+
+<div class="rich-text" set:html={body} />

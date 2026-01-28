@@ -15,7 +15,9 @@ const navLinks = [
 ---
 
 <nav class:list={["fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-12 flex justify-between items-center", className]}>
-    <a href="/" class="font-serif text-[0.9375rem] font-medium tracking-wider">noto.</a>
+    <a href="/" class="font-serif text-[0.9375rem] font-medium tracking-wider relative z-[60]">noto.</a>
+
+    <!-- Desktop Navigation -->
     <ul class="hidden md:flex gap-8 list-none">
         {
             navLinks.map((link) => (
@@ -30,4 +32,145 @@ const navLinks = [
             ))
         }
     </ul>
+
+    <!-- Mobile Menu Button -->
+    <button
+        id="mobileMenuBtn"
+        type="button"
+        class="relative z-[60] md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 -mr-2"
+        aria-label="メニューを開く"
+        aria-expanded="false"
+    >
+        <span class="menu-line w-5 h-[1.5px] bg-noto-text transition-all duration-300 ease-out origin-center"></span>
+        <span class="menu-line w-5 h-[1.5px] bg-noto-text transition-all duration-300 ease-out origin-center"></span>
+    </button>
 </nav>
+
+<!-- Mobile Menu Overlay -->
+<div
+    id="mobileMenu"
+    class="fixed inset-0 z-[55] pointer-events-none md:hidden"
+    aria-hidden="true"
+>
+    <!-- Backdrop -->
+    <div class="menu-backdrop absolute inset-0 bg-noto-bg opacity-0 transition-opacity duration-500 ease-out"></div>
+
+    <!-- Menu Content -->
+    <div class="menu-content absolute inset-0 flex flex-col justify-center items-center opacity-0 translate-y-4 transition-all duration-500 ease-out">
+        <!-- Close Button -->
+        <button
+            id="mobileMenuClose"
+            type="button"
+            class="absolute top-6 right-4 w-10 h-10 flex items-center justify-center"
+            aria-label="メニューを閉じる"
+        >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <line x1="6" y1="6" x2="18" y2="18" />
+                <line x1="6" y1="18" x2="18" y2="6" />
+            </svg>
+        </button>
+
+        <!-- Decorative vertical text -->
+        <span class="absolute right-6 top-1/2 -translate-y-1/2 text-[0.625rem] text-noto-text-muted/30 tracking-[0.3em] uppercase [writing-mode:vertical-rl]">
+            Portfolio
+        </span>
+
+        <!-- Navigation Links -->
+        <ul class="flex flex-col items-center gap-6 list-none">
+            {
+                navLinks.map((link, index) => (
+                    <li class="menu-item opacity-0 translate-y-4" style={`transition-delay: ${index * 60}ms`}>
+                        <a
+                            href={link.href}
+                            class="mobile-nav-link font-serif text-[1.75rem] font-medium text-noto-text no-underline transition-all duration-300 hover:text-noto-accent relative group"
+                        >
+                            {link.label}
+                            <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-noto-accent transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+
+        <!-- Bottom decoration -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-3 text-noto-text-muted/40">
+            <span class="w-8 h-[1px] bg-current"></span>
+            <span class="text-[0.625rem] tracking-[0.2em] uppercase">Menu</span>
+            <span class="w-8 h-[1px] bg-current"></span>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Menu button animation */
+    .menu-open .menu-line:first-child {
+        transform: rotate(45deg) translateY(3px);
+    }
+    .menu-open .menu-line:last-child {
+        transform: rotate(-45deg) translateY(-3px);
+    }
+
+    /* Menu open state */
+    #mobileMenu.open {
+        pointer-events: auto;
+    }
+    #mobileMenu.open .menu-backdrop {
+        opacity: 1;
+    }
+    #mobileMenu.open .menu-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    #mobileMenu.open .menu-item {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+</style>
+
+<script>
+    const menuBtn = document.getElementById('mobileMenuBtn')
+    const closeBtn = document.getElementById('mobileMenuClose')
+    const mobileMenu = document.getElementById('mobileMenu')
+    const navLinks = mobileMenu?.querySelectorAll('.mobile-nav-link')
+
+    let isOpen = false
+
+    function openMenu() {
+        isOpen = true
+        mobileMenu?.classList.add('open')
+        menuBtn?.classList.add('menu-open')
+        menuBtn?.setAttribute('aria-expanded', 'true')
+        document.body.style.overflow = 'hidden'
+    }
+
+    function closeMenu() {
+        isOpen = false
+        mobileMenu?.classList.remove('open')
+        menuBtn?.classList.remove('menu-open')
+        menuBtn?.setAttribute('aria-expanded', 'false')
+        document.body.style.overflow = ''
+    }
+
+    menuBtn?.addEventListener('click', () => {
+        if (isOpen) {
+            closeMenu()
+        } else {
+            openMenu()
+        }
+    })
+
+    closeBtn?.addEventListener('click', closeMenu)
+
+    // Close menu when clicking a link
+    navLinks?.forEach(link => {
+        link.addEventListener('click', closeMenu)
+    })
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+            closeMenu()
+        }
+    })
+</script>
