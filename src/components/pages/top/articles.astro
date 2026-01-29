@@ -8,7 +8,7 @@ export interface Props {
 
 const { class: className } = Astro.props
 
-const { contents } = await getTopArticles({ limit: 4 })
+const { contents } = await getTopArticles()
 
 const articles = contents.map((article) => ({
   id: article.id,
