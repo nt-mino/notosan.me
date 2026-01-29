@@ -9,7 +9,7 @@ export interface Props {
 
 const { class: className } = Astro.props
 
-const { contents } = await getNewsList({ limit: 4 })
+const { contents } = await getNewsList({ limit: 5 })
 
 // カテゴリーからbadgeTypeへのマッピング
 const categoryToBadgeType: Record<NewsCategory, string> = {
