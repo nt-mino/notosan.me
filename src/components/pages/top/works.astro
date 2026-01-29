@@ -8,7 +8,7 @@ export interface Props {
 
 const { class: className } = Astro.props
 
-const { contents } = await getTopWorks({ limit: 4 })
+const { contents } = await getTopWorks()
 
 const works = contents.map((work) => ({
   id: work.id,
@@ -36,14 +36,14 @@ const works = contents.map((work) => ({
         href={work.href}
         class="group block no-underline text-inherit bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
       >
-        <div class="bg-[#e8e8e8]">
+        <div class="bg-[#e8e8e8] aspect-[16/9]">
           <Image
             src={work.image}
             alt={work.title}
             width={600}
             height={340}
             loading="lazy"
-            class="w-full h-auto block"
+            class="w-full h-full object-cover block"
           />
         </div>
         <div class="p-6">
@@ -64,8 +64,8 @@ const works = contents.map((work) => ({
     ))}
   </div>
 
-  <div class="relative mt-10 max-w-[900px] mx-auto">
-    <span class="absolute right-0 -top-6 text-[0.6875rem] text-noto-text-muted">※ 参画した開発プロジェクトを掲載しています</span>
+  <div class="mt-10 max-w-[900px] mx-auto">
+    <p class="text-[0.6875rem] text-noto-text-muted text-center md:text-right mb-4">※ 参画した開発プロジェクトを掲載しています</p>
     <div class="text-center">
       <a
         href="/works"

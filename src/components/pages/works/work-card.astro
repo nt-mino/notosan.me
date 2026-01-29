@@ -16,14 +16,14 @@ const { href, thumbnail, alt, company, title, description } =
 
 <a href={href} class="group block bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
   <!-- Thumbnail -->
-  <div class="bg-noto-bg-alt">
+  <div class="bg-noto-bg-alt aspect-[16/9]">
     <Image
       src={thumbnail}
       alt={alt}
       width={600}
       height={340}
       loading="lazy"
-      class="w-full h-auto block"
+      class="w-full h-full object-cover block"
     />
   </div>
 

@@ -8,7 +8,10 @@ const ENDPOINT = 'works'
 export const getWorks = async (queries?: MicroCMSQueries) => {
   return await client.getList<Work>({
     endpoint: ENDPOINT,
-    queries,
+    queries: {
+      orders: 'createdAt',
+      ...queries,
+    },
   })
 }
 
@@ -27,6 +30,7 @@ export const getTopWorks = async (queries?: MicroCMSQueries) => {
     endpoint: ENDPOINT,
     queries: {
       filters: 'isTop[equals]true',
+      orders: 'createdAt',
       ...queries,
     },
   })

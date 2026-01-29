@@ -61,7 +61,7 @@ export function SkillsTerminal() {
       <div className="p-5">
         {!isRunning && visibleLines.length === 0 && (
           <div className="flex items-start">
-            <span className="font-mono text-sm text-[#6b7280]">
+            <span className="font-mono text-xs sm:text-sm text-[#6b7280] whitespace-nowrap">
               &gt; Runボタンをクリックしてスキルを表示する
               <span className="ml-0.5 text-[#5a9] animate-[blink_1s_step-end_infinite]">
                 |
