@@ -19,14 +19,6 @@ export async function getStaticPaths() {
 const { slug } = Astro.params
 const work = await getWork(slug)
 
-// 公開年を取得
-const year = new Date(work.publishedAt ?? work.createdAt)
-  .getFullYear()
-  .toString()
-
-// 技術スタックをタグに変換
-const techTags = work.tech.split(',').map((t) => t.trim())
-
 const infoItems = [
   {
     label: '企業名',
@@ -57,7 +49,7 @@ const infoItems = [
 ---
 
 <Layout
-  title={`${work.title} | noto.`}
+  title={work.title}
   description={work.description}
   keywords={`実績,${work.tech.replace(/, /g, ',')},${work.phase}`}
   ogImage={work.thumbnail.url}
@@ -67,8 +59,7 @@ const infoItems = [
 
   <article>
     <WorkDetailHeader
-      year={year}
-      phase={work.phase}
+      company={work.company}
       title={work.title}
       description={work.description}
     />
@@ -76,7 +67,6 @@ const infoItems = [
     <WorkDetailThumbnail
       src={work.thumbnail.url}
       alt={work.title}
-      tags={techTags}
     />
 
     <div class="px-6 md:px-12 pb-12">

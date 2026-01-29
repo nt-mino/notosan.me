@@ -5,49 +5,33 @@ export interface Props {
   href: string
   thumbnail: string
   alt: string
-  tags: string[]
-  year: string
-  type: string
+  company: string
   title: string
   description: string
 }
 
-const { href, thumbnail, alt, tags, year, type, title, description } =
+const { href, thumbnail, alt, company, title, description } =
   Astro.props
 ---
 
-<a href={href} class="group block bg-white rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-400 ease-[cubic-bezier(0.165,0.84,0.44,1)] relative hover:shadow-[0_8px_24px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.08)] hover:-translate-y-1.5">
-  <!-- Top border animation -->
-  <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-noto-accent to-noto-accent-light scale-x-0 origin-left transition-transform duration-400 group-hover:scale-x-100"></div>
-
+<a href={href} class="group block bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
   <!-- Thumbnail -->
-  <div class="aspect-video bg-noto-bg-alt relative overflow-hidden">
+  <div class="bg-noto-bg-alt">
     <Image
       src={thumbnail}
       alt={alt}
       width={600}
       height={340}
       loading="lazy"
-      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      class="w-full h-auto block"
     />
-    <!-- Gradient overlay -->
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none"></div>
-    <!-- Tags -->
-    <div class="absolute bottom-3.5 left-3.5 right-3.5 flex flex-wrap gap-1.5 z-10">
-      {tags.map((tag) => (
-        <span class="px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded text-[0.625rem] text-white font-medium tracking-wide">
-          {tag}
-        </span>
-      ))}
-    </div>
   </div>
 
   <!-- Content -->
   <div class="p-6">
-    <div class="flex items-center gap-3 mb-3">
-      <span class="text-xs text-noto-accent font-semibold tracking-wider">{year}</span>
-      <span class="text-[0.625rem] text-noto-text-muted px-2 py-1 bg-noto-bg-alt rounded tracking-wide">{type}</span>
-    </div>
+    <span class="text-[0.6875rem] text-noto-text-muted tracking-wide mb-2 block">
+      {company}
+    </span>
     <h3 class="font-serif text-xl font-medium mb-3 leading-snug transition-colors duration-300 group-hover:text-noto-accent">
       {title}
     </h3>

@@ -14,9 +14,7 @@ const works = contents.map((work) => ({
   id: work.id,
   title: work.title,
   description: work.description,
-  year: new Date(work.publishedAt).getFullYear().toString(),
-  type: work.phase,
-  tags: work.tech.split(',').map((t) => t.trim()),
+  company: work.company,
   image: work.thumbnail.url,
   href: `/works/${work.id}`,
 }))
@@ -32,41 +30,26 @@ const works = contents.map((work) => ({
     <span class="text-[0.6875rem] text-noto-accent tracking-[0.15em] font-medium">WORKS</span>
   </div>
 
-  <p class="text-xs text-noto-text-muted max-w-[900px] mx-auto -mt-10 mb-10 text-right">
-    ※ 参画した開発プロジェクトを掲載しています
-  </p>
-
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mx-auto">
     {works.map((work) => (
       <a
         href={work.href}
-        class="group block no-underline text-inherit bg-white rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-400 relative hover:shadow-[0_8px_24px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[3px] before:bg-gradient-to-r before:from-noto-accent before:to-noto-accent-light before:scale-x-0 before:origin-left before:transition-transform before:duration-400 hover:before:scale-x-100"
+        class="group block no-underline text-inherit bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
       >
-        <div class="aspect-video bg-[#e8e8e8] relative overflow-hidden">
+        <div class="bg-[#e8e8e8]">
           <Image
             src={work.image}
             alt={work.title}
             width={600}
             height={340}
             loading="lazy"
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-auto block"
           />
-          <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 pointer-events-none" />
-          <div class="absolute bottom-3.5 left-3.5 right-3.5 flex flex-wrap gap-1.5 z-10">
-            {work.tags.map((tag) => (
-              <span class="px-2.5 py-1 bg-black/60 backdrop-blur-sm rounded text-[0.625rem] text-white font-medium tracking-[0.02em]">
-                {tag}
-              </span>
-            ))}
-          </div>
         </div>
         <div class="p-6">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="text-xs text-noto-accent font-semibold tracking-wide">{work.year}</span>
-            <span class="text-[0.625rem] text-noto-text-muted px-2 py-1 bg-noto-bg-alt rounded tracking-[0.02em]">
-              {work.type}
-            </span>
-          </div>
+          <span class="text-[0.6875rem] text-noto-text-muted tracking-wide mb-2 block">
+            {work.company}
+          </span>
           <h3 class="font-serif text-lg font-medium mb-2.5 leading-snug transition-colors duration-300 group-hover:text-noto-accent">
             {work.title}
           </h3>
@@ -81,12 +64,15 @@ const works = contents.map((work) => ({
     ))}
   </div>
 
-  <div class="text-center mt-10">
-    <a
-      href="/works"
-      class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
-    >
-      もっと見る →
-    </a>
+  <div class="relative mt-10 max-w-[900px] mx-auto">
+    <span class="absolute right-0 -top-6 text-[0.6875rem] text-noto-text-muted">※ 参画した開発プロジェクトを掲載しています</span>
+    <div class="text-center">
+      <a
+        href="/works"
+        class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
+      >
+        もっと見る →
+      </a>
+    </div>
   </div>
 </section>

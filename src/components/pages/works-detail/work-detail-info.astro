@@ -20,7 +20,7 @@ const { items } = Astro.props
           <span class="opacity-60" set:html={item.icon} />
           {item.label}
         </span>
-        <span class="text-[0.9375rem] text-noto-text">{item.value}</span>
+        <span class="text-[0.9375rem] text-noto-text whitespace-pre-line">{item.value}</span>
       </div>
     ))
   }
