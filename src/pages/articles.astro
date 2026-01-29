@@ -8,7 +8,7 @@ import Layout from '@/layouts/Layout.astro'
 import { getArticles } from '@/lib/microcms/api/articles'
 import { formatDate } from '@/utils/format'
 
-const { contents } = await getArticles()
+const { contents } = await getArticles({ limit: 50 })
 
 const articles = contents.map((article) => ({
   href: article.zennUrl,
@@ -23,7 +23,7 @@ const articles = contents.map((article) => ({
 
 <Layout
   title="noto. articles"
-  description="能戸成琉の技術記事一覧。TypeScript、React、マイクロサービス、CI/CD、セキュリティなど、設計パターンやベストプラクティスを中心に発信。"
+  description="能戸成琉の技術記事一覧。フロントエンドの技術選定・比較や分析、開発ストーリーを中心に発信。"
   keywords="技術記事,ブログ,TypeScript,React,マイクロサービス,設計パターン,ベストプラクティス"
 >
   <Navigation class="bg-noto-bg/90 backdrop-blur-sm" />
@@ -31,7 +31,7 @@ const articles = contents.map((article) => ({
   <PageHeader
     label="ARTICLES"
     title="執筆一覧"
-    description="技術ブログやZennで執筆した記事の一覧です。設計パターンやベストプラクティスを中心に発信しています。"
+    description="技術ブログやZennで執筆した記事の一覧です。フロントエンドの技術選定・比較や分析、開発ストーリーを中心に発信しています。"
     bgText="Articles"
   />
 

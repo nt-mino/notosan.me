@@ -1,6 +1,7 @@
 ---
 import { getNewsList } from '@/lib/microcms/api/news'
 import { NEWS_CATEGORIES, type NewsCategory } from '@/lib/microcms/types/news'
+import { formatDate } from '@/utils/format'
 
 export interface Props {
   class?: string
@@ -20,8 +21,6 @@ const categoryToBadgeType: Record<NewsCategory, string> = {
   [NEWS_CATEGORIES.ANNOUNCEMENT]: 'update',
 }
 
-// 日付フォーマット（YYYY-MM-DD → YYYY.MM.DD）
-const formatDate = (dateString: string) => dateString.replace(/-/g, '.')
 
 const newsItems = contents.map((news) => ({
   id: news.id,

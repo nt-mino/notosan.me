@@ -8,7 +8,10 @@ const ENDPOINT = 'articles'
 export const getArticles = async (queries?: MicroCMSQueries) => {
   return await client.getList<Article>({
     endpoint: ENDPOINT,
-    queries,
+    queries: {
+      orders: '-date',
+      ...queries,
+    },
   })
 }
 
@@ -21,6 +24,18 @@ export const getArticle = async (
     endpoint: ENDPOINT,
     contentId,
     queries,
+  })
+}
+
+// トップページ用の記事を取得
+export const getTopArticles = async (queries?: MicroCMSQueries) => {
+  return await client.getList<Article>({
+    endpoint: ENDPOINT,
+    queries: {
+      filters: 'isTop[equals]true',
+      orders: '-date',
+      ...queries,
+    },
   })
 }
 

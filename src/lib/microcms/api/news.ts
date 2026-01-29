@@ -8,7 +8,10 @@ const ENDPOINT = 'news'
 export const getNewsList = async (queries?: MicroCMSQueries) => {
   return await client.getList<News>({
     endpoint: ENDPOINT,
-    queries,
+    queries: {
+      orders: '-date',
+      ...queries,
+    },
   })
 }
 

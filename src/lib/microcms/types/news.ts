@@ -1,4 +1,4 @@
-import type { MicroCMSContent } from './common'
+import type { MicroCMSContent, MicroCMSImage } from './common'
 
 // カテゴリーの選択肢
 export const NEWS_CATEGORIES = {
@@ -16,6 +16,7 @@ export type NewsCategory =
 // ニュースコンテンツの型
 export type News = MicroCMSContent & {
   title: string
+  thumbnail?: MicroCMSImage
   body: string
   category: NewsCategory
   date: string

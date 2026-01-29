@@ -1,6 +1,6 @@
 ---
-import { getArticles } from '@/lib/microcms/api/articles'
-import { ARTICLE_CATEGORIES } from '@/lib/microcms/types/article'
+import { getTopArticles } from '@/lib/microcms/api/articles'
+import { formatDate } from '@/utils/format'
 
 export interface Props {
   class?: string
@@ -8,25 +8,15 @@ export interface Props {
 
 const { class: className } = Astro.props
 
-const { contents } = await getArticles({ limit: 4 })
-
-// カテゴリーに応じたアイコンのマッピング
-const categoryIcons: Record<string, string> = {
-  [ARTICLE_CATEGORIES.TECH_SELECTION]: '⚖️',
-  [ARTICLE_CATEGORIES.TECH_ANALYSIS]: '🔍',
-  [ARTICLE_CATEGORIES.DEV_STORY]: '📖',
-}
-
-// 日付フォーマット（YYYY-MM-DD → YYYY.MM.DD）
-const formatDate = (dateString: string) => dateString.replace(/-/g, '.')
+const { contents } = await getTopArticles({ limit: 4 })
 
 const articles = contents.map((article) => ({
   id: article.id,
   title: article.title,
   excerpt: article.description,
-  date: formatDate(article.date),
+  thumbnail: article.thumbnail,
   category: article.category,
-  icon: categoryIcons[article.category] || '📝',
+  date: formatDate(article.date),
   href: article.zennUrl,
   isExternal: true,
 }))
@@ -48,24 +38,21 @@ const articles = contents.map((article) => ({
         href={article.href}
         target={article.isExternal ? '_blank' : undefined}
         rel={article.isExternal ? 'noopener noreferrer' : undefined}
-        class="group grid grid-cols-1 sm:grid-cols-[150px_1fr] md:grid-cols-[200px_1fr] gap-4 md:gap-8 p-5 md:p-6 bg-white rounded-md border border-noto-border shadow-sm no-underline text-inherit transition-all duration-300 relative overflow-hidden hover:shadow-lg hover:-translate-y-0.5 hover:border-noto-accent"
+        class="group grid grid-cols-1 sm:grid-cols-[160px_1fr] md:grid-cols-[220px_1fr] items-center gap-4 md:gap-6 p-5 md:p-6 bg-white rounded-md border border-noto-border shadow-sm no-underline text-inherit transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:border-noto-accent"
       >
-        <div
-          class="aspect-video sm:aspect-[16/10] rounded relative overflow-hidden"
-          style="background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);"
-        >
-          <div
-            class="absolute inset-0 opacity-10"
-            style="background: linear-gradient(135deg, #3d5a80 0%, #5a7fa8 100%);"
+        <div class="rounded bg-neutral-100 shrink-0">
+          <img
+            src={`${article.thumbnail.url}?fm=webp&w=360`}
+            alt={article.title}
+            class="w-full h-auto block rounded"
+            loading="lazy"
+            decoding="async"
           />
-          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl opacity-30">
-            {article.icon}
-          </span>
         </div>
         <div class="flex flex-col justify-center">
-          <div class="flex items-center gap-4 mb-3">
+          <div class="flex items-center gap-3 mb-3">
             <span class="text-[0.6875rem] text-noto-text-muted tracking-wide">{article.date}</span>
-            <span class="text-[0.625rem] text-noto-accent tracking-wide px-2 py-1 bg-noto-accent/10 rounded font-medium">
+            <span class="text-[0.625rem] text-noto-accent tracking-wide px-2 py-0.5 bg-noto-accent/10 rounded font-medium">
               {article.category}
             </span>
           </div>

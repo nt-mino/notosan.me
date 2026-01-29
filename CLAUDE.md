@@ -40,7 +40,7 @@ src/
 
 ### 技術スタック
 
-- **フレームワーク**: Astro 5 (SSRモード) + React 19
+- **フレームワーク**: Astro 5 (静的ビルド) + React 19
 - **スタイリング**: Tailwind CSS v4 (@tailwindcss/vite)
 - **UIライブラリ**: shadcn/ui (new-york スタイル)
 - **リンター/フォーマッター**: Biome

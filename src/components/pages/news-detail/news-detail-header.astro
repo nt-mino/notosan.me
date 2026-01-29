@@ -1,12 +1,15 @@
 ---
+import type { MicroCMSImage } from '@/lib/microcms/types/common'
+
 export interface Props {
   date: string
   category: string
   badgeType: 'release' | 'event' | 'media' | 'award' | 'update'
   title: string
+  thumbnail?: MicroCMSImage
 }
 
-const { date, category, badgeType, title } = Astro.props
+const { date, category, badgeType, title, thumbnail } = Astro.props
 
 const badgeColors = {
   release: 'bg-[#e3f2fd] text-[#1565c0]',
@@ -56,5 +59,16 @@ const badgeColors = {
     >
       {title}
     </h1>
+
+    {thumbnail && (
+      <div class="mt-8 rounded-lg overflow-hidden">
+        <img
+          src={`${thumbnail.url}?fm=webp&w=1200`}
+          alt={title}
+          class="w-full h-auto block"
+          decoding="async"
+        />
+      </div>
+    )}
   </div>
 </header>

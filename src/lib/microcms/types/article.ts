@@ -19,4 +19,5 @@ export type Article = MicroCMSContent & {
   date: string
   zennUrl: string
   tags?: string
+  isTop: boolean
 }

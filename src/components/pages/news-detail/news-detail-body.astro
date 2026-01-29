@@ -4,32 +4,16 @@ export interface Props {
 }
 
 const { body } = Astro.props
+
+// 外部リンクに target="_blank" rel="noopener noreferrer" を付与
+const processedBody = body.replace(
+  /<a\s+(href="https?:\/\/)/g,
+  '<a target="_blank" rel="noopener noreferrer" $1',
+)
 ---
 
 <div class="px-6 md:px-12 pb-16 md:pb-24">
   <div class="max-w-[800px] mx-auto">
-    <div class="rich-text" set:html={body} />
-  </div>
-</div>
-
-<!-- Navigation -->
-<div class="px-6 md:px-12 pb-16 md:pb-24">
-  <div class="max-w-[800px] mx-auto pt-8 border-t border-noto-border">
-    <a
-      href="/news"
-      class="inline-flex items-center gap-2 text-[0.875rem] text-noto-accent no-underline transition-all duration-200 hover:gap-3"
-    >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path d="M19 12H5M12 19l-7-7 7-7" />
-      </svg>
-      お知らせ一覧に戻る
-    </a>
+    <div class="rich-text" set:html={processedBody} />
   </div>
 </div>
