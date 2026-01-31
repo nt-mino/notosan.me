@@ -3,12 +3,12 @@ import { cn } from '@/lib/utils'
 
 const skills = [
   { label: 'Frontend', values: 'TypeScript / React / Next.js' },
-  { label: 'Backend', values: 'Node.js / Nest.js / Hono / Elysia' },
+  { label: 'Backend', values: 'Node.js / Nest.js / Hono / Elysia / Python / Go' },
   {
     label: 'Infrastructure',
     values: 'Vercel / GCP / Supabase / Firebase / Cloudflare',
   },
-  { label: 'Tools', values: 'Cursor / Claude Code / Linear / Notion / Figma' },
+  { label: 'Tools', values: 'Cursor / Claude Code / Linear / Notion / Figma / microCMS' },
 ]
 
 export function SkillsTerminal() {
