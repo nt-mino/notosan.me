@@ -12,4 +12,5 @@ export type Work = MicroCMSContent & {
   company: string
   body: string
   isTop: boolean
+  index?: number
 }
