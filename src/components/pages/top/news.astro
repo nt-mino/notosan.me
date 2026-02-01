@@ -51,6 +51,7 @@ const badgeStyles: Record<string, string> = {
       <div class="py-5 border-b border-noto-border transition-all duration-200 hover:pl-2 hover:bg-noto-accent/[0.02]">
         <a
           href={news.href}
+          data-astro-prefetch
           class="grid grid-cols-1 sm:grid-cols-[80px_1fr] md:grid-cols-[100px_1fr] gap-2 sm:gap-4 md:gap-8 no-underline text-inherit"
         >
           <span class="text-xs text-noto-text-muted">{news.date}</span>
@@ -73,6 +74,7 @@ const badgeStyles: Record<string, string> = {
   <div class="text-center mt-10">
     <a
       href="/news"
+      data-astro-prefetch
       class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
     >
       もっと見る →

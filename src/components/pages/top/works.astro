@@ -34,6 +34,7 @@ const works = contents.map((work) => ({
     {works.map((work) => (
       <a
         href={work.href}
+        data-astro-prefetch
         class="group block no-underline text-inherit bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
       >
         <div class="bg-[#e8e8e8] aspect-[16/9]">
@@ -69,6 +70,7 @@ const works = contents.map((work) => ({
     <div class="text-center">
       <a
         href="/works"
+        data-astro-prefetch
         class="inline-flex items-center gap-2 px-8 py-3 text-[0.8125rem] text-noto-accent no-underline border border-noto-border rounded transition-all duration-200 hover:border-noto-accent hover:bg-noto-accent/5"
       >
         もっと見る →

@@ -11,6 +11,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  prefetch: {
+    defaultStrategy: 'viewport',
+  },
   integrations: [react(), sitemap()],
   image: {
     domains: ['images.unsplash.com'],

@@ -15,7 +15,7 @@ const navLinks = [
 ---
 
 <nav class:list={["fixed top-0 left-0 right-0 z-50 px-6 py-6 md:px-12 flex justify-between items-center", className]}>
-    <a href="/" class="font-serif text-[0.9375rem] font-medium tracking-wider relative z-[60]">noto.</a>
+    <a href="/" data-astro-prefetch class="font-serif text-[0.9375rem] font-medium tracking-wider relative z-[60]">noto.</a>
 
     <!-- Desktop Navigation -->
     <ul class="hidden md:flex gap-8 list-none">
@@ -25,6 +25,7 @@ const navLinks = [
                     <a
                         href={link.href}
                         class="text-noto-text-muted text-[0.8125rem] no-underline transition-colors duration-200 hover:text-noto-text"
+                        {...(!link.href.startsWith('#') && !link.href.startsWith('/#') ? { 'data-astro-prefetch': '' } : {})}
                     >
                         {link.label}
                     </a>
@@ -83,6 +84,7 @@ const navLinks = [
                         <a
                             href={link.href}
                             class="mobile-nav-link font-serif text-[1.75rem] font-medium text-noto-text no-underline transition-all duration-300 hover:text-noto-accent relative group"
+                            {...(!link.href.startsWith('#') && !link.href.startsWith('/#') ? { 'data-astro-prefetch': '' } : {})}
                         >
                             {link.label}
                             <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-noto-accent transition-all duration-300 group-hover:w-full"></span>
