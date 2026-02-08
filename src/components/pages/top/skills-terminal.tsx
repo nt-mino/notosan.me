@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const skills = [
-  { label: 'Frontend', values: 'TypeScript / React / Next.js' },
+  { label: 'Frontend', values: 'TypeScript / React / Next.js / Astro / Remix' },
   { label: 'Backend', values: 'Node.js / Nest.js / Hono / Elysia / Python / Go' },
   {
     label: 'Infrastructure',
