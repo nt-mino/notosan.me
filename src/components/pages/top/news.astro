@@ -18,7 +18,7 @@ const categoryToBadgeType: Record<NewsCategory, string> = {
   [NEWS_CATEGORIES.EVENT]: 'event',
   [NEWS_CATEGORIES.RELEASE]: 'release',
   [NEWS_CATEGORIES.MEDIA]: 'media',
-  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'update',
+  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'announcement',
 }
 
 
@@ -33,10 +33,11 @@ const newsItems = contents.map((news) => ({
 
 const badgeStyles: Record<string, string> = {
   release: 'bg-[#e3f2fd] text-[#1565c0]',
-  event: 'bg-[#fce4ec] text-[#c2185b]',
+  event: 'bg-[#e0f2f1] text-[#00897b]',
   media: 'bg-[#f3e5f5] text-[#7b1fa2]',
   award: 'bg-[#fff8e1] text-[#f57c00]',
   update: 'bg-[#e8f5e9] text-[#2e7d32]',
+  announcement: 'bg-[#e3f2fd] text-[#1976d2]',
 }
 ---
 

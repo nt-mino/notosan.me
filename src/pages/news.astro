@@ -14,14 +14,14 @@ const { contents } = await getNewsList()
 // カテゴリーからbadgeTypeへのマッピング
 const categoryToBadgeType: Record<
   NewsCategory,
-  'release' | 'event' | 'media' | 'award' | 'update'
+  'release' | 'event' | 'media' | 'award' | 'update' | 'announcement'
 > = {
   [NEWS_CATEGORIES.CAREER]: 'update',
   [NEWS_CATEGORIES.CERTIFICATION]: 'award',
   [NEWS_CATEGORIES.EVENT]: 'event',
   [NEWS_CATEGORIES.RELEASE]: 'release',
   [NEWS_CATEGORIES.MEDIA]: 'media',
-  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'update',
+  [NEWS_CATEGORIES.ANNOUNCEMENT]: 'announcement',
 }
 
 const newsItems = contents.map((news) => ({

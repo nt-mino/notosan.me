@@ -29,15 +29,24 @@
   </div>
 </div>
 
-<script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const loader = document.getElementById('pageLoader')
-      if (loader) {
+<script is:inline>
+  // 初回訪問時のみローディングを表示
+  ;(function () {
+    const loader = document.getElementById('pageLoader')
+    if (!loader) return
+
+    if (sessionStorage.getItem('loaderShown')) {
+      loader.remove()
+      return
+    }
+
+    sessionStorage.setItem('loaderShown', '1')
+    window.addEventListener('load', () => {
+      setTimeout(() => {
         loader.style.opacity = '0'
         loader.style.visibility = 'hidden'
         loader.style.pointerEvents = 'none'
-      }
-    }, 1400)
-  })
+      }, 1400)
+    })
+  })()
 </script>
