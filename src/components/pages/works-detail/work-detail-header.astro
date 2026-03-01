@@ -10,6 +10,24 @@ const { company, title, description } = Astro.props
 
 <header class="pt-28 md:pt-36 px-6 md:px-12">
   <div class="max-w-[1000px] mx-auto">
+    <a
+      href="/works"
+      class="inline-flex items-center gap-2 text-[0.8125rem] text-noto-text-muted no-underline mb-8 transition-colors duration-200 hover:text-noto-accent group"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="transition-transform duration-200 group-hover:-translate-x-1"
+      >
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      実績一覧に戻る
+    </a>
+
     <span class="text-[0.8125rem] text-noto-text-muted tracking-wide mb-4 block">
       {company}
     </span>
