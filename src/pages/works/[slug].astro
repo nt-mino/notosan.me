@@ -5,28 +5,18 @@ import WorkDetailBody from '@/components/pages/works-detail/work-detail-body.ast
 import WorkDetailCta from '@/components/pages/works-detail/work-detail-cta.astro'
 import WorkDetailHeader from '@/components/pages/works-detail/work-detail-header.astro'
 import WorkDetailInfo from '@/components/pages/works-detail/work-detail-info.astro'
-import WorkDetailPager from '@/components/pages/works-detail/work-detail-pager.astro'
 import WorkDetailThumbnail from '@/components/pages/works-detail/work-detail-thumbnail.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getWork, getWorks } from '@/lib/microcms/api/works'
 
 export async function getStaticPaths() {
   const { contents } = await getWorks({ limit: 100 })
-  return contents.map((work, index) => {
-    const prev = index > 0 ? contents[index - 1] : undefined
-    return {
-      params: { slug: work.id },
-      props: {
-        prev: prev
-          ? { id: prev.id, title: prev.title }
-          : undefined,
-      },
-    }
-  })
+  return contents.map((work) => ({
+    params: { slug: work.id },
+  }))
 }
 
 const { slug } = Astro.params
-const { prev } = Astro.props
 const work = await getWork(slug)
 
 const infoItems = [
@@ -96,7 +86,6 @@ const infoItems = [
       </div>
     </div>
 
-    <WorkDetailPager prev={prev} />
     <WorkDetailCta />
   </article>
 
