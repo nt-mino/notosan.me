@@ -2,13 +2,22 @@ import { useCallback, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const skills = [
-  { label: 'Frontend', values: 'TypeScript / React / Next.js / Astro / Remix' },
-  { label: 'Backend', values: 'Node.js / Nest.js / Hono / Elysia / Python / Go' },
+  {
+    label: 'Frontend',
+    values: 'TypeScript / React / Next.js / Astro / Remix / Tanstack',
+  },
+  {
+    label: 'Backend',
+    values: 'Node.js / Express / Nest.js / Hono / Elysia / Python',
+  },
   {
     label: 'Infrastructure',
     values: 'Vercel / GCP / Supabase / Firebase / Cloudflare',
   },
-  { label: 'Tools', values: 'Cursor / Claude Code / Linear / Notion / Figma / microCMS' },
+  {
+    label: 'Tools',
+    values: 'Cursor / Claude Code / Linear / Notion / Figma / microCMS',
+  },
 ]
 
 export function SkillsTerminal() {

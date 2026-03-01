@@ -3,6 +3,7 @@ export interface InfoItem {
   label: string
   value: string
   icon: string
+  isLink?: boolean
 }
 
 export interface Props {
@@ -20,7 +21,11 @@ const { items } = Astro.props
           <span class="opacity-60" set:html={item.icon} />
           {item.label}
         </span>
-        <span class="text-[0.9375rem] text-noto-text whitespace-pre-line">{item.value}</span>
+        {item.isLink ? (
+          <a href={item.value} target="_blank" rel="noopener noreferrer" class="text-[0.9375rem] text-noto-text-muted underline break-all">{item.value}</a>
+        ) : (
+          <span class="text-[0.9375rem] text-noto-text whitespace-pre-line">{item.value}</span>
+        )}
       </div>
     ))
   }

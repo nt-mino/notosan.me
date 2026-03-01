@@ -10,6 +10,7 @@ export type Work = MicroCMSContent & {
   phase: string
   tech: string
   company: string
+  link?: string
   body: string
   isTop: boolean
   index?: number
