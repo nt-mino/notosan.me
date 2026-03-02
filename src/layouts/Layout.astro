@@ -51,6 +51,9 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#3d5a80" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- SEO Meta Tags -->
@@ -119,5 +122,10 @@ const jsonLd = {
   </head>
   <body>
     <slot />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+      }
+    </script>
   </body>
 </html>
