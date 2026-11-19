@@ -1,0 +1,50 @@
+---
+import ProjectList from '@/components/common/project-list.astro'
+import type { Project } from '@/data/projects'
+
+export interface Props {
+  project: Project
+  others: Project[]
+}
+
+const { project, others } = Astro.props
+const SHOT_COUNT = 4
+---
+
+<div class="app">
+  <div class="apphead">
+    <div class="icon lg" aria-hidden="true" translate="no">
+      {project.name.charAt(0).toUpperCase()}
+    </div>
+    <div>
+      <h1 translate="no">{project.name}</h1>
+      <p class="tg">{project.tagline}</p>
+      <span class="st">{project.status}</span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div><dt>状態</dt><dd>{project.status}</dd></div>
+    <div><dt>技術</dt><dd>{project.stack.join('・')}</dd></div>
+    <div><dt>種別</dt><dd>{project.kind}</dd></div>
+  </dl>
+  <div
+    class="shots"
+    tabindex="0"
+    role="group"
+    aria-label={`${project.name} のスクリーンショット`}
+  >
+    {Array.from({ length: SHOT_COUNT }, (_, i) => (
+      <div class="shot" style={`--cv:var(--color-ink-c${i + 1})`}>
+        画面 {i + 1}
+      </div>
+    ))}
+  </div>
+  <h2>概要</h2>
+  <p>{project.summary}</p>
+  <h2>できること</h2>
+  <ul>
+    {project.points.map((point) => <li>{point}</li>)}
+  </ul>
+  <h2>ほかの個人開発</h2>
+  <ProjectList projects={others} />
+</div>

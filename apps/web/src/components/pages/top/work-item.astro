@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets'
+import type { Work } from '@/lib/microcms/types/work'
+
+export interface Props {
+  work: Work
+  index: number
+}
+
+const { work, index } = Astro.props
+
+const OMIT = ['TypeScript', 'React']
+const STACK_LIMIT = 6
+
+// microCMS の tech は「Frontend：A / B」の行が並ぶので、Tools 以外の行から技術名を拾う
+const toStack = (tech: string) => {
+  const names = tech
+    .split('\n')
+    .filter((line) => !line.trim().startsWith('Tools'))
+    .flatMap((line) => (line.split('：')[1] ?? '').split(/\s+\/\s+/))
+    .map((name) => name.trim())
+    .filter((name) => name && !OMIT.includes(name))
+  return [...new Set(names)].slice(0, STACK_LIMIT)
+}
+
+const stack = toStack(work.tech ?? '')
+const meta = stack.length
+  ? `${work.business}　技術: ${stack.join('・')}`
+  : work.business
+---
+
+<article class="wk">
+  {work.thumbnail ? (
+    <Fragment>
+      <Image
+        class="cover-img"
+        src={work.thumbnail.url}
+        alt=""
+        width={960}
+        height={600}
+        loading="lazy"
+      />
+      <h4 class="wt" translate="no">{work.title}</h4>
+    </Fragment>
+  ) : (
+    <h4
+      class="cover"
+      style={`--cv:var(--color-ink-c${(index % 4) + 1})`}
+      translate="no"
+    >
+      {work.title}
+    </h4>
+  )}
+  <p class="s">{work.description}</p>
+  <p class="m">{meta}</p>
+  {work.link && (
+    <a class="go" href={work.link} rel="noopener" target="_blank">
+      サービスを見る
+    </a>
+  )}
+</article>

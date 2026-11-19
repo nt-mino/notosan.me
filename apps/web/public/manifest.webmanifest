@@ -4,8 +4,8 @@
   "description": "ソフトウェアエンジニア 能戸成琉のポートフォリオサイト",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fafafa",
-  "theme_color": "#3d5a80",
+  "background_color": "#ffffff",
+  "theme_color": "#15171c",
   "icons": [
     {
       "src": "/pwa/icon-192.png",

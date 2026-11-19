@@ -1,29 +1,27 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "./animations.css";
-@import "./rich-text.css";
+@import "./ink.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* ===== noto. Design Tokens ===== */
-@theme inline {
-  /* Fonts */
-  --font-sans: "Noto Sans JP", sans-serif;
-  --font-serif: "Shippori Mincho", serif;
+/* 39 Ink の配色とフォント。色はここを変えれば全体に効く */
+@theme static {
+  --font-gothic: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+  --font-mincho: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+  --font-garamond: "Cormorant Garamond", "Shippori Mincho", serif;
 
-  /* Brand colors */
-  --color-noto-accent: #3d5a80;
-  --color-noto-accent-light: #5a7fa8;
-  --color-noto-bg: #fafafa;
-  --color-noto-bg-alt: #f0f0f0;
-  --color-noto-text: #171717;
-  --color-noto-text-muted: #737373;
-  --color-noto-border: #e0e0e0;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
+  --color-ink-bg: #fff;
+  --color-ink-fg: #15171c;
+  --color-ink-muted: #5b5f68;
+  --color-ink-line: #e1e3e8;
+  --color-ink-band: #15171c;
+  --color-ink-on-band: #fff;
+  --color-ink-accent: #15171c;
+  --color-ink-soft: #eceef1;
+  --color-ink-field: #fff;
+  --color-ink-c1: var(--color-ink-band);
+  --color-ink-c2: color-mix(in srgb, var(--color-ink-band) 88%, #fff);
+  --color-ink-c3: color-mix(in srgb, var(--color-ink-band) 80%, #fff);
+  --color-ink-c4: color-mix(in srgb, var(--color-ink-band) 72%, #fff);
 }
 
 /* ===== shadcn/ui Theme ===== */
@@ -135,18 +133,4 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-noto-bg text-noto-text;
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
 }

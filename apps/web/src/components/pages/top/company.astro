@@ -1,0 +1,21 @@
+---
+import { flarely } from '@/data/flarely'
+---
+
+<section id="company" aria-labelledby="h-company">
+  <h2 class="pad" id="h-company">運営会社</h2>
+  <div class="co">
+    <div class="logobox" aria-hidden="true" translate="no">Flarely</div>
+    <div>
+      <h3 translate="no">{flarely.name}</h3>
+      <p class="sub">{flarely.founded} 設立・{flarely.position}</p>
+      <p class="sum">{flarely.summary}</p>
+      <div class="svc">
+        {flarely.services.map((service) => <div>{service}</div>)}
+      </div>
+      <a href={flarely.url} rel="noopener" target="_blank">
+        Flarely のサイトを見る
+      </a>
+    </div>
+  </div>
+</section>

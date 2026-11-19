@@ -1,34 +1,25 @@
 ---
-import Footer from '@/components/common/footer.astro'
-import Navigation from '@/components/common/navigation.astro'
-import PageLoader from '@/components/common/page-loader.astro'
-import About from '@/components/pages/top/about.astro'
-import Articles from '@/components/pages/top/articles.astro'
+import SiteFooter from '@/components/common/site-footer.astro'
+import SiteHeader from '@/components/common/site-header.astro'
+import Career from '@/components/pages/top/career.astro'
+import Company from '@/components/pages/top/company.astro'
 import ContactCta from '@/components/pages/top/contact-cta.astro'
-import Hero from '@/components/pages/top/hero.astro'
-import News from '@/components/pages/top/news.astro'
-import Works from '@/components/pages/top/works.astro'
+import Profile from '@/components/pages/top/profile.astro'
+import Projects from '@/components/pages/top/projects.astro'
+import Writing from '@/components/pages/top/writing.astro'
+import { site } from '@/data/site'
 import Layout from '@/layouts/Layout.astro'
 ---
 
-<Layout
-  title="noto."
-  description="ソフトウェアエンジニア 能戸成琉のポートフォリオサイト。バックエンドからフロントエンドまで、スケーラブルなシステム設計と開発を行っています。"
-  keywords="能戸成琉,ソフトウェアエンジニア,フルスタック,ポートフォリオ,TypeScript,Go,React"
->
-  <PageLoader />
-  <Navigation />
-  <main>
-    <Hero />
-    <About />
-    <Works />
-    <Articles />
-    <News />
+<Layout title="noto.">
+  <SiteHeader isTop tagline={site.tagline} />
+  <main id="main" class="col">
+    <Profile />
+    <Career />
+    <Projects />
+    <Writing />
+    <Company />
     <ContactCta />
   </main>
-  <Footer />
+  <SiteFooter />
 </Layout>
-
-<script>
-  import '@/scripts/scroll-animation'
-</script>

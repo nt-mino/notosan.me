@@ -15,7 +15,7 @@ export type Article = MicroCMSContent & {
   title: string
   description: string
   thumbnail: MicroCMSImage
-  category: ArticleCategory
+  category: ArticleCategory[]
   date: string
   zennUrl: string
   tags?: string

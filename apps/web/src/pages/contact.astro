@@ -1,31 +1,33 @@
 ---
-import Footer from '@/components/common/footer.astro'
-import Navigation from '@/components/common/navigation.astro'
-import PageHeader from '@/components/common/page-header.astro'
+import SiteFooter from '@/components/common/site-footer.astro'
+import SiteHeader from '@/components/common/site-header.astro'
 import ContactForm from '@/components/pages/contact/contact-form'
+import { site } from '@/data/site'
 import Layout from '@/layouts/Layout.astro'
+import { categoryLabels } from '@/server/schemas/contact'
+
+const categories = Object.entries(categoryLabels).map(([value, label]) => ({
+  value,
+  label,
+}))
 ---
 
 <Layout
-  title="noto. - contact"
-  description="お仕事のご依頼・ご相談など、お気軽にお問い合わせください。新規開発、技術顧問、講演など幅広く対応しています。"
-  keywords="問い合わせ,ご依頼,ご相談,新規開発,技術顧問,能戸成琉"
+  title="お問い合わせ - noto."
+  description="新規開発・技術支援・技術顧問など、お仕事のご相談はこちらからどうぞ。"
 >
-  <Navigation class="bg-noto-bg/90 backdrop-blur-sm" />
-
-  <PageHeader
-    label="CONTACT"
-    title="お問い合わせ"
-    description="お仕事のご依頼・ご相談など、お気軽にお問い合わせください。新規開発、技術顧問、講演など幅広く対応しています。通常2〜3営業日以内にご返信いたします。"
-    bgText="Contact"
-    maxWidth="narrow"
-  />
-
-  <main class="px-6 md:px-12 pb-24">
-    <div class="max-w-[700px] mx-auto">
-      <ContactForm client:load />
-    </div>
+  <SiteHeader />
+  <main id="main" class="col pad">
+    <h1 class="ph">お問い合わせ</h1>
+    <p class="lead">{site.contactLead}</p>
+    <ContactForm client:load categories={categories} />
+    <p class="side">
+      LinkedIn からのご連絡も歓迎です。<a
+        href={site.linkedin}
+        rel="noopener"
+        target="_blank">LinkedIn を開く</a
+      >
+    </p>
   </main>
-
-  <Footer />
+  <SiteFooter />
 </Layout>

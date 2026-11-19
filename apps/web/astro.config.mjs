@@ -13,6 +13,10 @@ export default defineConfig({
     imageService: 'compile',
   }),
   session: false,
+  // contact.html の形で書き出し、末尾スラッシュへのリダイレクトを挟まずに配る
+  build: {
+    format: 'file',
+  },
   vite: {
     plugins: [tailwindcss()],
   },
