@@ -1,15 +1,10 @@
 import * as v from 'valibot'
 
 export const contactSchema = v.object({
-  lastName: v.pipe(
+  name: v.pipe(
     v.string(),
-    v.nonEmpty('姓を入力してください'),
-    v.maxLength(50, '姓は50文字以内で入力してください'),
-  ),
-  firstName: v.pipe(
-    v.string(),
-    v.nonEmpty('名を入力してください'),
-    v.maxLength(50, '名は50文字以内で入力してください'),
+    v.nonEmpty('お名前を入力してください'),
+    v.maxLength(100, 'お名前は100文字以内で入力してください'),
   ),
   email: v.pipe(
     v.string(),

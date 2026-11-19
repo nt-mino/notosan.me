@@ -16,8 +16,7 @@ export default function ContactForm() {
     const formData = new FormData(form)
 
     const data = {
-      lastName: formData.get('last_name') as string,
-      firstName: formData.get('first_name') as string,
+      name: formData.get('name') as string,
       email: formData.get('email') as string,
       company: formData.get('company') as string,
       category: formData.get('category') as string,
@@ -140,16 +139,8 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
             type="text"
-            name="last_name"
-            placeholder="姓"
-            required
-            disabled={formState === 'submitting'}
-            className="w-full px-4 py-3.5 text-[0.9375rem] border border-noto-border rounded-md bg-noto-bg text-noto-text placeholder:text-noto-text-muted transition-all duration-200 focus:outline-none focus:border-noto-accent focus:ring-[3px] focus:ring-noto-accent/10 disabled:opacity-50"
-          />
-          <input
-            type="text"
-            name="first_name"
-            placeholder="名"
+            name="name"
+            placeholder="お名前"
             required
             disabled={formState === 'submitting'}
             className="w-full px-4 py-3.5 text-[0.9375rem] border border-noto-border rounded-md bg-noto-bg text-noto-text placeholder:text-noto-text-muted transition-all duration-200 focus:outline-none focus:border-noto-accent focus:ring-[3px] focus:ring-noto-accent/10 disabled:opacity-50"
