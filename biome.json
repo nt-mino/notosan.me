@@ -18,7 +18,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!!**/dist"]
+    "includes": [
+      "**",
+      "!!**/dist",
+      "!**/*.md",
+      "!**/worker-configuration.d.ts",
+      "!**/src/lib/microcms/schema"
+    ]
   },
   "formatter": {
     "enabled": true,
