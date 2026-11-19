@@ -33,10 +33,13 @@ export default function ContactForm({ categories }: Props) {
 
     try {
       const response = await api.contact.$post({ json: data })
-      const result = await response.json()
+      // エラーページなど JSON でない応答は、共通の文言で知らせる
+      const result = await response.json().catch(() => null)
 
-      if (!response.ok || !result.success) {
-        throw new Error('error' in result ? result.error : '送信に失敗しました')
+      if (!response.ok || !result?.success) {
+        throw new Error(
+          result && 'error' in result ? result.error : '送信に失敗しました',
+        )
       }
 
       setFormState('success')

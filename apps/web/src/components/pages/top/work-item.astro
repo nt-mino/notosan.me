@@ -20,7 +20,16 @@ const toStack = (tech: string) => {
     .flatMap((line) => (line.split('：')[1] ?? '').split(/\s+\/\s+/))
     .map((name) => name.trim())
     .filter((name) => name && !OMIT.includes(name))
-  return [...new Set(names)].slice(0, STACK_LIMIT)
+  // 「Next.js (Route Handlers)」は「Next.js」と同じ技術として 1 回だけ出す
+  const seen = new Set<string>()
+  return names
+    .filter((name) => {
+      const base = name.replace(/\s*[（(].*$/, '')
+      if (seen.has(base)) return false
+      seen.add(base)
+      return true
+    })
+    .slice(0, STACK_LIMIT)
 }
 
 const stack = toStack(work.tech ?? '')

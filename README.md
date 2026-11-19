@@ -13,9 +13,10 @@ Node 22.23.4 以上と bun が必要です。
 ```sh
 bun install
 cp apps/web/.env.example apps/web/.env.local        # microCMS のキーを入れる
-cp apps/web/.dev.vars.example apps/web/.dev.vars    # Resend の設定を入れる（お問い合わせを試すときだけ）
 bun dev
 ```
+
+`bun dev` と `bun preview` の Worker は `apps/web/.dev.vars` を読み、無ければ `.env.local` の値を使います。`.env.local` に本物の Resend のキーがあると、ローカルでもお問い合わせのメールが実際に届きます。試すだけなら `.dev.vars.example` を `.dev.vars` に写し、送信先を自分に向けてください。
 
 ## コマンド
 
