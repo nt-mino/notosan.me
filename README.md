@@ -26,9 +26,10 @@ bun dev
 | `bun run build` | `apps/web/dist/` にビルドします |
 | `bun preview` | ビルド結果を Workers のローカル実行で確かめます |
 | `bun check` | `astro check` で型を確かめます |
-| `bun lint` | Biome でリポジトリ全体を確かめます |
+| `bun lint` | oxlint でリポジトリ全体を確かめます |
+| `bun format` | oxfmt で整形します（`.astro` は対象外です） |
 | `bun run deploy` | ビルドして `wrangler deploy` します |
 
 ## デプロイ
 
-Cloudflare Workers の `noto` に `wrangler deploy` で出します。本番の `RESEND_API_KEY` / `CONTACT_EMAIL` / `FROM_EMAIL` は `wrangler secret put` で登録します。
+`main` に push すると GitHub Actions がビルドして Cloudflare Workers の `noto` に出します（手元からは `bun run deploy`）。本番の `RESEND_API_KEY` / `CONTACT_EMAIL` / `FROM_EMAIL` は `wrangler secret put` で登録します。

@@ -65,7 +65,7 @@ h3,
 h4 {
   margin: 0;
   text-wrap: balance;
-  font-feature-settings: "palt";
+  font-feature-settings: 'palt';
 }
 .col {
   width: min(880px, 100%);

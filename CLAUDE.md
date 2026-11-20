@@ -18,9 +18,10 @@ bun run build    # プロダクションビルド（dist/client と dist/server�
 bun preview      # ビルド結果を Workers のローカル実行で確認
 bun check        # astro check（型チェック）
 bun run deploy   # ビルドして wrangler deploy
-bun lint         # Biome でチェック（リポジトリ全体）
-bun lint:fix     # チェック + 自動修正（unsafe 含む）
-bun format       # Biome でフォーマット
+bun lint         # oxlint でチェック（リポジトリ全体）
+bun lint:fix     # チェック + 自動修正
+bun format       # oxfmt でフォーマット（.astro は対象外）
+bun format:check # 整形ずれの確認だけ
 
 # apps/web で実行
 bun run cf-typegen                 # wrangler.jsonc から worker-configuration.d.ts を作り直す
@@ -61,7 +62,8 @@ apps/web/
 - **スタイリング**: Tailwind CSS v4 (@tailwindcss/vite)
 - **UIライブラリ**: shadcn/ui (new-york スタイル)
 - **API**: Hono + valibot、メール送信は Resend
-- **リンター/フォーマッター**: Biome（設定はルートの biome.json）
+- **リンター/フォーマッター**: oxlint + oxfmt（設定はルートの .oxlintrc.json と .oxfmtrc.json）
+- **CI/CD**: GitHub Actions（`.github/workflows/ci.yml`）。PR で lint・型チェック・ビルド、`main` への push と microCMS の Webhook で Workers にデプロイ
 - **CMS**: microCMS
 
 ### レンダリングと API

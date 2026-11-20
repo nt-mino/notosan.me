@@ -1,13 +1,13 @@
-@import "tailwindcss";
-@import "./ink.css";
+@import 'tailwindcss';
+@import './ink.css';
 
 @custom-variant dark (&:is(.dark *));
 
 /* 39 Ink の配色とフォント。色はここを変えれば全体に効く */
 @theme static {
-  --font-gothic: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
-  --font-mincho: "Shippori Mincho", "Hiragino Mincho ProN", serif;
-  --font-garamond: "Cormorant Garamond", "Shippori Mincho", serif;
+  --font-gothic: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  --font-mincho: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  --font-garamond: 'Cormorant Garamond', 'Shippori Mincho', serif;
 
   --color-ink-bg: #fff;
   --color-ink-fg: #15171c;
