@@ -18,7 +18,9 @@ const links = [
 <div class:list={['band', { sm: !tagline }]}>
   <div class="col">
     <header class="pad">
-      <a class="logo" href="/" translate="no">noto.</a>
+      <a class="logo" href="/">
+        <img src="/logo.png" alt="noto" width="69" height="32" />
+      </a>
       <nav aria-label="メイン">
         {links.map((link) => <a href={link.href}>{link.label}</a>)}
       </nav>

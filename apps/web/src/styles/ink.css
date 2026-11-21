@@ -103,10 +103,14 @@ header {
   padding-top: 8px;
 }
 .logo {
-  font: 600 24px / 1 var(--font-garamond);
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+}
+.logo img {
+  display: block;
+  height: 32px;
+  width: auto;
 }
 nav {
   display: flex;
