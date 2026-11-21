@@ -1,0 +1,9 @@
+---
+import ProjectList from '@/components/common/project-list.astro'
+import { projects } from '@/data/projects'
+---
+
+<section id="projects" class="pad" aria-labelledby="h-projects">
+  <h2 id="h-projects">個人開発</h2>
+  <ProjectList projects={projects} />
+</section>

@@ -1,0 +1,30 @@
+---
+import type { GetStaticPaths } from 'astro'
+import SiteFooter from '@/components/common/site-footer.astro'
+import SiteHeader from '@/components/common/site-header.astro'
+import ProjectDetail from '@/components/pages/projects/project-detail.astro'
+import { type Project, projects } from '@/data/projects'
+import Layout from '@/layouts/Layout.astro'
+
+export const getStaticPaths = (() =>
+  projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }))) satisfies GetStaticPaths
+
+export interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+const others = projects.filter((p) => p.slug !== project.slug)
+---
+
+<Layout title={`${project.name} - noto.`} description={project.summary}>
+  <SiteHeader />
+  <main id="main" class="col pad">
+    <p class="back"><a href="/#projects">個人開発に戻る</a></p>
+    <ProjectDetail project={project} others={others} />
+  </main>
+  <SiteFooter />
+</Layout>

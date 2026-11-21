@@ -1,0 +1,99 @@
+---
+import '@/styles/globals.css'
+
+export interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+  ogType?: 'website' | 'article'
+  noindex?: boolean
+}
+
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID
+const SITE_URL = 'https://notosan.me'
+const SITE_NAME = 'noto.'
+const DEFAULT_OG_IMAGE = '/og-image.png'
+const FONTS_URL =
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap'
+
+const {
+  title,
+  description = 'ソフトウェアエンジニア 能戸成琉のポートフォリオサイト。経歴、個人開発、記事、運営会社を載せています。',
+  ogImage = DEFAULT_OG_IMAGE,
+  ogType = 'website',
+  noindex = false,
+} = Astro.props
+
+// build.format が file なので、ビルド時のパスに付く .html を外して正規 URL にする
+const canonicalPath = Astro.url.pathname.replace(/(index)?\.html$/, '')
+const canonicalURL = new URL(canonicalPath, SITE_URL).toString()
+const ogImageURL = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage, SITE_URL).toString()
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: '能戸成琉',
+  alternateName: 'Minoru Noto',
+  url: SITE_URL,
+  jobTitle: 'ソフトウェアエンジニア',
+}
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#15171c" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="能戸成琉" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    {GA_MEASUREMENT_ID && (
+      <Fragment>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', GA_MEASUREMENT_ID);
+        </script>
+      </Fragment>
+    )}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={FONTS_URL} rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip" href="#main">本文へ移動</a>
+    <slot />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+      }
+    </script>
+  </body>
+</html>

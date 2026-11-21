@@ -1,0 +1,41 @@
+---
+import WorkItem from '@/components/pages/top/work-item.astro'
+import { career } from '@/data/career'
+import { flarely } from '@/data/flarely'
+import { getWorks } from '@/lib/microcms/api/works'
+
+const { contents } = await getWorks()
+const worksById = new Map(contents.map((work) => [work.id, work]))
+
+const jobs = career.map((job) => ({
+  ...job,
+  relation: [job.type, job.role].filter(Boolean).join('・'),
+  works: job.works.flatMap((id) => worksById.get(id) ?? []),
+}))
+---
+
+<section id="career" class="pad" aria-labelledby="h-career">
+  <h2 id="h-career">経歴</h2>
+  <ul class="jobs">
+    {jobs.map((job) => (
+      <li class:list={['job', { lite: job.works.length === 0 }]}>
+        <div class="date">{job.start} 〜</div>
+        <div class="jb">
+          <h3 class="org" translate="no">{job.org}</h3>
+          <p class="rel">{job.relation}</p>
+          {job.note && <p class="note">{job.note}</p>}
+          {job.org === flarely.name && (
+            <p class="note">
+              <a href="#company">運営会社を見る</a>
+            </p>
+          )}
+          {job.works.length > 0 && (
+            <div class="wks">
+              {job.works.map((work, i) => <WorkItem work={work} index={i} />)}
+            </div>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>

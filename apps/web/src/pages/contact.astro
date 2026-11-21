@@ -1,0 +1,33 @@
+---
+import SiteFooter from '@/components/common/site-footer.astro'
+import SiteHeader from '@/components/common/site-header.astro'
+import ContactForm from '@/components/pages/contact/contact-form'
+import { site } from '@/data/site'
+import Layout from '@/layouts/Layout.astro'
+import { categoryLabels } from '@/server/schemas/contact'
+
+const categories = Object.entries(categoryLabels).map(([value, label]) => ({
+  value,
+  label,
+}))
+---
+
+<Layout
+  title="お問い合わせ - noto."
+  description="新規開発・技術支援・技術顧問など、お仕事のご相談はこちらからどうぞ。"
+>
+  <SiteHeader />
+  <main id="main" class="col pad">
+    <h1 class="ph">お問い合わせ</h1>
+    <p class="lead">{site.contactLead}</p>
+    <ContactForm client:load categories={categories} />
+    <p class="side">
+      LinkedIn からのご連絡も歓迎です。<a
+        href={site.linkedin}
+        rel="noopener"
+        target="_blank">LinkedIn を開く</a
+      >
+    </p>
+  </main>
+  <SiteFooter />
+</Layout>
