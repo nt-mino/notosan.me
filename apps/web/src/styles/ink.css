@@ -255,10 +255,10 @@ h2 {
 }
 .org a {
   text-decoration: none;
+  transition: color 0.15s;
 }
 .org a:hover {
-  color: inherit;
-  text-decoration: underline;
+  color: var(--color-ink-accent);
 }
 .lite .org {
   font-size: 17px;
