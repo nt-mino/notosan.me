@@ -7,8 +7,8 @@ const { isTop = false } = Astro.props;
 const prefix = isTop ? "" : "/";
 const links = [
 	{ href: `${prefix}#career`, label: "経歴" },
-	{ href: `${prefix}#projects`, label: "個人開発" },
-	{ href: `${prefix}#writing`, label: "記事" },
+	{ href: "/projects", label: "個人開発" },
+	{ href: "/articles", label: "記事" },
 	{ href: "/contact", label: "お問い合わせ" },
 ];
 ---

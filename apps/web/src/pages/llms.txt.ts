@@ -52,8 +52,8 @@ export const GET: APIRoute = async ({ site: origin }) => {
     '',
     ...careers.map((career) =>
       [
-        `- ${career.company}${career.role ? `（${career.role}）` : ''}: ${formatDate(career.startDate).slice(0, 7)} から。${career.description ? toPlainText(career.description) : ''}`,
-        ...career.works.map(
+        `- ${career.company}（${[career.role, career.employment].filter(Boolean).join('・')}）: ${formatDate(career.startDate).slice(0, 7)} 〜 ${career.endDate ? formatDate(career.endDate).slice(0, 7) : ''}。${career.description ? toPlainText(career.description) : ''}`,
+        ...(career.works ?? []).map(
           (work) =>
             `  - ${work.title}${work.description ? `: ${toPlainText(work.description)}` : ''}`,
         ),

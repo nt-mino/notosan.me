@@ -12,7 +12,9 @@ export type Career = MicroCMSContent & {
   company: string
   companyUrl?: string
   role?: string
+  employment?: string
   startDate: string
+  endDate?: string
   description?: string
   works: CareerWork[]
 }

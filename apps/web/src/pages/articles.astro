@@ -1,5 +1,6 @@
 ---
 import ArticleGrid from "@/components/common/article-grid.astro";
+import SectionTitle from "@/components/common/section-title.astro";
 import SiteFooter from "@/components/common/site-footer.astro";
 import SiteHeader from "@/components/common/site-header.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -19,7 +20,7 @@ const sources = [
 >
   <SiteHeader />
   <main id="main" class="col pad">
-    <h1 class="ph">記事</h1>
+    <SectionTitle as="h1" id="h-writing" en="Writing" lead="開発や技術について書いた記事" />
     <ArticleGrid articles={articles} />
     <p class="more">
       {sources.map((source) => (
