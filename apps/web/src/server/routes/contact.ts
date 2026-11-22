@@ -2,6 +2,7 @@ import { vValidator } from '@hono/valibot-validator'
 import { Hono } from 'hono'
 import type { Bindings } from '../app'
 import { escapeHtml, mailTable, sendMail } from '../lib/mail'
+import { notifySlack } from '../lib/slack'
 import { categoryLabels, contactSchema } from '../schemas/contact'
 
 export const contactRoute = new Hono<{ Bindings: Bindings }>().post(
@@ -41,6 +42,12 @@ export const contactRoute = new Hono<{ Bindings: Bindings }>().post(
         `,
       })
 
+      await notifySlack(c.env, `お問い合わせ：${category}`, [
+        ['お名前', body.name],
+        ['メールアドレス', body.email],
+        ['会社名', body.company],
+        ['お問い合わせ内容', body.message],
+      ])
       return c.json({ success: true as const })
     } catch (error) {
       console.error('Email send error:', error)
