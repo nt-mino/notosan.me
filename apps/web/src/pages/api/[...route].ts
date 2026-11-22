@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers'
-import type { APIRoute } from 'astro'
 import { app } from '@/server/app'
+import type { APIRoute } from 'astro'
 
 export const prerender = false
 

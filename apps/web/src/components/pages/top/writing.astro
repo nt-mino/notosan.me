@@ -1,40 +1,19 @@
 ---
-import { Image } from 'astro:assets'
-import { site } from '@/data/site'
-import { getArticles } from '@/lib/microcms/api/articles'
-import { formatDate } from '@/utils/format'
+import ArticleGrid from "@/components/common/article-grid.astro";
+import SectionTitle from "@/components/common/section-title.astro";
+import { getLatestArticles } from "@/lib/feeds";
 
-const ARTICLE_COUNT = 8
+const ARTICLE_COUNT = 9;
 
-const { contents } = await getArticles({ limit: ARTICLE_COUNT })
+const articles = await getLatestArticles(ARTICLE_COUNT);
 ---
 
 <section id="writing" class="pad" aria-labelledby="h-writing">
-  <h2 id="h-writing">記事</h2>
-  <div class="arts">
-    {contents.map((article) => (
-      <a class="art" href={article.zennUrl} rel="noopener" target="_blank">
-        {article.thumbnail ? (
-          <Image
-            src={article.thumbnail.url}
-            alt=""
-            width={600}
-            height={315}
-            loading="lazy"
-          />
-        ) : (
-          <span class="art-blank" aria-hidden="true" />
-        )}
-        <span class="d">
-          {[formatDate(article.date), ...article.category].join('・')}
-        </span>
-        <span class="tt">{article.title}</span>
-      </a>
-    ))}
-  </div>
-  <p class="more">
-    <a href={site.writingMore} rel="noopener" target="_blank">
-      Zenn でほかの記事を読む
-    </a>
+  <SectionTitle id="h-writing" en="Writing"
+    lead="開発や技術について書いた記事"
+  />
+  <ArticleGrid articles={articles} />
+  <p class="more center">
+    <a class="btn ghost" href="/articles">記事一覧を見る</a>
   </p>
 </section>

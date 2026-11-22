@@ -1,34 +1,42 @@
 ---
-import WorkItem from '@/components/pages/top/work-item.astro'
-import { career } from '@/data/career'
-import { flarely } from '@/data/flarely'
-import { getWorks } from '@/lib/microcms/api/works'
+import SectionTitle from "@/components/common/section-title.astro";
+import WorkItem from "@/components/pages/top/work-item.astro";
+import { getCareers } from "@/lib/microcms/api/careers";
+import { formatDate } from "@/utils/format";
 
-const { contents } = await getWorks()
-const worksById = new Map(contents.map((work) => [work.id, work]))
+const { contents } = await getCareers();
 
-const jobs = career.map((job) => ({
-  ...job,
-  relation: [job.type, job.role].filter(Boolean).join('・'),
-  works: job.works.flatMap((id) => worksById.get(id) ?? []),
-}))
+const jobs = contents.map((job) => ({
+	id: job.id,
+	start: formatDate(job.startDate).slice(0, 7),
+	org: job.company,
+	url: job.companyUrl,
+	position: job.role,
+	note: job.description,
+	works: job.works ?? [],
+}));
 ---
 
 <section id="career" class="pad" aria-labelledby="h-career">
-  <h2 id="h-career">経歴</h2>
+  <SectionTitle id="h-career" en="Career"
+    lead="これまで関わってきた企業&担当したプロダクト"
+  />
   <ul class="jobs">
     {jobs.map((job) => (
       <li class:list={['job', { lite: job.works.length === 0 }]}>
         <div class="date">{job.start} 〜</div>
         <div class="jb">
-          <h3 class="org" translate="no">{job.org}</h3>
-          <p class="rel">{job.relation}</p>
+          <h3 class="org" translate="no">
+            {job.url ? (
+              <a href={job.url} target="_blank" rel="noopener">
+                {job.org}
+              </a>
+            ) : (
+              job.org
+            )}
+          </h3>
+          {job.position && <p class="rel">{job.position}</p>}
           {job.note && <p class="note">{job.note}</p>}
-          {job.org === flarely.name && (
-            <p class="note">
-              <a href="#company">運営会社を見る</a>
-            </p>
-          )}
           {job.works.length > 0 && (
             <div class="wks">
               {job.works.map((work, i) => <WorkItem work={work} index={i} />)}

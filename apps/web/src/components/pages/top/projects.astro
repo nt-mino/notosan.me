@@ -1,9 +1,14 @@
 ---
-import ProjectList from '@/components/common/project-list.astro'
-import { projects } from '@/data/projects'
+import ProjectList from "@/components/common/project-list.astro";
+import SectionTitle from "@/components/common/section-title.astro";
+import { getProjects } from "@/lib/microcms/api/projects";
+
+const projects = await getProjects();
 ---
 
 <section id="projects" class="pad" aria-labelledby="h-projects">
-  <h2 id="h-projects">個人開発</h2>
+  <SectionTitle id="h-projects" en="Projects"
+    lead="自分で企画して作っているアプリ"
+  />
   <ProjectList projects={projects} />
 </section>

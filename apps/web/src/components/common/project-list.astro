@@ -1,24 +1,24 @@
 ---
-import type { Project } from '@/data/projects'
+import { Image } from "astro:assets";
+import type { Project } from "@/lib/microcms/types/project";
 
 export interface Props {
-  projects: Project[]
+	projects: Project[];
 }
 
-const { projects } = Astro.props
+const { projects } = Astro.props;
 ---
 
 <div class="prjs">
   {projects.map((project) => (
-    <a class="prj" href={`/projects/${project.slug}`}>
-      <div class="icon" aria-hidden="true" translate="no">
-        {project.name.charAt(0).toUpperCase()}
-      </div>
+    <a class="prj" href={`/projects/${project.id}`}>
+      {project.icon && (
+        <Image class="icon" src={project.icon.url} alt="" width={128} height={128} />
+      )}
       <div>
         <span class="n" translate="no">{project.name}</span>
-        <span class="t">{project.tagline}</span>
+        <span class="t">{project.description}</span>
       </div>
-      <span class="st">{project.status}</span>
     </a>
   ))}
 </div>

@@ -1,24 +1,21 @@
 ---
-import SiteFooter from '@/components/common/site-footer.astro'
-import SiteHeader from '@/components/common/site-header.astro'
-import Career from '@/components/pages/top/career.astro'
-import Company from '@/components/pages/top/company.astro'
-import ContactCta from '@/components/pages/top/contact-cta.astro'
-import Profile from '@/components/pages/top/profile.astro'
-import Projects from '@/components/pages/top/projects.astro'
-import Writing from '@/components/pages/top/writing.astro'
-import { site } from '@/data/site'
-import Layout from '@/layouts/Layout.astro'
+import SiteFooter from "@/components/common/site-footer.astro";
+import SiteHeader from "@/components/common/site-header.astro";
+import Career from "@/components/pages/top/career.astro";
+import ContactCta from "@/components/pages/top/contact-cta.astro";
+import Profile from "@/components/pages/top/profile.astro";
+import Projects from "@/components/pages/top/projects.astro";
+import Writing from "@/components/pages/top/writing.astro";
+import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="noto.">
-  <SiteHeader isTop tagline={site.tagline} />
+  <SiteHeader isTop />
   <main id="main" class="col">
     <Profile />
     <Career />
     <Projects />
     <Writing />
-    <Company />
     <ContactCta />
   </main>
   <SiteFooter />

@@ -1,0 +1,45 @@
+{
+	"apiFields": [
+		{
+			"fieldId": "title",
+			"name": "タイトル",
+			"kind": "text",
+			"description": null,
+			"required": true,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		},
+		{
+			"fieldId": "thumbnail",
+			"name": "サムネイル",
+			"kind": "media",
+			"description": null,
+			"required": false,
+			"imageSizeValidation": null,
+			"initialValue": null
+		},
+		{
+			"fieldId": "date",
+			"name": "公開日時",
+			"kind": "date",
+			"description": null,
+			"required": true,
+			"dateFormat": false,
+			"initialValue": null
+		},
+		{
+			"fieldId": "url",
+			"name": "リンク",
+			"kind": "text",
+			"description": "記事の URL",
+			"required": true,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": true,
+			"initialValue": null
+		}
+	],
+	"customFields": []
+}

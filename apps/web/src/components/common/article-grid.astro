@@ -1,0 +1,33 @@
+---
+import type { FeedArticle } from "@/lib/feeds";
+import { formatDate } from "@/utils/format";
+
+export interface Props {
+	articles: FeedArticle[];
+}
+
+const { articles } = Astro.props;
+---
+
+<div class="arts">
+  {articles.map((article) => (
+    <a class="art" href={article.url} rel="noopener" target="_blank">
+      {article.image ? (
+        <img
+          src={article.image}
+          alt=""
+          width="600"
+          height="315"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <span class="art-blank" aria-hidden="true" />
+      )}
+      <span class="d">
+        {formatDate(article.date)}・{article.source}
+      </span>
+      <span class="tt">{article.title}</span>
+    </a>
+  ))}
+</div>

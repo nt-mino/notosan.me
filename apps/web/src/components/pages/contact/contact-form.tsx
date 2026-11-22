@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { api } from '@/lib/rpc'
+import { useState } from 'react'
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -57,7 +57,12 @@ export default function ContactForm({ categories }: Props) {
   return (
     <form onSubmit={onSubmit}>
       <div>
-        <label htmlFor="f-name">お名前</label>
+        <label htmlFor="f-name">
+          お名前
+          <span className="req" aria-hidden="true">
+            *
+          </span>
+        </label>
         <input
           id="f-name"
           name="name"
@@ -68,7 +73,12 @@ export default function ContactForm({ categories }: Props) {
         />
       </div>
       <div>
-        <label htmlFor="f-mail">メールアドレス</label>
+        <label htmlFor="f-mail">
+          メールアドレス
+          <span className="req" aria-hidden="true">
+            *
+          </span>
+        </label>
         <input
           id="f-mail"
           name="email"
@@ -80,7 +90,12 @@ export default function ContactForm({ categories }: Props) {
         />
       </div>
       <div>
-        <label htmlFor="f-org">会社名</label>
+        <label htmlFor="f-org">
+          会社名
+          <span className="req" aria-hidden="true">
+            *
+          </span>
+        </label>
         <input
           id="f-org"
           name="company"
@@ -91,7 +106,12 @@ export default function ContactForm({ categories }: Props) {
         />
       </div>
       <div>
-        <label htmlFor="f-type">種別</label>
+        <label htmlFor="f-type">
+          種別
+          <span className="req" aria-hidden="true">
+            *
+          </span>
+        </label>
         <select id="f-type" name="category" required disabled={isSubmitting}>
           {categories.map((category) => (
             <option key={category.value} value={category.value}>
@@ -101,7 +121,12 @@ export default function ContactForm({ categories }: Props) {
         </select>
       </div>
       <div>
-        <label htmlFor="f-body">内容</label>
+        <label htmlFor="f-body">
+          内容
+          <span className="req" aria-hidden="true">
+            *
+          </span>
+        </label>
         <textarea id="f-body" name="message" required disabled={isSubmitting} />
       </div>
       <button className="send" type="submit" disabled={isSubmitting}>

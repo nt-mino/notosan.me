@@ -1,22 +1,26 @@
 ---
-import { flarely } from '@/data/flarely'
-import { site } from '@/data/site'
+import { Image } from "astro:assets";
+import profileImage from "@/assets/profile.png";
+import SocialLinks from "@/components/common/social-links.astro";
+import { site } from "@/data/site";
 ---
 
 <section class="profile pad" aria-label="プロフィール">
-  <div class="who">
-    <div class="photo">写真</div>
-    <div class="txt">
-      <h1 translate="no">{site.nameEn}</h1>
-      <p class="kana">{site.name}・{site.role}</p>
-    </div>
+  <Image
+    class="photo"
+    src={profileImage}
+    alt=""
+    width={320}
+    height={320}
+    loading="eager"
+  />
+  <div class="txt">
+    <h1>
+      {site.name}
+      <span class="en" translate="no">{site.nameEn}</span>
+    </h1>
+    <p class="role">{site.title}</p>
+    <p class="bio">{site.bio.join('')}</p>
+    <SocialLinks />
   </div>
-  <p class="info">
-    <span>{site.location}</span>
-    <i aria-hidden="true">・</i>
-    <a href="#company" translate="no">{flarely.name}</a>
-    <span>{flarely.position}</span>
-    <i aria-hidden="true">・</i>
-    <a href={site.linkedin} rel="noopener" target="_blank">LinkedIn</a>
-  </p>
 </section>

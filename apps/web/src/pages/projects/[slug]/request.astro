@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import SiteFooter from "@/components/common/site-footer.astro";
+import SiteHeader from "@/components/common/site-header.astro";
+import AppRequestForm from "@/components/pages/projects/app-request-form";
+import Layout from "@/layouts/Layout.astro";
+import { getProjects } from "@/lib/microcms/api/projects";
+import type { Project } from "@/lib/microcms/types/project";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+	const projects = await getProjects();
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}) satisfies GetStaticPaths;
+
+export interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<Layout
+  title={`${project.name} の利用申し込み - noto.`}
+  description={`${project.name} の利用申し込みはこちらからどうぞ。`}
+  noindex
+>
+  <SiteHeader />
+  <main id="main" class="col pad contact-page">
+    {project.icon && (
+      <Image
+        class="req-icon"
+        src={project.icon.url}
+        alt=""
+        width={160}
+        height={160}
+        loading="eager"
+      />
+    )}
+    <h1 class="ph">{project.name} を使ってみる</h1>
+    <p class="lead">
+      お名前と登録用のメールアドレスを送ってください。アカウントを発行して、ログイン用のリンクをお送りします。
+    </p>
+    <div class="form-box">
+      <AppRequestForm client:load app={project.id} />
+    </div>
+    <p class="side">
+      <a href={`/projects/${project.id}`}>{project.name} の紹介に戻る</a>
+    </p>
+  </main>
+  <SiteFooter />
+</Layout>

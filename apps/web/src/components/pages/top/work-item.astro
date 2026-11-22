@@ -1,41 +1,13 @@
 ---
-import { Image } from 'astro:assets'
-import type { Work } from '@/lib/microcms/types/work'
+import { Image } from "astro:assets";
+import type { CareerWork } from "@/lib/microcms/types/career";
 
 export interface Props {
-  work: Work
-  index: number
+	work: CareerWork;
+	index: number;
 }
 
-const { work, index } = Astro.props
-
-const OMIT = ['TypeScript', 'React']
-const STACK_LIMIT = 6
-
-// microCMS の tech は「Frontend：A / B」の行が並ぶので、Tools 以外の行から技術名を拾う
-const toStack = (tech: string) => {
-  const names = tech
-    .split('\n')
-    .filter((line) => !line.trim().startsWith('Tools'))
-    .flatMap((line) => (line.split('：')[1] ?? '').split(/\s+\/\s+/))
-    .map((name) => name.trim())
-    .filter((name) => name && !OMIT.includes(name))
-  // 「Next.js (Route Handlers)」は「Next.js」と同じ技術として 1 回だけ出す
-  const seen = new Set<string>()
-  return names
-    .filter((name) => {
-      const base = name.replace(/\s*[（(].*$/, '')
-      if (seen.has(base)) return false
-      seen.add(base)
-      return true
-    })
-    .slice(0, STACK_LIMIT)
-}
-
-const stack = toStack(work.tech ?? '')
-const meta = stack.length
-  ? `${work.business}　技術: ${stack.join('・')}`
-  : work.business
+const { work, index } = Astro.props;
 ---
 
 <article class="wk">
@@ -60,8 +32,7 @@ const meta = stack.length
       {work.title}
     </h4>
   )}
-  <p class="s">{work.description}</p>
-  <p class="m">{meta}</p>
+  {work.description && <p class="s">{work.description}</p>}
   {work.link && (
     <a class="go" href={work.link} rel="noopener" target="_blank">
       サービスを見る

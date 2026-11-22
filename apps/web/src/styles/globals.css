@@ -3,21 +3,22 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 39 Ink の配色とフォント。色はここを変えれば全体に効く */
+/* 配色は Flarely のサイトに合わせる。フォントは 39 Ink のまま。色はここを変えれば全体に効く */
 @theme static {
   --font-gothic: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
   --font-mincho: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
   --font-garamond: 'Cormorant Garamond', 'Shippori Mincho', serif;
 
-  --color-ink-bg: #fff;
-  --color-ink-fg: #15171c;
-  --color-ink-muted: #5b5f68;
-  --color-ink-line: #e1e3e8;
-  --color-ink-band: #15171c;
+  --color-ink-bg: #f3ece2;
+  --color-ink-fg: #1f1f1f;
+  --color-ink-muted: #6b6359;
+  --color-ink-line: #ddd2c3;
+  --color-ink-band: #1f1f1f;
   --color-ink-on-band: #fff;
-  --color-ink-accent: #15171c;
-  --color-ink-soft: #eceef1;
-  --color-ink-field: #fff;
+  --color-ink-accent: #c2410c;
+  --color-ink-accent-dk: #9a3412;
+  --color-ink-soft: #fbeedd;
+  --color-ink-field: #fffaf3;
   --color-ink-c1: var(--color-ink-band);
   --color-ink-c2: color-mix(in srgb, var(--color-ink-band) 88%, #fff);
   --color-ink-c3: color-mix(in srgb, var(--color-ink-band) 80%, #fff);
