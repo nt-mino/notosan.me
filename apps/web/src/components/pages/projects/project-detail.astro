@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
 import type { Project } from "@/lib/microcms/types/project";
+import { toParagraphs } from '@/utils/rich-text'
 
 export interface Props {
 	project: Project;
@@ -20,6 +21,10 @@ const zoomed = await Promise.all(
 	}),
 );
 const zoomedSrcs = zoomed.map((image) => image.src);
+const sections = [
+  { title: '概要', text: project.summary },
+  { title: '制作背景', text: project.background },
+].filter((section): section is { title: string; text: string } => !!section.text)
 ---
 
 <article class="app-page" style={project.color && `--app: ${project.color}`}>
@@ -101,26 +106,36 @@ const zoomedSrcs = zoomed.map((image) => image.src);
     </Fragment>
   )}
 
-  {project.summary && (
+  {sections.map((section) => (
     <Fragment>
-      <h2 class="app-h">概要</h2>
-      <p class="app-text">{project.summary}</p>
+      <h2 class="app-h">{section.title}</h2>
+      <div class="app-text">
+        {toParagraphs(section.text).map((parts) => (
+          <p>
+            {parts.map((part) =>
+              part.href ? (
+                <a href={part.href} target="_blank" rel="noopener">
+                  {part.text}
+                </a>
+              ) : (
+                part.text
+              ),
+            )}
+          </p>
+        ))}
+      </div>
     </Fragment>
-  )}
+  ))}
 
-  {project.background && (
-    <Fragment>
-      <h2 class="app-h">制作背景</h2>
-      <p class="app-text">{project.background}</p>
-    </Fragment>
-  )}
-
-  <div class="req-box">
-    <p>
-      使ってみたい方は、お名前と登録用のメールアドレスだけで申し込めます。アカウントを発行して、ログイン用のリンクをお送りします。
-    </p>
-    <a class="btn" href={`/projects/${project.id}/request`}>使ってみる</a>
-  </div>
+  <section class="cta app-cta" aria-labelledby="h-try">
+    <h2 id="h-try">使ってみる</h2>
+    <div>
+      <p class="lead">
+        お名前と登録用のメールアドレスだけで申し込めます。アカウントを発行して、ログイン用のリンクをお送りします。
+      </p>
+      <a class="btn" href={`/projects/${project.id}/request`}>申し込みページへ</a>
+    </div>
+  </section>
 </article>
 
 <script>
