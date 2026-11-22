@@ -10,15 +10,32 @@ const { projects } = Astro.props;
 ---
 
 <div class="prjs">
-  {projects.map((project) => (
-    <a class="prj" href={`/projects/${project.id}`}>
-      {project.icon && (
-        <Image class="icon" src={project.icon.url} alt="" width={128} height={128} />
-      )}
-      <div>
-        <span class="n" translate="no">{project.name}</span>
-        <span class="t">{project.description}</span>
-      </div>
-    </a>
-  ))}
+  {projects.map((project) => {
+    const cover = project.screenshots?.[0];
+    return (
+      <a class="prj" href={`/projects/${project.id}`}>
+        {cover ? (
+          <Image
+            class="thumb"
+            src={cover.url}
+            alt=""
+            width={720}
+            height={Math.round((720 * (cover.height ?? 10)) / (cover.width ?? 16))}
+            loading="lazy"
+          />
+        ) : (
+          <span class="thumb" aria-hidden="true" />
+        )}
+        <span class="meta">
+          {project.icon && (
+            <Image class="icon" src={project.icon.url} alt="" width={96} height={96} />
+          )}
+          <span>
+            <span class="n" translate="no">{project.name}</span>
+            <span class="t">{project.description}</span>
+          </span>
+        </span>
+      </a>
+    );
+  })}
 </div>
