@@ -1,0 +1,33 @@
+---
+import ArticleGrid from "@/components/common/article-grid.astro";
+import SiteFooter from "@/components/common/site-footer.astro";
+import SiteHeader from "@/components/common/site-header.astro";
+import Layout from "@/layouts/Layout.astro";
+import { feedSources, getLatestArticles } from "@/lib/feeds";
+
+const articles = await getLatestArticles();
+const sources = [
+	{ label: "Zenn", href: feedSources.zenn },
+	{ label: "note", href: feedSources.note },
+	{ label: "Flarely のメディア", href: feedSources.flarely },
+].filter((source) => source.href);
+---
+
+<Layout
+  title="記事 - noto."
+  description="Zenn・note・Flarely のメディアに書いた記事の一覧です。"
+>
+  <SiteHeader />
+  <main id="main" class="col pad">
+    <h1 class="ph">記事</h1>
+    <ArticleGrid articles={articles} />
+    <p class="more">
+      {sources.map((source) => (
+        <a href={source.href} rel="noopener" target="_blank">
+          {source.label}
+        </a>
+      ))}
+    </p>
+  </main>
+  <SiteFooter />
+</Layout>

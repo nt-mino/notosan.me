@@ -1,43 +1,35 @@
-# Astro Starter Kit: Minimal
+# noto.
+
+能戸成琉のポートフォリオサイト（https://notosan.me）。Astro 7 で作り、Cloudflare Workers で配信しています。
+
+## 構成
+
+bun workspaces のモノレポで、アプリは `apps/web/` にあります。ページはすべてビルド時に作り、お問い合わせ API（`/api/*`）だけを Worker がその場で処理します。
+
+## はじめかた
+
+Node 22.23.4 以上と bun が必要です。
 
 ```sh
-npm create astro@latest -- --template minimal
+bun install
+cp apps/web/.env.example apps/web/.env.local        # microCMS のキーを入れる
+bun dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`bun dev` と `bun preview` の Worker は `apps/web/.dev.vars` を読み、無ければ `.env.local` の値を使います。`.env.local` に本物の Resend のキーがあると、ローカルでもお問い合わせのメールが実際に届きます。試すだけなら `.dev.vars.example` を `.dev.vars` に写し、送信先を自分に向けてください。
 
-## 🚀 Project Structure
+## コマンド
 
-Inside of your Astro project, you'll see the following folders and files:
+| コマンド | 内容 |
+| :-- | :-- |
+| `bun dev` | 開発サーバーを起動します |
+| `bun run build` | `apps/web/dist/` にビルドします |
+| `bun preview` | ビルド結果を Workers のローカル実行で確かめます |
+| `bun check` | `astro check` で型を確かめます |
+| `bun lint` | oxlint でリポジトリ全体を確かめます |
+| `bun format` | oxfmt で整形します（`.astro` は対象外です） |
+| `bun run deploy` | ビルドして `wrangler deploy` します |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## デプロイ
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+`main` に push すると GitHub Actions がビルドして Cloudflare Workers の `noto` に出します（手元からは `bun run deploy`）。本番の `RESEND_API_KEY` / `CONTACT_EMAIL` / `FROM_EMAIL` は `wrangler secret put` で登録します。

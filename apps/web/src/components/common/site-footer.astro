@@ -1,0 +1,29 @@
+---
+import SocialLinks from "@/components/common/social-links.astro";
+import { site } from "@/data/site";
+
+const links = [
+	{ href: "/#career", label: "経歴" },
+	{ href: "/#projects", label: "個人開発" },
+	{ href: "/articles", label: "記事一覧" },
+	{ href: "/contact", label: "お問い合わせ" },
+];
+---
+
+<footer class="col pad">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <a class="logo" href="/">
+        <img src="/logo.png" alt="noto" width="69" height="32" />
+      </a>
+      <p>{site.name}・{site.title}</p>
+      <SocialLinks />
+    </div>
+    <div class="ft-nav" role="navigation" aria-label="フッター">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+  </div>
+  <p class="ft-copy">
+    © {new Date().getFullYear()} <span translate="no">noto.</span>
+  </p>
+</footer>

@@ -1,0 +1,19 @@
+---
+import ArticleGrid from "@/components/common/article-grid.astro";
+import SectionTitle from "@/components/common/section-title.astro";
+import { getLatestArticles } from "@/lib/feeds";
+
+const ARTICLE_COUNT = 9;
+
+const articles = await getLatestArticles(ARTICLE_COUNT);
+---
+
+<section id="writing" class="pad" aria-labelledby="h-writing">
+  <SectionTitle id="h-writing" en="Writing"
+    lead="開発や技術について書いた記事"
+  />
+  <ArticleGrid articles={articles} />
+  <p class="more center">
+    <a class="btn ghost" href="/articles">記事一覧を見る</a>
+  </p>
+</section>

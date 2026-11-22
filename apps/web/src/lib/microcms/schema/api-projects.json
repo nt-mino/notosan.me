@@ -1,0 +1,86 @@
+{
+	"apiFields": [
+		{
+			"fieldId": "icon",
+			"name": "アイコン",
+			"kind": "media",
+			"description": "正方形の画像",
+			"required": false,
+			"imageSizeValidation": null,
+			"initialValue": null
+		},
+		{
+			"fieldId": "name",
+			"name": "サービス名",
+			"kind": "text",
+			"description": null,
+			"required": true,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		},
+		{
+			"fieldId": "screenshots",
+			"name": "サービス紹介画像",
+			"kind": "mediaList",
+			"description": "複数枚登録できます",
+			"required": false,
+			"mediaListLayout": "HORIZONTAL_SCROLL",
+			"imageSizeValidation": null
+		},
+		{
+			"fieldId": "description",
+			"name": "説明",
+			"kind": "textArea",
+			"description": "一覧に出る短い紹介",
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"initialValue": null
+		},
+		{
+			"fieldId": "summary",
+			"name": "概要",
+			"kind": "textArea",
+			"description": null,
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"initialValue": null
+		},
+		{
+			"fieldId": "background",
+			"name": "制作背景",
+			"kind": "textArea",
+			"description": null,
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"initialValue": null
+		},
+		{
+			"fieldId": "kind",
+			"name": "種類",
+			"kind": "text",
+			"description": null,
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		},
+		{
+			"fieldId": "color",
+			"name": "テーマ色",
+			"kind": "text",
+			"description": null,
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		}
+	],
+	"customFields": []
+}

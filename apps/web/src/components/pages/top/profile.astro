@@ -1,0 +1,26 @@
+---
+import { Image } from "astro:assets";
+import profileImage from "@/assets/profile.png";
+import SocialLinks from "@/components/common/social-links.astro";
+import { site } from "@/data/site";
+---
+
+<section class="profile pad" aria-label="プロフィール">
+  <Image
+    class="photo"
+    src={profileImage}
+    alt=""
+    width={320}
+    height={320}
+    loading="eager"
+  />
+  <div class="txt">
+    <h1>
+      {site.name}
+      <span class="en" translate="no">{site.nameEn}</span>
+    </h1>
+    <p class="role">{site.title}</p>
+    <p class="bio">{site.bio.join('')}</p>
+    <SocialLinks />
+  </div>
+</section>

@@ -1,0 +1,171 @@
+---
+import { Image, getImage } from "astro:assets";
+import type { Project } from "@/lib/microcms/types/project";
+
+export interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+const shots = project.screenshots ?? [];
+
+// 拡大表示用に、一覧より大きいサイズをビルド時に作っておく
+const zoomed = await Promise.all(
+	shots.map((shot) => {
+		const width = Math.min(shot.width ?? 1920, 1920);
+		const height = Math.round(
+			(width * (shot.height ?? 1200)) / (shot.width ?? 1920),
+		);
+		return getImage({ src: shot.url, width, height });
+	}),
+);
+const zoomedSrcs = zoomed.map((image) => image.src);
+---
+
+<article class="app-page" style={project.color && `--app: ${project.color}`}>
+  <div class="app-head">
+    {project.icon && (
+      <Image
+        class="app-icon"
+        src={project.icon.url}
+        alt=""
+        width={256}
+        height={256}
+        loading="eager"
+      />
+    )}
+    <div class="app-title">
+      <h1 translate="no">{project.name}</h1>
+      <p class="app-sub">{project.description}</p>
+      {project.kind && <p class="app-meta">{project.kind}</p>}
+    </div>
+    <a class="btn app-get" href={`/projects/${project.id}/request`}>
+      使ってみる
+    </a>
+  </div>
+
+  {shots.length > 0 && (
+    <Fragment>
+      <ul class="app-shots" aria-label={`${project.name} の画面`}>
+        {shots.map((shot, index) => (
+          <li class="app-photo">
+            <button
+              type="button"
+              class="app-zoom"
+              data-index={index}
+              aria-label={`${project.name} の画面 ${index + 1} 枚目を拡大`}
+            >
+              <Image
+                src={shot.url}
+                alt=""
+                width={1120}
+                height={Math.round(
+                  (1120 * (shot.height ?? 1200)) / (shot.width ?? 1920),
+                )}
+                loading="lazy"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <dialog
+        class="shot-viewer"
+        aria-label={`${project.name} の画面`}
+        data-name={project.name}
+        data-srcs={JSON.stringify(zoomedSrcs)}
+      >
+        <img class="shot-img" src={zoomedSrcs[0]} alt="" />
+        <p class="shot-count" aria-live="polite"></p>
+        <button type="button" class="shot-btn shot-close" aria-label="閉じる">
+          ×
+        </button>
+        {shots.length > 1 && (
+          <Fragment>
+            <button
+              type="button"
+              class="shot-btn shot-prev"
+              aria-label="前の画像"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              class="shot-btn shot-next"
+              aria-label="次の画像"
+            >
+              ›
+            </button>
+          </Fragment>
+        )}
+      </dialog>
+    </Fragment>
+  )}
+
+  {project.summary && (
+    <Fragment>
+      <h2 class="app-h">概要</h2>
+      <p class="app-text">{project.summary}</p>
+    </Fragment>
+  )}
+
+  {project.background && (
+    <Fragment>
+      <h2 class="app-h">制作背景</h2>
+      <p class="app-text">{project.background}</p>
+    </Fragment>
+  )}
+
+  <div class="req-box">
+    <p>
+      使ってみたい方は、お名前と登録用のメールアドレスだけで申し込めます。アカウントを発行して、ログイン用のリンクをお送りします。
+    </p>
+    <a class="btn" href={`/projects/${project.id}/request`}>使ってみる</a>
+  </div>
+</article>
+
+<script>
+  const viewer = document.querySelector<HTMLDialogElement>('.shot-viewer')
+  const image = viewer?.querySelector<HTMLImageElement>('.shot-img')
+  const count = viewer?.querySelector('.shot-count')
+
+  if (viewer && image && count) {
+    const srcs: string[] = JSON.parse(viewer.dataset.srcs ?? '[]')
+    let current = 0
+
+    const show = (index: number) => {
+      current = (index + srcs.length) % srcs.length
+      image.src = srcs[current]
+      image.alt = `${viewer.dataset.name} の画面 ${current + 1} 枚目`
+      count.textContent = `${current + 1} / ${srcs.length}`
+    }
+
+    document
+      .querySelectorAll<HTMLButtonElement>('.app-zoom')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          // Safari はクリックでフォーカスしないので、閉じたあと戻る先をここで決める
+          button.focus()
+          show(Number(button.dataset.index))
+          viewer.showModal()
+        })
+      })
+    viewer
+      .querySelector('.shot-prev')
+      ?.addEventListener('click', () => show(current - 1))
+    viewer
+      .querySelector('.shot-next')
+      ?.addEventListener('click', () => show(current + 1))
+    viewer
+      .querySelector('.shot-close')
+      ?.addEventListener('click', () => viewer.close())
+    // 画像やボタンの外は dialog 自身なので、そこを押したら閉じる
+    viewer.addEventListener('click', (event) => {
+      if (event.target === viewer) viewer.close()
+    })
+    viewer.addEventListener('keydown', (event) => {
+      if (srcs.length < 2) return
+      if (event.key === 'ArrowLeft') show(current - 1)
+      if (event.key === 'ArrowRight') show(current + 1)
+    })
+  }
+</script>

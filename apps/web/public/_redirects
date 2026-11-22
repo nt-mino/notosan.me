@@ -1,0 +1,4 @@
+/works /#career 301
+/works/* /#career 301
+/news / 301
+/news/* / 301

@@ -1,0 +1,17 @@
+---
+import flamey from "@/assets/flamey.svg";
+
+export interface Props {
+	id: string;
+	en: string;
+	lead?: string;
+}
+
+const { id, en, lead } = Astro.props;
+---
+
+<h2 class="eyebrow" id={id} translate="no">
+  <img src={flamey.src} alt="" width="32" height="40" />
+  {en}
+</h2>
+{lead && <p class="section-lead">{lead}</p>}

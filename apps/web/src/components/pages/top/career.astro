@@ -1,0 +1,49 @@
+---
+import SectionTitle from "@/components/common/section-title.astro";
+import WorkItem from "@/components/pages/top/work-item.astro";
+import { getCareers } from "@/lib/microcms/api/careers";
+import { formatDate } from "@/utils/format";
+
+const { contents } = await getCareers();
+
+const jobs = contents.map((job) => ({
+	id: job.id,
+	start: formatDate(job.startDate).slice(0, 7),
+	org: job.company,
+	url: job.companyUrl,
+	position: job.role,
+	note: job.description,
+	works: job.works ?? [],
+}));
+---
+
+<section id="career" class="pad" aria-labelledby="h-career">
+  <SectionTitle id="h-career" en="Career"
+    lead="これまで関わってきた企業&担当したプロダクト"
+  />
+  <ul class="jobs">
+    {jobs.map((job) => (
+      <li class:list={['job', { lite: job.works.length === 0 }]}>
+        <div class="date">{job.start} 〜</div>
+        <div class="jb">
+          <h3 class="org" translate="no">
+            {job.url ? (
+              <a href={job.url} target="_blank" rel="noopener">
+                {job.org}
+              </a>
+            ) : (
+              job.org
+            )}
+          </h3>
+          {job.position && <p class="rel">{job.position}</p>}
+          {job.note && <p class="note">{job.note}</p>}
+          {job.works.length > 0 && (
+            <div class="wks">
+              {job.works.map((work, i) => <WorkItem work={work} index={i} />)}
+            </div>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>

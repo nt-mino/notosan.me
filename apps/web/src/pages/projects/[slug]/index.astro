@@ -1,0 +1,32 @@
+---
+import SiteFooter from "@/components/common/site-footer.astro";
+import SiteHeader from "@/components/common/site-header.astro";
+import ProjectDetail from "@/components/pages/projects/project-detail.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getProjects } from "@/lib/microcms/api/projects";
+import type { Project } from "@/lib/microcms/types/project";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+	const projects = await getProjects();
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}) satisfies GetStaticPaths;
+
+export interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.name} - noto.`} description={project.summary ?? project.description}>
+  <SiteHeader />
+  <main id="main" class="col pad">
+    <p class="back"><a href="/#projects">Projects に戻る</a></p>
+    <ProjectDetail project={project} />
+  </main>
+  <SiteFooter />
+</Layout>

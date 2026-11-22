@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import type { CareerWork } from "@/lib/microcms/types/career";
+
+export interface Props {
+	work: CareerWork;
+	index: number;
+}
+
+const { work, index } = Astro.props;
+---
+
+<article class="wk">
+  {work.thumbnail ? (
+    <Fragment>
+      <Image
+        class="cover-img"
+        src={work.thumbnail.url}
+        alt=""
+        width={960}
+        height={600}
+        loading="lazy"
+      />
+      <h4 class="wt" translate="no">{work.title}</h4>
+    </Fragment>
+  ) : (
+    <h4
+      class="cover"
+      style={`--cv:var(--color-ink-c${(index % 4) + 1})`}
+      translate="no"
+    >
+      {work.title}
+    </h4>
+  )}
+  {work.description && <p class="s">{work.description}</p>}
+  {work.link && (
+    <a class="go" href={work.link} rel="noopener" target="_blank">
+      サービスを見る
+    </a>
+  )}
+</article>

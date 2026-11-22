@@ -1,0 +1,106 @@
+{
+	"apiFields": [
+		{
+			"fieldId": "company",
+			"name": "企業名",
+			"kind": "text",
+			"description": null,
+			"required": true,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		},
+		{
+			"fieldId": "role",
+			"name": "役職",
+			"kind": "text",
+			"description": "例: Tech Lead / EM",
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		},
+		{
+			"fieldId": "startDate",
+			"name": "開始日",
+			"kind": "date",
+			"description": null,
+			"required": true,
+			"dateFormat": true,
+			"initialValue": null
+		},
+		{
+			"fieldId": "description",
+			"name": "説明",
+			"kind": "textArea",
+			"description": null,
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"initialValue": null
+		},
+		{
+			"fieldId": "works",
+			"name": "実績",
+			"kind": "repeater",
+			"description": null,
+			"required": false,
+			"customFieldCreatedAtList": ["2026-11-21T09:00:00.000Z"],
+			"repeaterValidation": null
+		},
+		{
+			"fieldId": "companyUrl",
+			"name": "企業リンク",
+			"kind": "text",
+			"description": null,
+			"required": false,
+			"textSizeLimitValidation": null,
+			"patternMatchValidation": null,
+			"isUnique": false,
+			"initialValue": null
+		}
+	],
+	"customFields": [
+		{
+			"createdAt": "2026-11-21T09:00:00.000Z",
+			"fieldId": "work",
+			"name": "実績",
+			"fields": [
+				{
+					"idValue": "wTitle01",
+					"fieldId": "title",
+					"name": "タイトル",
+					"kind": "text",
+					"required": true,
+					"isUnique": false
+				},
+				{
+					"idValue": "wDesc001",
+					"fieldId": "description",
+					"name": "説明",
+					"kind": "textArea",
+					"required": false
+				},
+				{
+					"idValue": "wThumb01",
+					"fieldId": "thumbnail",
+					"name": "画像",
+					"kind": "media",
+					"required": false
+				},
+				{
+					"idValue": "wLink001",
+					"fieldId": "link",
+					"name": "リンク",
+					"kind": "text",
+					"required": false,
+					"isUnique": false
+				}
+			],
+			"position": [["wTitle01", "wDesc001", "wThumb01", "wLink001"]],
+			"updatedAt": "2026-11-21T09:00:00.000Z"
+		}
+	]
+}
