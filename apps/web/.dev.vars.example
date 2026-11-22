@@ -1,3 +1,4 @@
 RESEND_API_KEY=re_xxxxxxxxxx
 CONTACT_EMAIL=your-email@example.com
 FROM_EMAIL=noreply@your-domain.com
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/xxx

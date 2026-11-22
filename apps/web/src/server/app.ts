@@ -6,6 +6,7 @@ export type Bindings = {
   RESEND_API_KEY: string
   CONTACT_EMAIL: string
   FROM_EMAIL: string
+  SLACK_WEBHOOK_URL?: string
 }
 
 export const app = new Hono<{ Bindings: Bindings }>()
