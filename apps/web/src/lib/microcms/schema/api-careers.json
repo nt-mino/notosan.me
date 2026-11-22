@@ -47,7 +47,9 @@
 			"kind": "repeater",
 			"description": null,
 			"required": false,
-			"customFieldCreatedAtList": ["2026-11-21T09:00:00.000Z"],
+			"customFieldCreatedAtList": [
+				"2026-11-21T09:00:00.000Z"
+			],
 			"repeaterValidation": null
 		},
 		{
@@ -60,6 +62,21 @@
 			"patternMatchValidation": null,
 			"isUnique": false,
 			"initialValue": null
+		},
+		{
+			"idValue": "26AKIgiFqw",
+			"fieldId": "endDate",
+			"name": "終了日",
+			"kind": "date",
+			"required": false
+		},
+		{
+			"idValue": "dtrecg7I6q",
+			"fieldId": "employment",
+			"name": "雇用形態",
+			"kind": "text",
+			"required": false,
+			"isUnique": false
 		}
 	],
 	"customFields": [
@@ -99,7 +116,14 @@
 					"isUnique": false
 				}
 			],
-			"position": [["wTitle01", "wDesc001", "wThumb01", "wLink001"]],
+			"position": [
+				[
+					"wTitle01",
+					"wDesc001",
+					"wThumb01",
+					"wLink001"
+				]
+			],
 			"updatedAt": "2026-11-21T09:00:00.000Z"
 		}
 	]
