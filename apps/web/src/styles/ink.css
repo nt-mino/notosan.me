@@ -746,8 +746,10 @@ a.prj:hover .n {
 .back a {
   display: inline-flex;
   align-items: center;
+  min-width: 44px;
   min-height: 44px;
-  font-size: 15px;
+  font-size: 24px;
+  text-decoration: none;
 }
 .app-page {
   margin-top: 24px;

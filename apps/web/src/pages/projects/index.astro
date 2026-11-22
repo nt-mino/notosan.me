@@ -1,0 +1,21 @@
+---
+import ProjectList from '@/components/common/project-list.astro'
+import SiteFooter from '@/components/common/site-footer.astro'
+import SiteHeader from '@/components/common/site-header.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getProjects } from '@/lib/microcms/api/projects'
+
+const projects = await getProjects()
+---
+
+<Layout
+  title="個人開発 - noto."
+  description="自分で企画して作っているアプリの一覧です。"
+>
+  <SiteHeader />
+  <main id="main" class="col pad">
+    <h1 class="ph">個人開発</h1>
+    <ProjectList projects={projects} />
+  </main>
+  <SiteFooter />
+</Layout>

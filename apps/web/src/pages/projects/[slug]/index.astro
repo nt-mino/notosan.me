@@ -26,7 +26,9 @@ const { project } = Astro.props;
 <Layout title={`${project.name} - noto.`} description={project.summary ? firstParagraph(project.summary) : project.description}>
   <SiteHeader />
   <main id="main" class="col pad">
-    <p class="back"><a href="/#projects">Projects に戻る</a></p>
+    <p class="back">
+      <a href="/projects" aria-label="個人開発の一覧に戻る">←</a>
+    </p>
     <ProjectDetail project={project} />
   </main>
   <SiteFooter />
