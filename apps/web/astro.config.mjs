@@ -20,7 +20,11 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    // 申し込みページは noindex なので、サイトマップにも載せない
+    sitemap({ filter: (page) => !page.endsWith('/request') }),
+  ],
   image: {
     domains: ['images.microcms-assets.io'],
   },
