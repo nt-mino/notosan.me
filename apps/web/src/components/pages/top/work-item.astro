@@ -18,7 +18,9 @@ const { work, index } = Astro.props;
         src={work.thumbnail.url}
         alt=""
         width={960}
-        height={600}
+        height={Math.round(
+          (960 * (work.thumbnail.height ?? 600)) / (work.thumbnail.width ?? 960),
+        )}
         loading="lazy"
       />
       <h4 class="wt" translate="no">{work.title}</h4>
