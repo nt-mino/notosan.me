@@ -4,13 +4,14 @@ import { formatDate } from "@/utils/format";
 
 export interface Props {
 	articles: FeedArticle[];
+	priority?: boolean;
 }
 
-const { articles } = Astro.props;
+const { articles, priority = false } = Astro.props;
 ---
 
 <div class="arts">
-  {articles.map((article) => (
+  {articles.map((article, index) => (
     <a class="art" href={article.url} rel="noopener" target="_blank">
       {article.image ? (
         <img
@@ -18,7 +19,8 @@ const { articles } = Astro.props;
           alt=""
           width="600"
           height="315"
-          loading="lazy"
+          loading={priority && index < 3 ? "eager" : "lazy"}
+          fetchpriority={priority && index === 0 ? "high" : undefined}
           decoding="async"
         />
       ) : (

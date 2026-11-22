@@ -29,6 +29,7 @@ export const getLatestArticles = async (limit?: number) => {
     title: article.title,
     url: article.url,
     date: article.date,
-    image: article.thumbnail?.url,
+    // microCMS の画像 API で、一覧の表示幅に合わせた WebP にする
+    image: article.thumbnail && `${article.thumbnail.url}?fm=webp&w=600&q=80`,
   }))
 }

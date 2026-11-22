@@ -63,6 +63,8 @@ const sections = [
               <Image
                 src={shot.url}
                 alt=""
+                widths={[560, 1120]}
+                sizes="(max-width: 720px) 85vw, 560px"
                 width={1120}
                 height={Math.round(
                   (1120 * (shot.height ?? 1200)) / (shot.width ?? 1920),
@@ -79,7 +81,7 @@ const sections = [
         data-name={project.name}
         data-srcs={JSON.stringify(zoomedSrcs)}
       >
-        <img class="shot-img" src={zoomedSrcs[0]} alt="" />
+        <img class="shot-img" alt="" />
         <p class="shot-count" aria-live="polite"></p>
         <button type="button" class="shot-btn shot-close" aria-label="閉じる">
           ×
@@ -128,12 +130,17 @@ const sections = [
   ))}
 
   <section class="cta app-cta" aria-labelledby="h-try">
-    <h2 id="h-try">使ってみる</h2>
+    <div>
+      <h2 id="h-try">無料で使ってみる</h2>
+      <p class="cta-note">
+        ありがたいことに知人にも使っていただいていて、いただいたフィードバックをもとに改善を続けています。
+      </p>
+    </div>
     <div>
       <p class="lead">
-        個人で作って、無料で配布しています。ありがたいことに知人にも使っていただいていて、いただいたフィードバックをもとに改善を続けています。申し込みはお名前と登録用のメールアドレスだけで、アカウントを発行してログイン用のリンクをお送りします。
+        お名前と登録用のメールアドレスだけで申し込めます。アカウントを発行して、ログイン用のリンクをお送りします。
       </p>
-      <a class="btn" href={`/projects/${project.id}/request`}>申し込みページへ</a>
+      <a class="btn" href={`/projects/${project.id}/request`}>使ってみる</a>
     </div>
   </section>
 </article>
