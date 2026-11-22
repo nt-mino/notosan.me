@@ -191,6 +191,10 @@ h1 {
   width: auto;
   height: 22px;
 }
+/* しずかなインターネットのアイコンは白地なので、背景色になじませる */
+.sns .sizu {
+  mix-blend-mode: multiply;
+}
 .eyebrow {
   display: flex;
   align-items: center;

@@ -1,5 +1,6 @@
 ---
 import flarelyMark from "@/assets/flarely-mark.svg";
+import sizuMark from "@/assets/sizu.png";
 import { flarely } from "@/data/flarely";
 import { site } from "@/data/site";
 import { feedSources } from "@/lib/feeds";
@@ -36,6 +37,11 @@ const links = [
       </a>
     </li>
   ))}
+  <li>
+    <a href="https://sizu.me/notosan" rel="noopener" target="_blank" aria-label="しずかなインターネット">
+      <img class="sizu" src={sizuMark.src} alt="" width="20" height="20" />
+    </a>
+  </li>
   <li>
     <a href={flarely.url} rel="noopener" target="_blank" aria-label={flarely.name}>
       <img src={flarelyMark.src} alt="" width="9" height="22" />
