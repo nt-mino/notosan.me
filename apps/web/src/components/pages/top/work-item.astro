@@ -17,6 +17,8 @@ const { work, index } = Astro.props;
         class="cover-img"
         src={work.thumbnail.url}
         alt=""
+        widths={[480, 960]}
+        sizes="(max-width: 720px) 100vw, 340px"
         width={960}
         height={Math.round(
           (960 * (work.thumbnail.height ?? 600)) / (work.thumbnail.width ?? 960),

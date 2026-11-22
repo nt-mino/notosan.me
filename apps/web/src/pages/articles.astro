@@ -21,7 +21,7 @@ const sources = [
   <SiteHeader />
   <main id="main" class="col pad">
     <SectionTitle as="h1" id="h-writing" en="Writing" lead="開発や技術について書いた記事" />
-    <ArticleGrid articles={articles} />
+    <ArticleGrid articles={articles} priority />
     <p class="more">
       {sources.map((source) => (
         <a href={source.href} rel="noopener" target="_blank">
