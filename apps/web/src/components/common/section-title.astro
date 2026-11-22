@@ -5,13 +5,14 @@ export interface Props {
 	id: string;
 	en: string;
 	lead?: string;
+	as?: "h1" | "h2";
 }
 
-const { id, en, lead } = Astro.props;
+const { id, en, lead, as: Tag = "h2" } = Astro.props;
 ---
 
-<h2 class="eyebrow" id={id} translate="no">
+<Tag class:list={["eyebrow", { page: Tag === "h1" }]} id={id} translate="no">
   <img src={flamey.src} alt="" width="32" height="40" />
   {en}
-</h2>
+</Tag>
 {lead && <p class="section-lead">{lead}</p>}

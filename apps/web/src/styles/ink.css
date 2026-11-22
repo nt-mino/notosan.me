@@ -199,6 +199,9 @@ h1 {
   font: italic 600 34px / 1.2 var(--font-garamond);
   color: var(--color-ink-accent);
 }
+.eyebrow.page {
+  margin-top: 56px;
+}
 .eyebrow:has(+ .section-lead) {
   margin-bottom: 8px;
 }
