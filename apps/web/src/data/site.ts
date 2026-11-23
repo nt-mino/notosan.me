@@ -10,6 +10,7 @@ export const site = {
     '現在はプロダクトエンジニアとして働きながら、Flarely で受託開発と AI 活用の支援を担当している。',
   ],
   linkedin: 'https://www.linkedin.com/in/minoru-noto-8082a633a',
+  github: 'https://github.com/nt-mino',
   contactLead:
     '新規開発・技術支援・技術顧問など、お仕事のご相談はお気軽にどうぞ。通常 2〜3 営業日以内にお返事します。',
 }
