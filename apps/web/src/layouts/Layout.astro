@@ -11,7 +11,7 @@ export interface Props {
 
 const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const SITE_URL = "https://notosan.me";
-const SITE_NAME = "noto.";
+const SITE_NAME = "能戸 成琉";
 const DEFAULT_OG_IMAGE = "/og-image.png";
 const FONTS_URL =
 	"https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap";
@@ -31,13 +31,19 @@ const ogImageURL = ogImage.startsWith("http")
 	? ogImage
 	: new URL(ogImage, SITE_URL).toString();
 
+// WebSite の name は、Google の検索結果に出るサイト名に使われる
 const jsonLd = {
 	"@context": "https://schema.org",
-	"@type": "Person",
-	name: "能戸成琉",
-	alternateName: "Minoru Noto",
-	url: SITE_URL,
-	jobTitle: "プロダクトエンジニア",
+	"@graph": [
+		{ "@type": "WebSite", name: SITE_NAME, url: `${SITE_URL}/` },
+		{
+			"@type": "Person",
+			name: "能戸成琉",
+			alternateName: "Minoru Noto",
+			url: SITE_URL,
+			jobTitle: "プロダクトエンジニア",
+		},
+	],
 };
 ---
 
