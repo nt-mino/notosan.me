@@ -4,17 +4,13 @@ on:
   pull_request:
   push:
     branches: [main]
-  workflow_dispatch:
-  # microCMS の Webhook から呼び、記事や実績の更新をサイトに反映する
-  repository_dispatch:
-    types: [microcms-update]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  check-and-deploy:
+  check:
     runs-on: ubuntu-latest
     env:
       MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
@@ -31,10 +27,3 @@ jobs:
       - run: bun run format:check
       - run: bun check
       - run: bun run build
-      - name: Deploy
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        run: bunx wrangler deploy
-        working-directory: apps/web
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
