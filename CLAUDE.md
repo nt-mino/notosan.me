@@ -94,7 +94,6 @@ apps/web/
 ビルド時（`apps/web/.env.local`。見本は `apps/web/.env.example`）:
 
 ```
-MICROCMS_SERVICE_DOMAIN   # microCMSサービスドメイン
 MICROCMS_API_KEY          # microCMS APIキー
 PUBLIC_GA_MEASUREMENT_ID  # GA4 の測定 ID（任意）
 ```
