@@ -63,7 +63,8 @@ apps/web/
 - **UIライブラリ**: shadcn/ui (new-york スタイル)
 - **API**: Hono + valibot、メール送信は Resend
 - **リンター/フォーマッター**: oxlint + oxfmt（設定はルートの .oxlintrc.json と .oxfmtrc.json）
-- **CI/CD**: GitHub Actions（`.github/workflows/ci.yml`）。PR で lint・型チェック・ビルド、`main` への push と microCMS の Webhook で Workers にデプロイ
+- **CI**: GitHub Actions（`.github/workflows/ci.yml`）。PR と `main` への push で lint・型チェック・ビルドを確かめるだけで、デプロイはしない
+- **デプロイ**: Cloudflare Workers Builds。`main` への push と、microCMS の Webhook を受けた Worker（`/api/webhooks/microcms`）が呼ぶ Deploy Hook でビルドしてデプロイする。ビルド時の環境変数は Workers Builds の設定に入れる
 - **CMS**: microCMS
 
 ### レンダリングと API
@@ -104,6 +105,8 @@ Worker の実行時（本番は `wrangler secret put`、ローカルは `apps/we
 RESEND_API_KEY  # Resend の API キー
 CONTACT_EMAIL   # お問い合わせの送り先
 FROM_EMAIL      # 送信元アドレス
+MICROCMS_WEBHOOK_SECRET  # microCMS の Webhook の署名を確かめるシークレット
+DEPLOY_HOOK_URL          # Workers Builds の Deploy Hook の URL
 ```
 
 ## デザイントークン
